@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background-color: #f7f7f7;
+}
+
+// .go {
+//   background-color: aquamarine;
+// }
+
+// .yes {
+//   color: rgb(104, 204, 204);
+//   text-decoration: line-through;
+// }
+
+li {
+  margin: 15px;
+  list-style: none;
+}
+
+.wrap {
+  display: grid;
+  grid-template-columns: 100vw;
+  grid-template-rows: 10vh 80vh 10vh;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 50vw 50vw;
+  grid-template-rows: 80vh;
+}
