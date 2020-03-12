@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source /home/ubpc/backend_promise/env/bin/activate
-exec gunicorn -c "/home/ubpc/backend_promise/config/gunicorn_config.py" config.wsgi
+source /home/ubpc/promise/env/bin/activate
+exec gunicorn -c "/home/ubpc/promise/config/gunicorn_config.py" config.wsgi

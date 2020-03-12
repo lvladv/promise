@@ -125,7 +125,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'OPTIONS': {
-            'options': '-c search_path=promise_app'
+            'options': '-c search_path=promise_rest'
         },
         'NAME': 'parsing_db',
         'USER': 'semenov',
@@ -149,7 +149,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': 'logs/debug.log',
+            'filename': '/home/ubpc/promise/debug.log',
         },
     },
     'loggers': {
