@@ -17,36 +17,70 @@ class App extends Component {
       newUsername: "",
       newPassword: "",
       newEmail: "",
-      };
+      tokenData: null,
+      token: ""
+    };
+  }
+  componentDidMount() {
+    this.getListFromToken();
   }
 
-  async componentDidMount() {
+  getListFromToken = async () => {
+    await this.newToken();
     const remember = localStorage.getItem("remember") === "true";
-    const token = localStorage.getItem("Authorization")
+    const tokenData = localStorage.getItem("tokenData");
+
     if (remember) {
-      this.setState({ newAutor: true });
+      this.setState({ newAutor: true, tokenData });
+    }
+
+    if (Date.now() >= this.state.tokenData * 5000) {
+      this.newToken();
     }
 
     let requestOptions = {
       method: "GET",
-    headers: {
-    'Authorization': token
-  }
+      headers: {
+        Authorization: this.state.token
+      }
     };
+
     let response = await fetch(
-      `http://77.244.65.15:3527/prom/`,
+      `http://77.244.65.15:3527/api/v1/data/promise/`,
       requestOptions
     );
     let list = await response.json();
-    this.setState({list})
-    console.log(list);
-    }
+    this.setState({ list: list.results });
+    console.log(this.state.list);
+  };
+
+  newToken = async () => {
+    const token = localStorage.getItem("Authorization");
+    const tokenRefresh = localStorage.getItem("refresh");
+    let formData = new FormData();
+    formData.append("refresh", tokenRefresh);
+    let requestOptions2 = {
+      body: formData,
+      method: "POST"
+    };
+
+    let resp = await fetch(
+      `http://77.244.65.15:3527/api/v1/data/auth/jwt/refresh/`,
+      requestOptions2
+    );
+
+    let newToken = await resp.json();
+    console.log(newToken);
+    await localStorage.setItem("Authorization", `Bearer ${newToken.access}`);
+    this.setState({ token });
+  };
 
   componentDidUpdate() {
     this.autorisation();
     this.newUser();
   }
 
+  // Аутентификация ------------------------------------------------------------------------------------------------------------------------
   async autorisation() {
     let formData = new FormData();
     formData.append("username", this.state.username);
@@ -57,27 +91,20 @@ class App extends Component {
       body: formData
     };
     let response = await fetch(
-      `http://77.244.65.15:3527/auth/jwt/create/`,
+      `http://77.244.65.15:3527/api/v1/data/auth/jwt/create/`,
       requestOptions
     );
     let autor = await response.json();
     if (response.ok) {
       await localStorage.setItem("Authorization", `Bearer ${autor.access}`);
       await localStorage.setItem("remember", "true");
+      await localStorage.setItem("tokenData", Date.now());
+      await localStorage.setItem("refresh", autor.refresh);
     }
     console.log(autor);
   }
-  // mrlvladv1
-  // 9684998352b
-  // mrlvladv2
-  // 9684998352c
-  // mrlvladv3
-  // 9684998352c
-  // mrlvladv4
-  // 9684998352d
-  // mrlvladv6
-  // 9684998352f
 
+  // регистрация -------------------------------------------------------------------------------------------------------------------------
   async newUser() {
     let formData = new FormData();
     formData.append("username", this.state.newEmail);
@@ -89,7 +116,7 @@ class App extends Component {
       body: formData
     };
     let response = await fetch(
-      `http://77.244.65.15:3527/auth/users/`,
+      `http://77.244.65.15:3527/api/v1/data/auth/users/`,
       requestOptions
     );
     let autor = await response.json();

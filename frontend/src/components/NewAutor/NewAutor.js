@@ -29,11 +29,16 @@ class NewAutor extends Component {
  
 
        <button onClick={
-          ()=> this.props.getLog(
-            this.loginValue.current.value,
-            this.passwordValue.current.value,
-            
-          )
+          ()=> {
+            this.props.getLog(
+              this.loginValue.current.value,
+              this.passwordValue.current.value
+            );
+            document.location.reload(true)
+          }
+          
+        
+        
         }>Авторизоваться</button>
 
         {/* ------------------------------------------------------------------- */}
