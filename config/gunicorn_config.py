@@ -18,7 +18,8 @@ loglevel = 'info'
 accesslog = os.path.join(BASE_DIR, 'backend_promise.log')
 #accesslog = '/home/ubpc/promise/backend_promise.log'
 # access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
-access_log_format = '%(t)s %(h)s %(u)s %(r)s %(q)s %(s)s %(p)s'
+# access_log_format = '%(t)s %(h)s %(u)s %(r)s %(q)s %(s)s %(p)s'
+access_log_format = '%(t)s %(h)s %(r)s %(q)s %(s)s %(T)s %(p)s'
 raw_env = 'DJANGO_SETTINGS_MODULE=config.settings'
 redirect_stderr = True
 autorestart = True

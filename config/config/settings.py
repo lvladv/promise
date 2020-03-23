@@ -18,7 +18,8 @@ DEBUG = True
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['77.244.65.15', '0.0.0.0', '127.0.0.1']
 
-AUTH_USER_MODEL = 'promise.User'
+AUTH_USER_MODEL = 'userdetail.User'
+# AUTH_USER_MODEL = 'promise.User'
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
@@ -52,7 +53,7 @@ SIMPLE_JWT = {
 
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=360),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=360),
 }
 
 
@@ -80,8 +81,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'promise',
+    'userdetail',
     'corsheaders',
+    'drf_yasg',
 ]
+
+# SWAGGER_SETTINGS = {
+#     'VALIDATOR_URL': 'http://localhost:8189',
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -134,22 +141,39 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-#DATABASES = {
+# DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.sqlite3',
 #        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #    }
-#}
+# }
 
-
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': '/home/ubpc/promise/debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/ubpc/promise/debug.log',
+            'filename': '/home/arty/python/promise/debug.log',
         },
     },
     'loggers': {
@@ -205,6 +229,19 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, "static")
 ]
+
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+}
+
+REDOC_SETTINGS = {
+   'LAZY_RENDERING': False,
+}
 
 
 APPEND_SLASH = True

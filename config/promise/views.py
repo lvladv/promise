@@ -1,15 +1,15 @@
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from .models import Promise
-from .serializers import PromiseDetailSerializer, PromiseListSerializer, UserSerializer
+from .serializers import PromiseSerializer
 from rest_framework import generics, views
 from rest_framework import permissions
 from rest_framework import pagination
 from django_filters import rest_framework as rest_filter
 from rest_framework import filters
-# from .permissions import IsOwnerOrReadOnly
 
-User = get_user_model()
+
+# from .permissions import IsOwnerOrReadOnly
 
 
 class PromisePaginations(pagination.PageNumberPagination):
@@ -21,6 +21,7 @@ class PromisePaginations(pagination.PageNumberPagination):
 class PromiseFilter(rest_filter.FilterSet):
     # slug = rest_filter.CharFilter(field_name='slug', lookup_expr='icontains')
     owner = rest_filter.CharFilter(field_name='owner_id__username')
+
     # primose_name = rest_filter.CharFilter(field_name='name', lookup_expr='icontains')
     class Meta:
         model = Promise
@@ -32,18 +33,18 @@ class PromiseFilter(rest_filter.FilterSet):
 
 class PromiseCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = PromiseDetailSerializer
+    serializer_class = PromiseSerializer
     queryset = Promise.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-import datetime
+
 class PromiseListView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Promise.objects.all().order_by('-create_time')
     # queryset = Promise.objects.filter(create_time__lte=datetime.datetime.now())
-    serializer_class = PromiseListSerializer
+    serializer_class = PromiseSerializer
     pagination_class = PromisePaginations
     # filter_backends = (filters.SearchFilter,)
     filter_backends = (rest_filter.DjangoFilterBackend, filters.SearchFilter)
@@ -54,7 +55,7 @@ class PromiseListView(generics.ListAPIView):
 
 class PromiseDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = PromiseDetailSerializer
+    serializer_class = PromiseSerializer
     queryset = Promise.objects.all()
     lookup_field = 'slug'
     # lookup_field = ('name', 'owner')
@@ -64,28 +65,6 @@ class PromiseDetailView(generics.RetrieveUpdateDestroyAPIView):
     #     vessel = get_object_or_404(Promise, **lookup)
     #     serializer = PromiseDetailSerializer(vessel, context={'request': request})
     #     return Response(serializer.data)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # class PromiseDetailView(views.APIView):
 #     # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -144,13 +123,3 @@ class PromiseDetailView(generics.RetrieveUpdateDestroyAPIView):
 #
 
 # Not needed
-class UserList(generics.ListAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDetail(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
