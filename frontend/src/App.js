@@ -18,17 +18,15 @@ class App extends Component {
       newPassword: "",
       newEmail: "",
       tokenData: null,
-      token: "",
-      discr: "4"
+      token: ""
     };
   }
   componentDidMount() {
-    this.newToken()
     this.getListFromToken();
-    this.saveList();
   }
 
   getListFromToken = async () => {
+    await this.newToken();
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
 
@@ -52,9 +50,11 @@ class App extends Component {
       requestOptions
     );
     let list = await response.json();
+    if (response.status === 401) {
+      this.setState({ newAutor: false });
+    }
     console.log(list);
     this.setState({ list: list.results });
-  
   };
 
   newToken = async () => {
@@ -74,7 +74,6 @@ class App extends Component {
     );
 
     let newToken = await resp.json();
-    // console.log(newToken);
     await localStorage.setItem("Authorization", `Bearer ${newToken.access}`);
     this.setState({ token });
   };
@@ -82,7 +81,6 @@ class App extends Component {
   componentDidUpdate() {
     this.autorisation();
     this.newUser();
-    
   }
 
   // Аутентификация ------------------------------------------------------------------------------------------------------------------------
@@ -146,10 +144,14 @@ class App extends Component {
   // создание записи --------------------------------------------------------------------------------
 
   saveList = async () => {
+    const { list } =  this.state;
+    console.log(list);
+    const newPoint  =  list[0];
+    console.log(newPoint)
     let formData = new FormData();
 
     formData.append("name", "123");
-    formData.append("description", this.state.discr);
+    formData.append("description", newPoint.description);
 
     let requestOptions = {
       body: formData,
@@ -165,22 +167,17 @@ class App extends Component {
     );
 
     console.log(resp.json());
-    
   };
 
-  inputClickAdd = async (list, value) => {
-    this.saveList();
-    this.setState(() =>
-      list.push({
+  inputClickAdd =  async(list, value) => {
+     await this.setState(() =>
+      list.unshift({
         id: Date.now(),
         description: value,
         status: "no"
       })
-      
     );
-    // this.setState({ disr: value });
-
-    console.log(this.state.disr);
+    await this.saveList();
   };
 
   toCompleted = id => {
