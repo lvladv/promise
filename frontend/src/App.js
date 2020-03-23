@@ -18,15 +18,17 @@ class App extends Component {
       newPassword: "",
       newEmail: "",
       tokenData: null,
-      token: ""
+      token: "",
+      discr: "4"
     };
   }
   componentDidMount() {
+    this.newToken()
     this.getListFromToken();
+    this.saveList();
   }
 
   getListFromToken = async () => {
-    await this.newToken();
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
 
@@ -50,8 +52,9 @@ class App extends Component {
       requestOptions
     );
     let list = await response.json();
+    console.log(list);
     this.setState({ list: list.results });
-    console.log(this.state.list);
+  
   };
 
   newToken = async () => {
@@ -59,6 +62,7 @@ class App extends Component {
     const tokenRefresh = localStorage.getItem("refresh");
     let formData = new FormData();
     formData.append("refresh", tokenRefresh);
+
     let requestOptions2 = {
       body: formData,
       method: "POST"
@@ -70,7 +74,7 @@ class App extends Component {
     );
 
     let newToken = await resp.json();
-    console.log(newToken);
+    // console.log(newToken);
     await localStorage.setItem("Authorization", `Bearer ${newToken.access}`);
     this.setState({ token });
   };
@@ -78,6 +82,7 @@ class App extends Component {
   componentDidUpdate() {
     this.autorisation();
     this.newUser();
+    
   }
 
   // Аутентификация ------------------------------------------------------------------------------------------------------------------------
@@ -88,6 +93,7 @@ class App extends Component {
 
     let requestOptions = {
       method: "POST",
+
       body: formData
     };
     let response = await fetch(
@@ -101,15 +107,21 @@ class App extends Component {
       await localStorage.setItem("tokenData", Date.now());
       await localStorage.setItem("refresh", autor.refresh);
     }
-    console.log(autor);
   }
+
+  getLog = async (username, password) => {
+    this.setState({
+      username,
+      password
+    });
+  };
 
   // регистрация -------------------------------------------------------------------------------------------------------------------------
   async newUser() {
     let formData = new FormData();
-    formData.append("username", this.state.newEmail);
+    formData.append("username", this.state.newPassword);
     formData.append("password", this.state.newUsername);
-    formData.append("email", this.state.newPassword);
+    formData.append("email", this.state.newEmail);
 
     let requestOptions = {
       method: "POST",
@@ -123,13 +135,6 @@ class App extends Component {
     console.log(autor);
   }
 
-  getLog = async (username, password) => {
-    this.setState({
-      username,
-      password
-    });
-  };
-
   getNewLog = async (newEmail, newPassword, newUsername) => {
     this.setState({
       newEmail,
@@ -138,26 +143,44 @@ class App extends Component {
     });
   };
 
-  inputClickAdd = (list, value) => {
+  // создание записи --------------------------------------------------------------------------------
+
+  saveList = async () => {
+    let formData = new FormData();
+
+    formData.append("name", "123");
+    formData.append("description", this.state.discr);
+
+    let requestOptions = {
+      body: formData,
+      headers: {
+        Authorization: this.state.token
+      },
+      method: "POST"
+    };
+
+    let resp = await fetch(
+      `http://77.244.65.15:3527/api/v1/data/promise/new/`,
+      requestOptions
+    );
+
+    console.log(resp.json());
+    
+  };
+
+  inputClickAdd = async (list, value) => {
+    this.saveList();
     this.setState(() =>
       list.push({
         id: Date.now(),
         description: value,
         status: "no"
       })
+      
     );
-  };
+    // this.setState({ disr: value });
 
-  onCheck = id => {
-    const { list } = this.state;
-    this.setState(() =>
-      // eslint-disable-next-line
-      list.map(item => {
-        if (item.id === id) {
-          item.status === "yes" ? (item.status = "no") : (item.status = "yes");
-        }
-      })
-    );
+    console.log(this.state.disr);
   };
 
   toCompleted = id => {
@@ -178,6 +201,7 @@ class App extends Component {
     console.log(completedList);
   };
 
+  // рендер -----------------------------------------------------------------------
   render() {
     const { list, completedList, newAutor } = this.state;
     return (
