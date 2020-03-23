@@ -173,7 +173,8 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': '/home/arty/python/promise/debug.log',
+            #'filename': '/home/arty/python/promise/debug.log',
+            'filename': '/home/ubpc/promise/debug.log',
         },
     },
     'loggers': {
