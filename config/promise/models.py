@@ -12,7 +12,7 @@ from django.dispatch import receiver
 class Promise(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=False)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, default=None)
     description = models.CharField(max_length=2024, blank=False, default='')
     deadline = models.CharField(max_length=2024, blank=False, default='60')
     status = models.CharField(max_length=1, blank=False, default='D')
@@ -21,11 +21,14 @@ class Promise(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     owner = models.ForeignKey(User, related_name='promise', on_delete=models.CASCADE)
 
-
     def save(self, *args, **kwargs):
-        prefix = self.owner.__str__()
-        self.slug = prefix + '-' + str(uuid4())[:8]
+        if self.slug is None:
+            prefix = self.owner.__str__()
+            self.slug = prefix + '-' + str(uuid4())[:8]
         super(Promise, self).save(*args, **kwargs)
+
+    REQUIRED_FIELDS = ['name', 'description', 'deadline', 'status']
+
 
     class Meta:
         db_table = 'dt_promise'

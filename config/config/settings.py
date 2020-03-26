@@ -1,11 +1,18 @@
 import os
 from datetime import timedelta
 
+try:
+    from .settings_dev import *
+except:
+    from .settings_prod import *
+
+
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+# DJANGO_SETTINGS_MODULE = config.settings_dev
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -13,10 +20,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'r#a302+$yt%p%n518xg55n(955k2qalld&^ajz4y!$8x603*=+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['77.244.65.15', '0.0.0.0', '127.0.0.1']
 
 AUTH_USER_MODEL = 'userdetail.User'
 # AUTH_USER_MODEL = 'promise.User'
@@ -128,63 +133,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'OPTIONS': {
-            'options': '-c search_path=promise_rest'
-        },
-        'NAME': 'parsing_db',
-        'USER': 'semenov',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
-# DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#    }
-# }
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'INFO',
-#             'class': 'logging.FileHandler',
-#             'filename': '/home/ubpc/promise/debug.log',
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['file'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            #'filename': '/home/arty/python/promise/debug.log',
-            'filename': '/home/ubpc/promise/debug.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
+
 
 
 
@@ -225,11 +175,9 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT, "static")
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 SWAGGER_SETTINGS = {
@@ -246,3 +194,4 @@ REDOC_SETTINGS = {
 
 
 APPEND_SLASH = True
+
