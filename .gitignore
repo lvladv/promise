@@ -6,9 +6,11 @@
 __pycache__
 db.sqlite3
 media
-
+static/
 # Backup files # 
 *.bak 
+
+settings_dev.py
 
 # If you are using PyCharm #
 .idea/*
