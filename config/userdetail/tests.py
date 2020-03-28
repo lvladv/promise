@@ -61,9 +61,36 @@ class RegistrationsTestCase(APITestCase):
         }
         self.get_started()
         new_promise = self.client.post('http://127.0.0.1:8000/api/v1/data/promise/new/', data=promise_data)
+        # print(new_promise.data)
         self.assertEqual(new_promise.status_code, status.HTTP_201_CREATED, new_promise.data)
         #
 
+    def test_patch_promise(self):
+        self.get_started()
+        promise_data = {
+            'name': 'example_name',
+            'status': 'Y',
+            'description': 'example_desc',
+            'deadline': 100
+        }
+
+        change_data = {
+            'name': 'example_name',
+            'status': 'N',
+            'description': 'example_desc',
+            'deadline': 0
+        }
+        self.get_started()
+        new_promise = self.client.post('http://127.0.0.1:8000/api/v1/data/promise/new/', data=promise_data)
+        print(new_promise.data)
+        slug = new_promise.data['slug']
+        change_promise = self.client.patch(f'http://127.0.0.1:8000/api/v1/data/promise/{slug}/', data=change_data)
+        print(change_promise.data)
+
+        self.assertEqual(new_promise.data['slug'], change_promise.data['slug'])
+        self.assertEqual(new_promise.status_code, status.HTTP_201_CREATED, new_promise.data)
+
+    # #
     def test_list_promise(self):
         self.get_started()
         self.test_create_promise()
@@ -78,7 +105,7 @@ class RegistrationsTestCase(APITestCase):
         self.assertEqual(len(list_promise.data['results'][0]), 10, list_promise.data)
         self.assertFalse(None in list_promise.data['results'][0])
         return slug
-
+    #
     def test_single_promise(self):
         self.test_list_promise()
         single_promise = self.client.get(f'http://127.0.0.1:8000/api/v1/data/promise/{self.test_list_promise()}/')
@@ -87,7 +114,7 @@ class RegistrationsTestCase(APITestCase):
         self.assertEqual(single_promise.status_code, status.HTTP_200_OK, single_promise.status_code)
         #
         #
-
+    #
     def test_get_userinfo(self):
         self.get_started()
 
