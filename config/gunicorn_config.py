@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 command = os.path.join(BASE_DIR, 'env/bin/gunicorn')
 pythonpath = os.path.join(BASE_DIR, 'config')
-bind = '0.0.0.0:8283'
+bind = '0.0.0.0:8282'
 workers = 5
 user = 'ubpc'
 limit_request_field = 3200
