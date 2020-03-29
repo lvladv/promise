@@ -112,7 +112,8 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 'DIRS': ['/home/arty/python/promise/frontend/build/', ],
+        'DIRS': ['/home/ubpc//promise/frontend/build/', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -176,8 +177,11 @@ CORS_ORIGIN_ALLOW_ALL = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATIC_URL = '/home/arty/python/promise/frontend/build/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+# STATIC_ROOT = '/home/arty/python/promise/frontend/build/static/'
 # PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
 
 
 SWAGGER_SETTINGS = {
