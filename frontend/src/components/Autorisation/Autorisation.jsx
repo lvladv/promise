@@ -30,6 +30,7 @@ class NewAutor extends Component {
               this.passwordValue.current.value
             );
             await newList();
+           
           }}
         >
           Авторизоваться

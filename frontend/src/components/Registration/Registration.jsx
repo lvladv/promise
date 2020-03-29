@@ -5,8 +5,6 @@ class NewAutor extends Component {
   neweEmaildValue = createRef();
   newLoginValue = createRef();
   newPasswordValue = createRef();
-  
-
 
   render() {
     const { registration } = this.props;

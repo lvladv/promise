@@ -14,8 +14,11 @@ import { newPointList } from "./store/list/action";
 
 class App extends Component {
   componentDidMount() {
-    this.props.newList();
-    this.props.newTokenFromRefresh();
+    const { isAutorisation, newTokenFromRefresh, newList } = this.props;
+  if(isAutorisation){
+    newList();
+  }
+    newTokenFromRefresh();
   }
 
   // toCompleted = id => {
@@ -84,7 +87,7 @@ const mapStateToprops = store => {
     isAutorisation: store.tokenReducer.isAutorisation,
     token: store.tokenReducer.token,
     list: store.listReducer.list,
-    completedList: store.completedListReducer.completedList,
+    completedList: store.completedListReducer.completedList
   };
 };
 
@@ -96,7 +99,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(newUser(newEmail, newUsername, newPassword)),
     newList: () => dispatch(newList()),
     newPointList: description => dispatch(newPointList(description)),
-    newTokenFromRefresh: () => dispatch(newTokenFromRefresh()),
+    newTokenFromRefresh: () => dispatch(newTokenFromRefresh())
   };
 };
 
