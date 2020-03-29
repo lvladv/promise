@@ -1,5 +1,5 @@
 import React, { Component, createRef } from "react";
-import List from "./../list/list";
+import List from "../List/List";
 import "./input.scss";
 
 class Input extends Component {
@@ -10,13 +10,13 @@ class Input extends Component {
   inputValue = createRef();
 
   inputClick() {
-    this.props.on(this.props.list, this.inputValue.current.value);
+    this.props.newPointList(this.inputValue.current.value);
 
     this.inputValue.current.value = " ";
   }
 
   render() {
-    const { list } = this.props;
+    const { list, newList } = this.props;
     return (
       <section className="input">
         <h3>Надо выполнить</h3>
@@ -27,12 +27,11 @@ class Input extends Component {
           placeholder="введите задачу"
         />
         <button onClick={this.inputClick}>Добавить </button>
-
         <ul>
           <List
             list={list}
-            onCheck={this.props.onCheck}
-            toCompleted={this.props.toCompleted}
+            // onCheck={this.props.onCheck}
+            // toCompleted={this.props.toCompleted}
           />
         </ul>
       </section>
