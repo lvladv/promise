@@ -14,7 +14,7 @@ urlpatterns = [
     # url(r'^promise/', PromiseCreateView.as_view()),
     url(r'^promise/$', PromiseListView.as_view()),
     path('promise/<str:slug>/', PromiseDetailView.as_view()),
-    path('front/', start),
+    path('', start),
 
     # url(r'^promise/name/(?P<slug>[A-Za-z]+.)/$', PromiseDetailView.as_view()),
     # path('promise/users/detail/<str:nickname>/', UserInfoDetailView.as_view()),
