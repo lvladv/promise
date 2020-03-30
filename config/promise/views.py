@@ -66,10 +66,10 @@ class PromiseDetailView(generics.RetrieveUpdateDestroyAPIView):
     #     serializer = PromiseDetailSerializer(vessel, context={'request': request})
     #     return Response(serializer.data)
 
-from django.shortcuts import render
-def start(request):
-    # return render(request, '/home/ubpc/promise/frontend/build/index.html')
-    return render(request, 'index.html')
+# from django.shortcuts import render
+# def start(request):
+#     # return render(request, '/home/ubpc/promise/frontend/build/index.html')
+#     return render(request, 'index.html')
 
 
 # class PromiseDetailView(views.APIView):
