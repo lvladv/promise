@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import PromiseCreateView, PromiseDetailView, PromiseListView, start
+from .views import PromiseCreateView, PromiseDetailView, PromiseListView
 from django.conf.urls import include
 from django.urls import path
 
@@ -14,7 +14,6 @@ urlpatterns = [
     # url(r'^promise/', PromiseCreateView.as_view()),
     url(r'^promise/$', PromiseListView.as_view()),
     path('promise/<str:slug>/', PromiseDetailView.as_view()),
-    path('', start),
 
     # url(r'^promise/name/(?P<slug>[A-Za-z]+.)/$', PromiseDetailView.as_view()),
     # path('promise/users/detail/<str:nickname>/', UserInfoDetailView.as_view()),
