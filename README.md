@@ -124,7 +124,7 @@ REPSONSE:
 ## Детальная информация
 GET
   
-http://77.244.65.15:3527/api/v1/data/promise/name/Vlad-731fd3b5/
+http://77.244.65.15:3527/api/v1/data/promise/Vlad-731fd3b5/
   
 Дополнительно: name/Vlad-731fd3b5/ (по полю slug)
 RESPONSE:
@@ -144,7 +144,7 @@ RESPONSE:
 
 PUT
   
-http://77.244.65.15:3527/api/v1/data/promise/name/Vlad-731fd3b5/
+http://77.244.65.15:3527/api/v1/data/promise/Vlad-731fd3b5/
   
 Дополнительно: name/Vlad-731fd3b5/ (по полю slug)
 form-data:
