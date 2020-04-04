@@ -1,7 +1,4 @@
 import os
-from secret_properties import (
-    DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
-)
 
 REST_URL = 'http://77.244.65.15:3527'
 
@@ -15,11 +12,11 @@ DATABASES = {
         'OPTIONS': {
             'options': '-c search_path=promise_rest'
         },
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'NAME': 'parsing_db',
+        'USER': 'semenov',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
