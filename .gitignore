@@ -11,7 +11,7 @@ static/
 *.bak 
 
 settings_dev.py
-
+secret_properties.py
 # If you are using PyCharm #
 .idea/*
 .idea/**/workspace.xml 
