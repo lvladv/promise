@@ -9,6 +9,11 @@ from pprint import pprint
 from .models import User
 from .serializers import CustomUserSerializer
 from django.contrib.auth.models import User
+try:
+    from config.settings_dev import REST_URL
+except ImportError:
+    from config.settings_prod import REST_URL
+
 
 TEST_USERNAME = 'testcase'
 TEST_PASSWORD = 'JKDbfh2f'
@@ -23,8 +28,8 @@ class RegistrationsTestCase(APITestCase):
             'password': TEST_PASSWORD,
             # 'email': TEST_EMAIL,
         }
-        registration = self.client.post('http://127.0.0.1:8000/api/v1/data/auth/users/', data=self.data)
-        auth = self.client.post('http://127.0.0.1:8000/api/v1/data/auth/jwt/create/', data=self.data)
+        registration = self.client.post(REST_URL + '/api/v1/data/auth/users/', data=self.data)
+        auth = self.client.post(REST_URL + '/api/v1/data/auth/jwt/create/', data=self.data)
         data_auth = auth.data['access']
         self.client.credentials(HTTP_AUTHORIZATION='Bearer {0}'.format(data_auth))
 
@@ -34,7 +39,7 @@ class RegistrationsTestCase(APITestCase):
             'password': TEST_PASSWORD,
             # 'email': TEST_EMAIL,
         }
-        registration = self.client.post('http://127.0.0.1:8000/api/v1/data/auth/users/', data=self.data)
+        registration = self.client.post(REST_URL + '/api/v1/data/auth/users/', data=self.data)
 
         self.assertEqual(registration.status_code, status.HTTP_201_CREATED, registration.status_code)
         self.assertEqual(registration.data, {'email': '', 'username': 'testcase', 'id': 1}, registration.data)
@@ -44,8 +49,8 @@ class RegistrationsTestCase(APITestCase):
             'username': TEST_USERNAME,
             'password': TEST_PASSWORD,
         }
-        registration = self.client.post('http://127.0.0.1:8000/api/v1/data/auth/users/', data=self.data)
-        auth = self.client.post('http://127.0.0.1:8000/api/v1/data/auth/jwt/create/', data=self.data)
+        registration = self.client.post(REST_URL + '/api/v1/data/auth/users/', data=self.data)
+        auth = self.client.post(REST_URL + '/api/v1/data/auth/jwt/create/', data=self.data)
         self.assertEqual(auth.status_code, status.HTTP_200_OK, auth.data)
         self.assertEqual(len(auth.data), 2, auth.data)
         data_auth = auth.data['access']
@@ -60,7 +65,7 @@ class RegistrationsTestCase(APITestCase):
             'deadline': 100
         }
         self.get_started()
-        new_promise = self.client.post('http://127.0.0.1:8000/api/v1/data/promise/new/', data=promise_data)
+        new_promise = self.client.post(REST_URL + '/api/v1/data/promise/new/', data=promise_data)
         # print(new_promise.data)
         self.assertEqual(new_promise.status_code, status.HTTP_201_CREATED, new_promise.data)
         #
@@ -81,10 +86,10 @@ class RegistrationsTestCase(APITestCase):
             'deadline': 0
         }
         self.get_started()
-        new_promise = self.client.post('http://127.0.0.1:8000/api/v1/data/promise/new/', data=promise_data)
+        new_promise = self.client.post(REST_URL + '/api/v1/data/promise/new/', data=promise_data)
         print(new_promise.data)
         slug = new_promise.data['slug']
-        change_promise = self.client.patch(f'http://127.0.0.1:8000/api/v1/data/promise/{slug}/', data=change_data)
+        change_promise = self.client.patch(REST_URL + f'/api/v1/data/promise/{slug}/', data=change_data)
         print(change_promise.data)
 
         self.assertEqual(new_promise.data['slug'], change_promise.data['slug'])
@@ -95,7 +100,7 @@ class RegistrationsTestCase(APITestCase):
         self.get_started()
         self.test_create_promise()
 
-        list_promise = self.client.get('http://127.0.0.1:8000/api/v1/data/promise/')
+        list_promise = self.client.get(REST_URL + '/api/v1/data/promise/')
         from pprint import pprint
         # print(list_promise.data['results'][0])
 
@@ -108,7 +113,7 @@ class RegistrationsTestCase(APITestCase):
     #
     def test_single_promise(self):
         self.test_list_promise()
-        single_promise = self.client.get(f'http://127.0.0.1:8000/api/v1/data/promise/{self.test_list_promise()}/')
+        single_promise = self.client.get(REST_URL + f'/api/v1/data/promise/{self.test_list_promise()}/')
         # pprint(single_promise.data)
         #
         self.assertEqual(single_promise.status_code, status.HTTP_200_OK, single_promise.status_code)
@@ -118,7 +123,7 @@ class RegistrationsTestCase(APITestCase):
     def test_get_userinfo(self):
         self.get_started()
 
-        take_user = self.client.get('http://127.0.0.1:8000/api/v1/data/users/1/')
+        take_user = self.client.get(REST_URL + '/api/v1/data/users/1/')
         print(take_user.data)
         self.assertEqual(take_user.status_code, status.HTTP_200_OK, take_user.status_code)
         self.assertEqual(take_user.data['bio'], '', take_user.data)
@@ -126,12 +131,12 @@ class RegistrationsTestCase(APITestCase):
         user_data = {
             'bio': 'example bio'
         }
-        patch_user = self.client.patch('http://127.0.0.1:8000/api/v1/data/users/1/', data=user_data)
+        patch_user = self.client.patch(REST_URL + '/api/v1/data/users/1/', data=user_data)
         print(patch_user.data)
         self.assertEqual(patch_user.status_code, status.HTTP_200_OK, patch_user.status_code)
         self.assertEqual(patch_user.data['bio'], 'example bio', patch_user.data)
 
-        after_patch = self.client.get('http://127.0.0.1:8000/api/v1/data/users/1/')
+        after_patch = self.client.get(REST_URL + '/api/v1/data/users/1/')
         print(after_patch.data)
         self.assertEqual(after_patch.status_code, status.HTTP_200_OK, after_patch.status_code)
         self.assertEqual(after_patch.data['bio'], 'example bio', after_patch.data)
