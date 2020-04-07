@@ -22,18 +22,19 @@ export const newList = () => {
   };
 };
 
-export const newPointList = description => {
+export const newPointList = (name, description) => {
   return async dispatch => {
     await dispatch({
       type: PUT_NEW_POINT_LIST,
       payload: {
         id: Date.now(),
+        name: name,
         description: description
       }
     });
     let formData = new FormData();
 
-    formData.append("name", "123");
+    formData.append("name", name);
     formData.append("description", description);
 
     let requestOptions = {

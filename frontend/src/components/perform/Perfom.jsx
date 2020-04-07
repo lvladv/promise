@@ -1,5 +1,4 @@
 import React from "react";
-import "./perfom.scss";
 const Perfom = ({ completedList }) => {
   return (
     <section className="perf">

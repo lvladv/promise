@@ -3,8 +3,8 @@ export const REGISTRATION = "REGISTRATION";
 export const newUser = (newEmail, newUsername, newPassword) => {
   return async dispatch => {
     let formData = new FormData();
-    formData.append("username", newPassword);
-    formData.append("password", newUsername);
+    formData.append("username",newUsername );
+    formData.append("password", newPassword);
     formData.append("email", newEmail);
 
     let requestOptions = {

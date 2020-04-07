@@ -1,4 +1,4 @@
-import { PUT_NEW_TOKEN } from "./action";
+import { REGISTRATION } from "./action";
 
 const initialState = {
   token: "",
@@ -7,7 +7,7 @@ const initialState = {
 
 export const tokenReducer = (state = initialState, action) => {
   switch (action.type) {
-    case PUT_NEW_TOKEN:
+    case REGISTRATION:
       return {
         ...state,
         token: action.payload,

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Input from "./components/Input/Input";
 import Header from "./components/Header/Header";
 import Perfom from "./components/Perform/Perfom";
@@ -10,14 +10,17 @@ import { newToken } from "./store/token/action";
 import { newTokenFromRefresh } from "./store/token/action";
 import { newUser } from "./store/registration/action";
 import { newList } from "./store/list/action";
-import { newPointList } from "./store/list/action";
+
+
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
   componentDidMount() {
     const { isAutorisation, newTokenFromRefresh, newList } = this.props;
-  if(isAutorisation){
-    newList();
-  }
+    if (isAutorisation) {
+      newList();
+    }
     newTokenFromRefresh();
   }
 
@@ -28,7 +31,7 @@ class App extends Component {
   //     // eslint-disable-next-line
   //     list.map((item, index) => {
   //       if (item.id === id) {
-  //         completedList.push({
+  //         completedList.push(
   //           id: Date.now(),
   //           description: item.description,
   //           status: "no"
@@ -49,57 +52,58 @@ class App extends Component {
       newList,
       list,
       completedList,
-      newPointList
+            isOpenTopDraw,
     } = this.props;
     console.log(list);
 
     return (
-      <div className="wrap">
+      <div style={{ height: "100vh" }}>
         <Header />
 
         {!isAutorisation ? (
-          <article>
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            alignItems="center"
+            style={{ height: "90vh" }}
+          >
             <Autorisation autorisation={autorisation} newList={newList} />
-            <Registration registration={registration} />
-          </article>
+            {/* <Registration registration={registration} /> */}
+          </Grid>
         ) : (
-          <main className="main">
-            <article>
-              <Input
-                list={list}
-                newPointList={newPointList}
-                newList={newList}
-              />
-            </article>
-            <article>
-              <Perfom completedList={completedList} />
-            </article>
-          </main>
+          <Fragment>
+            <Input
+              list={list}
+                          newList={newList}
+              isOpenTopDraw={isOpenTopDraw}
+            />
+          </Fragment>
         )}
 
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }
 }
-const mapStateToprops = store => {
+const mapStateToprops = (store) => {
   return {
     isAutorisation: store.tokenReducer.isAutorisation,
     token: store.tokenReducer.token,
     list: store.listReducer.list,
-    completedList: store.completedListReducer.completedList
+    completedList: store.completedListReducer.completedList,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     autorisation: (username, password) =>
       dispatch(newToken(username, password)),
     registration: (newEmail, newUsername, newPassword) =>
       dispatch(newUser(newEmail, newUsername, newPassword)),
     newList: () => dispatch(newList()),
-    newPointList: description => dispatch(newPointList(description)),
-    newTokenFromRefresh: () => dispatch(newTokenFromRefresh())
+    
+    newTokenFromRefresh: () => dispatch(newTokenFromRefresh()),
   };
 };
 
