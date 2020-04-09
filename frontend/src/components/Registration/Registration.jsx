@@ -34,7 +34,7 @@ const InputTextField = withStyles({
       borderColor: blueGrey[200],
       padding: "4px !important", // override inline-style
     },
-    "& label.Mui-focused": {
+    "& coreel.Mui-focused": {
       color: blueGrey[700],
     },
   },
@@ -61,7 +61,7 @@ const Registration = ({ registration }) => {
 
         <InputTextField
           id="outlined"
-          label="Логин"
+          coreel="Логин"
           variant="outlined"
           inputRef={newLoginValue}
           className={classes.root}
@@ -69,7 +69,7 @@ const Registration = ({ registration }) => {
 
         <InputTextField
           id="outlined"
-          label="Почта"
+          coreel="Почта"
           variant="outlined"
           type="email"
           inputRef={neweEmaildValue}
@@ -77,7 +77,7 @@ const Registration = ({ registration }) => {
         />
         <InputTextField
           id="outlined"
-          label="Пароль"
+          coreel="Пароль"
           variant="outlined"
           type="password"
           inputRef={newPasswordValue}

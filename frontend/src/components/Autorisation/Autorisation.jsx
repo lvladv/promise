@@ -34,7 +34,7 @@ const InputTextField = withStyles({
       borderColor: blueGrey[200],
       padding: "4px !important", // override inline-style
     },
-    "& label.Mui-focused": {
+    "& coreel.Mui-focused": {
       color: blueGrey[700],
     },
   },
@@ -61,14 +61,14 @@ const Autorisation = ({ autorisation, newList }) => {
         <InputTextField
           className={classes.root}
           id="outlined"
-          label="Логин"
+          coreel="Логин"
           variant="outlined"
           inputRef={loginValue}
         />
         <InputTextField
           className={classes.root}
           id="outlined-password-input"
-          label="Password"
+          coreel="Password"
           type="password"
           autoComplete="current-password"
           variant="outlined"

@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { OpenNewCard } from "./OpenNewCard";
 import List from "../List/List";
@@ -11,26 +11,14 @@ import { closeNewCard } from "../../store/openNewCard/action";
 import { newPointList } from "../../store/list/action";
 
 class Input extends Component {
-  constructor(props) {
-    super(props);
-    this.inputClick = this.inputClick.bind(this);
-  }
-
-
-  inputClick() {
-    this.props.newPointList(this.inputValue.current.value);
-
-    this.inputValue.current.value = " ";
-  }
 
   render() {
     const {
       list,
-      newList,
       openNewCard,
       isOpenNewCard,
       closeNewCard,
-      newPointList
+      newPointList,
     } = this.props;
     console.log(openNewCard);
     return (
@@ -41,7 +29,7 @@ class Input extends Component {
           newPointList={newPointList}
         />
 
-        <Box pl={8} pt={3}>
+        <Box pl={10} py={5}>
           <Button
             variant="contained"
             style={{
@@ -57,14 +45,7 @@ class Input extends Component {
           </Button>
         </Box>
 
-  
-        <Grid
-          container
-          direction="row"
-          justify="space-evenly"
-          alignItems="center"
-          style={{ height: "90vh" }}
-        >
+        <Grid container direction="column" justify="center" alignItems="center">
           <List list={list} />
         </Grid>
       </section>
@@ -75,16 +56,16 @@ class Input extends Component {
 const mapStateToprops = (store) => {
   return {
     isOpenNewCard: store.newCardReducer.isOpenNewCard,
+    list: store.listReducer.list,
   };
 };
-
-
 
 const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
     closeNewCard: () => dispatch(closeNewCard()),
-    newPointList: (name, description) => dispatch(newPointList(name, description)),
+    newPointList: (name, description) =>
+      dispatch(newPointList(name, description)),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(Input);

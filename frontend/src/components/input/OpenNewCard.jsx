@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { createRef } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -48,7 +48,7 @@ const InputTextField = withStyles({
       borderColor: blueGrey[200],
       padding: "4px !important",
     },
-    "& label.Mui-focused": {
+    "& coreel.Mui-focused": {
       color: blueGrey[700],
     },
 
@@ -78,7 +78,7 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
       id="customized-dialog-title"
       fullWidth={true}
       maxWidth={"sm"}
-      aria-labelledby="customized-dialog-title"
+      aria-coreelledby="customized-dialog-title"
       anchor="top"
       open={isOpenNewCard}
       onClose={() => {
@@ -91,7 +91,7 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
         </Typography>
 
         <IconButton
-          aria-label="close"
+          aria-coreel="close"
           className={classes.closeButton}
           onClick={() => closeNewCard()}
         >
@@ -104,7 +104,7 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
         </DialogContentText>
 
         <InputTextField
-          label="Название"
+          coreel="Название"
           variant="outlined"
           className={classes.root}
           inputRef={inputName}
@@ -112,7 +112,7 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
 
         <InputTextField
           className={classes.root}
-          label="Описание"
+          coreel="Описание"
           variant="outlined"
           inputRef={inputDescription}
           multiline
