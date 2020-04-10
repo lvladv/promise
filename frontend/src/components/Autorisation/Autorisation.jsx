@@ -49,7 +49,6 @@ const Autorisation = ({ autorisation, newList }) => {
     <div className={classes.root}>
       <Grid
         container
-        md
         direction="column"
         alignItems="center"
         justify="flex-start"
