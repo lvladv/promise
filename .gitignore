@@ -11,6 +11,7 @@ static/
 *.bak 
 
 settings_dev.py
+secret_properties.py
 
 # If you are using PyCharm #
 .idea/*
@@ -123,3 +124,4 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+

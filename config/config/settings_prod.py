@@ -1,9 +1,10 @@
 import os
 
+REST_URL = 'http://77.244.65.15:3527'
+
 DEBUG = False
 ALLOWED_HOSTS = ['77.244.65.15', '0.0.0.0', '127.0.0.1']
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 DATABASES = {
     'default': {
@@ -38,4 +39,3 @@ LOGGING = {
         },
     },
 }
-
