@@ -17,22 +17,21 @@ import {
   closeAccauntMenu,
 } from "./store/entrance/action";
 
-
 import { newUser } from "./store/registration/action";
 import { newList } from "./store/list/action";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
-  
   componentDidMount() {
     const { isAutorisation, newTokenFromRefresh, newList } = this.props;
+
     if (isAutorisation) {
       newList();
     }
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
-    newTokenFromRefresh();
+
     if (remember) {
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
