@@ -1,42 +1,71 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { OpenNewCard } from "./OpenNewCard";
 import List from "../List/List";
-import "./input.scss";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import blueGrey from "@material-ui/core/colors/blueGrey";
+import { openNewCard } from "../../store/openNewCard/action";
+import { closeNewCard } from "../../store/openNewCard/action";
+import { newPointList } from "../../store/list/action";
 
 class Input extends Component {
-  constructor(props) {
-    super(props);
-    this.inputClick = this.inputClick.bind(this);
-  }
-  inputValue = createRef();
-
-  inputClick() {
-    this.props.newPointList(this.inputValue.current.value);
-
-    this.inputValue.current.value = " ";
-  }
 
   render() {
-    const { list, newList } = this.props;
+    const {
+      list,
+      openNewCard,
+      isOpenNewCard,
+      closeNewCard,
+      newPointList,
+    } = this.props;
+    console.log(openNewCard);
     return (
-      <section className="input">
-        <h3>Надо выполнить</h3>
-        <input
-          ref={this.inputValue}
-          type="text"
-          value={this.value}
-          placeholder="введите задачу"
+      <section>
+        <OpenNewCard
+          isOpenNewCard={isOpenNewCard}
+          closeNewCard={closeNewCard}
+          newPointList={newPointList}
         />
-        <button onClick={this.inputClick}>Добавить </button>
-        <ul>
-          <List
-            list={list}
-            // onCheck={this.props.onCheck}
-            // toCompleted={this.props.toCompleted}
-          />
-        </ul>
+
+        <Box pl={10} py={5}>
+          <Button
+            variant="contained"
+            style={{
+              background: blueGrey[400],
+              color: blueGrey[50],
+              minWidth: 280,
+            }}
+            onClick={() => {
+              openNewCard();
+            }}
+          >
+            Добавить новую запись
+          </Button>
+        </Box>
+
+        <Grid container direction="column" justify="center" alignItems="center">
+          <List list={list} />
+        </Grid>
       </section>
     );
   }
 }
 
-export default Input;
+const mapStateToprops = (store) => {
+  return {
+    isOpenNewCard: store.newCardReducer.isOpenNewCard,
+    list: store.listReducer.list,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    openNewCard: () => dispatch(openNewCard()),
+    closeNewCard: () => dispatch(closeNewCard()),
+    newPointList: (name, description) =>
+      dispatch(newPointList(name, description)),
+  };
+};
+export default connect(mapStateToprops, mapDispatchToProps)(Input);

@@ -1,4 +1,4 @@
-import { PUT_NEW_TOKEN ,ERROR_REQUEST, PUT_NEW_TOKEN_FROM_REFRESH} from "./action";
+import { PUT_NEW_TOKEN ,ERROR_REQUEST, PUT_NEW_TOKEN_FROM_REFRESH, EXIT_ACCAUNT} from "./action";
 const hasToken = localStorage.getItem("Authorization");
 const initialState = {
   token: hasToken,
@@ -19,7 +19,7 @@ export const tokenReducer = (state = initialState, action) => {
         isAutorisation: true
       };
     
-    case ERROR_REQUEST:
+    case EXIT_ACCAUNT:
       return {
         ...state,
              isAutorisation: false
