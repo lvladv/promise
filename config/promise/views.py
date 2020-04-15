@@ -1,19 +1,19 @@
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
+from .permissions import IsOwnerOrReadOnly
 from .models import Promise
 from .serializers import PromiseSerializer
 from rest_framework import generics, views
 from rest_framework import permissions
 from rest_framework import pagination
+from datetime import datetime, timedelta
 from django_filters import rest_framework as rest_filter
 from rest_framework import filters
 
 
-# from .permissions import IsOwnerOrReadOnly
-
 
 class PromisePaginations(pagination.PageNumberPagination):
-    page_size = 10
+    page_size = 15
     page_query_description = 'page_size'
     max_page_size = 100
 
@@ -21,15 +21,17 @@ class PromisePaginations(pagination.PageNumberPagination):
 class PromiseFilter(rest_filter.FilterSet):
     # slug = rest_filter.CharFilter(field_name='slug', lookup_expr='icontains')
     owner = rest_filter.CharFilter(field_name='owner_id__username')
-
     # primose_name = rest_filter.CharFilter(field_name='name', lookup_expr='icontains')
     class Meta:
         model = Promise
         fields = ['owner']
 
+    @property
+    def qs(self):
+        parent = super(PromiseFilter, self).qs
+        # print(self.request.user)
+        return parent.filter(owner_id__username=self.request.user)
 
-# permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-#                       IsOwnerOrReadOnly,)
 
 class PromiseCreateView(generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
