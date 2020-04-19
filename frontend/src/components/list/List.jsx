@@ -1,39 +1,85 @@
 import React from "react";
-import Box from "@material-ui/core/Box";
+import { makeStyles, styled } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import { makeStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
+import {
+  Typography,
+  Box,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Grid,
+  Button,
+} from "@material-ui/core/";
+
+const ButtonBlock = styled("div")({
+  width: "100%",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-evenly",
+  marginTop: '20px',
+});
+
+const SmallButton = styled(({ ...other }) => (
+  <Button variant="contained" {...other} />
+))({
+  background: blueGrey[400],
+  color: blueGrey[50],
+  width: "50%",
+
+});
+
+const DescriptionItem = styled(({ ...other }) => (
+  <Typography component="h6" variant="body1" {...other} />
+))({
+  color: blueGrey[400],
+});
+const Description = styled(({ ...other }) => (
+  <Typography component="hp" variant="body1" {...other} />
+))({
+  flexGrow: 1,
+});
+
+const Title = styled(({ ...other }) => (
+  <Typography component="h6" variant="body1" {...other} />
+))({
+  color: blueGrey[400],
+});
+
+const Item = styled(({ ...other }) => (
+  <Typography component="p" variant="body1" {...other} />
+))({
+  color: blueGrey[400],
+  "& span": {
+    color: "#000",
+  },
+});
 
 const useStyles = makeStyles({
   root: {
     paddingLeft: 15,
     borderBottom: "1px solid rgba(0, 0, 0, .125)",
-  },
-  color: {
-    color: blueGrey[400],
-    paddingTop: 10,
-    paddingBottom: 10,
+    display: "flex",
+    justifyContent: "space-between",
   },
   minWidth: {
     minWidth: 300,
-
-  }
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
 });
 
-const List = ({ list }) => {
+const List = ({ list,newStatus }) => {
   const classes = useStyles();
-
+  console.log(list);
   return list.map((item) => (
-    <Box key={item.id} m={2} width="80%">
+    <Box key={item.id} m={1} width="80%">
       <ExpansionPanel>
         <ExpansionPanelSummary className={classes.root}>
-          <Typography variant="h5" className={classes.color}>
+          <Title variant="h6" className={classes.color}>
             {item.name}
-          </Typography>
+          </Title>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Grid
@@ -43,34 +89,33 @@ const List = ({ list }) => {
             alignItems="flex-start"
           >
             <Box width="50%" className={classes.minWidth}>
-              <Typography variant="h6" className={classes.color}>
-                Подробности: 
-              </Typography>
-              <Typography component="p" variant="body1">
-                {item.description}
-              </Typography>
+              <DescriptionItem>Подробности:</DescriptionItem>
+              <Description>{`${item.description}`}</Description>
+              <ButtonBlock>
+                {
+                  item.status === "Y" ? null : <SmallButton onClick={()=>newStatus(item)}>Выполненно</SmallButton>
+                }
+                
+              </ButtonBlock>
             </Box>
 
             <Box width="50%" className={classes.minWidth}>
-            <Typography variant="h6" className={classes.color}>
-                Описание:
-              </Typography>
-
-              <Typography component="p" variant="body1" className={classes.color}>
-                Статус:
-              </Typography>
-
-              <Typography component="p" variant="body1" className={classes.color}>
-                Важность:
-              </Typography>
-
-              <Typography component="p" variant="body1" className={classes.color}>
-                Категория:
-              </Typography>
-              
-              <Typography component="p" variant="body1" className={classes.color}>
-                Дедлайн:
-              </Typography>
+              <DescriptionItem>Описание:</DescriptionItem>
+              <Item>
+                Статус: <span>{item.status === "Y" ? "Выполненно" : " Не выполненно"}</span>
+              </Item>
+              <Item>Важность:</Item>
+              <Item>Категория:</Item>
+              <Item>Дедлайн:</Item>
+              <Item>
+                Дата создания: <span> {item.create_time} </span>
+              </Item>
+              <Item>
+                Дата изменения: <span> {item.modify_time} </span>
+              </Item>
+              <ButtonBlock>
+                <SmallButton>Редактировать</SmallButton>
+              </ButtonBlock>
             </Box>
           </Grid>
         </ExpansionPanelDetails>
@@ -80,6 +125,18 @@ const List = ({ list }) => {
 };
 
 export default List;
+
+// id: 47
+// owner: "lvladv"
+// name: "2х"
+// slug: "lvladv-e816e158"
+// description: "111↵222"
+// deadline_row: ""
+// deadline: "29.04.2020 15:00:12"
+// status: "D"
+// is_approved: false
+// modify_time: "15.04.2020 21:17:06"
+// create_time: "15.04.2020 21:17:06"
 
 /* <input type="checkbox" onClick={() => props.onCheck(list.id)} /> */
 

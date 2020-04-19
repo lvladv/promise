@@ -40,18 +40,32 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
+
+
 const Registration = ({ registration }) => {
   const neweEmaildValue = createRef();
   const newLoginValue = createRef();
   const newPasswordValue = createRef();
   const classes = useStyles();
 
+  const toAutrosation = () => {
+    registration(
+      neweEmaildValue.current.value,
+      newLoginValue.current.value,
+      newPasswordValue.current.value
+    )
+  };
+  
   return (
     <div className="autor">
       <Grid
         container
         direction="column"
- 
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            toAutrosation();
+          }
+        }}
         alignItems="center"
         justify="flex-start"
       >
@@ -87,13 +101,7 @@ const Registration = ({ registration }) => {
          
           size="large"
           className={classes.root}
-          onClick={() =>
-            registration(
-              neweEmaildValue.current.value,
-              newLoginValue.current.value,
-              newPasswordValue.current.value
-            )
-          }
+          onClick={toAutrosation}
         >
           Создать
         </Button>

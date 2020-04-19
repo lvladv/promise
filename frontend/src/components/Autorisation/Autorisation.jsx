@@ -45,6 +45,11 @@ const Autorisation = ({ autorisation, newList }) => {
   const passwordValue = createRef();
   const classes = useStyles();
 
+  const toAutrosation = async () => {
+    await autorisation(loginValue.current.value, passwordValue.current.value);
+    await newList();
+  };
+
   return (
     <div className={classes.root}>
       <Grid
@@ -52,6 +57,11 @@ const Autorisation = ({ autorisation, newList }) => {
         direction="column"
         alignItems="center"
         justify="flex-start"
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            toAutrosation();
+          }
+        }}
       >
         <Typography variant="h2" gutterBottom className={classes.color}>
           Авторизация
@@ -73,17 +83,7 @@ const Autorisation = ({ autorisation, newList }) => {
           variant="outlined"
           inputRef={passwordValue}
         />
-        <Button
-          size="large"
-          className={classes.root}
-          onClick={async () => {
-            await autorisation(
-              loginValue.current.value,
-              passwordValue.current.value
-            );
-            await newList();
-          }}
-        >
+        <Button size="large" className={classes.root} onClick={toAutrosation}>
           Авторизоваться
         </Button>
       </Grid>

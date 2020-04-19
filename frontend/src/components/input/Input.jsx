@@ -9,9 +9,19 @@ import blueGrey from "@material-ui/core/colors/blueGrey";
 import { openNewCard } from "../../store/openNewCard/action";
 import { closeNewCard } from "../../store/openNewCard/action";
 import { newPointList } from "../../store/list/action";
+import { newStatus } from "../../store/list/action";
+import { styled } from "@material-ui/core/styles";
+
+const SmallButton = styled(({ ...other }) => (
+  <Button variant="contained" {...other} />
+))({
+  background: blueGrey[400],
+  color: blueGrey[50],
+  minWwidth: "280px",
+  margin: "20px 0 30px 100px",
+});
 
 class Input extends Component {
-
   render() {
     const {
       list,
@@ -19,8 +29,9 @@ class Input extends Component {
       isOpenNewCard,
       closeNewCard,
       newPointList,
+      newStatus,
     } = this.props;
-    console.log(openNewCard);
+
     return (
       <section>
         <OpenNewCard
@@ -28,25 +39,17 @@ class Input extends Component {
           closeNewCard={closeNewCard}
           newPointList={newPointList}
         />
-
-        <Box pl={10} py={5}>
-          <Button
-            variant="contained"
-            style={{
-              background: blueGrey[400],
-              color: blueGrey[50],
-              minWidth: 280,
-            }}
+        <div>
+          <SmallButton
             onClick={() => {
               openNewCard();
             }}
           >
             Добавить новую запись
-          </Button>
-        </Box>
-
+          </SmallButton>
+        </div>
         <Grid container direction="column" justify="center" alignItems="center">
-          <List list={list} />
+          <List newStatus={newStatus} list={list} />
         </Grid>
       </section>
     );
@@ -64,6 +67,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
     closeNewCard: () => dispatch(closeNewCard()),
+    newStatus: (newItem) => dispatch(newStatus(newItem)),
     newPointList: (name, description) =>
       dispatch(newPointList(name, description)),
   };

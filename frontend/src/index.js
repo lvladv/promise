@@ -10,10 +10,10 @@ import { rootReducer } from "./store/reducersCombaine";
 
 const store = createStore(
   rootReducer,
-  // compose(
+  compose(
     applyMiddleware(logger, thunk),
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  // )
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
 );
 
 ReactDOM.render(

@@ -1,16 +1,29 @@
 import React, { createRef } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles, styled } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
 import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+  IconButton,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+
+const Title = styled(({ ...other }) => (
+  <Typography variant="h5" gutterBottom {...other} />
+))({
+  color: blueGrey[400],
+});
+const Point = styled(({ ...other }) => (
+  <Typography variant="h6" gutterBottom {...other} />
+))({
+  color: blueGrey[500],
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +33,6 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(2),
       color: blueGrey[300],
     },
-  },
-  color: {
-    color: blueGrey[400],
   },
 
   closeButton: {
@@ -86,10 +96,7 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
       }}
     >
       <DialogTitle id="customized-dialog-title">
-        <Typography variant="h6" gutterBottom className={classes.color}>
-          Новая задача
-        </Typography>
-
+        <Title>Новая задача</Title>
         <IconButton
           aria-coreel="close"
           className={classes.closeButton}
@@ -118,7 +125,10 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
           multiline
           rows="5"
         />
+
+        <Point>Установить делайн</Point>
       </DialogContent>
+
       <DialogActions className={classes.buttonPosition}>
         <Button
           id="standard-multiline-flexible"

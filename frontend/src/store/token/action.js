@@ -29,6 +29,11 @@ export const newToken = (username, password) => {
         type: PUT_NEW_TOKEN,
         payload: `Bearer ${autor.access}`,
       });
+    } else {
+      await localStorage.clear();
+      await dispatch({
+        type: ERROR_REQUEST,
+      });
     }
   };
 };
@@ -48,19 +53,21 @@ export const newTokenFromRefresh = () => {
       `http://77.244.65.15:3527/api/v1/data/auth/jwt/refresh/`,
       requestOptions2
     );
-    if (resp.status === 401) {
+
+    if (resp.ok) {
+      let newToken = await resp.json();
+      await localStorage.setItem("Authorization", `Bearer ${newToken.access}`);
+
+      await dispatch({
+        type: PUT_NEW_TOKEN_FROM_REFRESH,
+        payload: `Bearer ${newToken.access}`,
+      });
+    } else {
+      await localStorage.clear();
       await dispatch({
         type: ERROR_REQUEST,
       });
     }
-
-    let newToken = await resp.json();
-    await localStorage.setItem("Authorization", `Bearer ${newToken.access}`);
-
-    await dispatch({
-      type: PUT_NEW_TOKEN_FROM_REFRESH,
-      payload: `Bearer ${newToken.access}`,
-    });
   };
 };
 
@@ -68,6 +75,5 @@ export function exitAccaunt() {
   localStorage.clear();
   return {
     type: EXIT_ACCAUNT,
-    payload: true,
   };
 }
