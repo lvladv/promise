@@ -17,7 +17,7 @@ import {
   closeAccauntMenu,
 } from "./store/entrance/action";
 
-import { newUser } from "./store/registration/action";
+import { newUser, closeErrorRegistration } from "./store/registration/action";
 import { newList } from "./store/list/action";
 import Grid from "@material-ui/core/Grid";
 
@@ -55,7 +55,7 @@ class App extends Component {
       exitAccaunt,
       errorAutorisation,
       closeError,
-      registerError,
+      registerError,closeErrorRegistration
     } = this.props;
 
     return (
@@ -90,7 +90,7 @@ class App extends Component {
               <Registration
                 registration={registration}
                 registerError={registerError}
-                closeError={closeError}
+                closeErrorRegistration={closeErrorRegistration}
               />
             )}
           </Grid>
@@ -130,6 +130,7 @@ const mapDispatchToProps = (dispatch) => {
     closeAccauntMenu: () => dispatch(closeAccauntMenu()),
     exitAccaunt: () => dispatch(exitAccaunt()),
     closeError: () => dispatch(closeError()),
+    closeErrorRegistration: () => dispatch(closeErrorRegistration()),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(App);

@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { OpenNewCard } from "./OpenNewCard";
 import List from "./../List/List";
-import { ChengesCard } from "./../List/ChangesCard";
+import { ChangesCard } from "./../List/ChangesCard";
 import { Grid, Button } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { openNewCard, closeNewCard } from "../../store/openNewCard/action";
 import { newPointList, newStatus, changeItem } from "../../store/list/action";
 import {
-  openChengesCard,
-  closeChengesCard,
-  putItemChenges,
+  openChangesCard,
+  closeChangesCard,
+  putItemChanges,
   putNewItem,
 } from "../../store/ChangesCard/action";
 
@@ -34,10 +34,10 @@ class Input extends Component {
       closeNewCard,
       newPointList,
       newStatus,
-      openChengesCard,
-      closeChengesCard,
+      openChangesCard,
+      closeChangesCard,
       isOpenChangesCard,
-      putItemChenges,
+      putItemChanges,
       itemChange,
       putNewItem,
       changeItem,
@@ -49,8 +49,8 @@ class Input extends Component {
           closeNewCard={closeNewCard}
           newPointList={newPointList}
         />
-        <ChengesCard
-          closeChengesCard={closeChengesCard}
+        <ChangesCard
+          closeChangesCard={closeChangesCard}
           isOpenChangesCard={isOpenChangesCard}
           itemChange={itemChange}
           putNewItem={putNewItem}
@@ -70,10 +70,10 @@ class Input extends Component {
             key={list.id}
             newStatus={newStatus}
             list={list}
-            openChengesCard={openChengesCard}
-            closeChengesCard={closeChengesCard}
+            openChangesCard={openChangesCard}
+            closeChangesCard={closeChangesCard}
             isOpenChangesCard={isOpenChangesCard}
-            putItemChenges={putItemChenges}
+            putItemChanges={putItemChanges}
           />
         </Grid>
       </section>
@@ -94,11 +94,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
     closeNewCard: () => dispatch(closeNewCard()),
-    openChengesCard: () => dispatch(openChengesCard()),
-    closeChengesCard: () => dispatch(closeChengesCard()),
+    openChangesCard: () => dispatch(openChangesCard()),
+    closeChangesCard: () => dispatch(closeChangesCard()),
     newStatus: (newItem) => dispatch(newStatus(newItem)),
     changeItem: (itemChange) => dispatch(changeItem(itemChange)),
-    putItemChenges: (itemChange) => dispatch(putItemChenges(itemChange)),
+    putItemChanges: (itemChange) => dispatch(putItemChanges(itemChange)),
     putNewItem: (name, value) => dispatch(putNewItem(name, value)),
     newPointList: (name, description) =>
       dispatch(newPointList(name, description)),

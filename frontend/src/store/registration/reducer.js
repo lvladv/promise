@@ -1,25 +1,10 @@
-import {
-  REGISTRATION,
-  ERROR_VALID_EMAIL,
-  ERROR_LOGIN,
-  ERROR_PASSWORD,
-  ERROR_PASSWORD_LOGIN,
-  ERROR_PASSWORD_EMAIL,
-  ERROR_PASSWORD_SHORT,
-  ERROR_LOGIN_CHAR,
-} from "./action";
+import { REGISTRATION, INPUT_ERROR, ERROR_LOGIN, CLOSE_ERROR } from "./action";
 
 const initialState = {
   token: "",
   errors: {
-    validEmail: false,
-    // closeValidEmail :
     errorLogin: false,
-    errorLoginChar: false,
-    errorPassword: false,
-    errorPasswordLogin: false,
-    errorPasswordEmail: false,
-    errorPasswordShort: false,
+    inputError: false,
   },
 };
 
@@ -31,40 +16,21 @@ export const registrationReducer = (state = initialState, action) => {
         token: action.payload,
       };
 
-    case ERROR_VALID_EMAIL:
+    case INPUT_ERROR:
       return {
         ...state,
-        errors: { ...state.errors, validEmail: true },
+        errors: { ...state.errors, inputError: true },
       };
     case ERROR_LOGIN:
       return {
         ...state,
         errors: { ...state.errors, errorLogin: true },
       };
-    case ERROR_PASSWORD:
+
+    case CLOSE_ERROR:
       return {
         ...state,
-        errors: { ...state.errors, errorPassword: true },
-      };
-    case ERROR_PASSWORD_LOGIN:
-      return {
-        ...state,
-        errors: { ...state.errors, errorPasswordLogin: true },
-      };
-    case ERROR_LOGIN_CHAR:
-      return {
-        ...state,
-        errors: { ...state.errors, errorLoginChar: true },
-      };
-    case ERROR_PASSWORD_EMAIL:
-      return {
-        ...state,
-        errors: { ...state.errors, errorPasswordEmail: true },
-      };
-    case ERROR_PASSWORD_SHORT:
-      return {
-        ...state,
-        errors: { ...state.errors, errorPasswordShort: true },
+        errors: { ...state.errors, errorLogin: false, inputError: false },
       };
 
     default:

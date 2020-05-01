@@ -70,7 +70,7 @@ const useStyles = makeStyles({
   },
 });
 
-const List = ({ list, newStatus, openChengesCard, putItemChenges }) => {
+const List = ({ list, newStatus, openChangesCard, putItemChanges }) => {
   const classes = useStyles();
 
   return list.map((item) => (
@@ -119,8 +119,8 @@ const List = ({ list, newStatus, openChengesCard, putItemChenges }) => {
               <ButtonBlock>
                 <SmallButton
                   onClick={() => {
-                    openChengesCard();
-                    putItemChenges(item);
+                    openChangesCard();
+                    putItemChanges(item);
                   }}
                 >
                   Редактировать

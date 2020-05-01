@@ -1,4 +1,4 @@
-import React, {createRef } from "react";
+import React, { createRef } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Typography, Button, TextField, Grid } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
@@ -23,6 +23,10 @@ const InputTextField = withStyles({
       borderColor: blueGrey[600],
       borderWidth: 1,
     },
+    "& input:valid + fieldset": {
+      borderColor: blueGrey[600],
+      borderWidth: 1,
+    },
     "& input:invalid + fieldset": {
       borderColor: blueGrey[200],
       borderWidth: 2,
@@ -30,7 +34,7 @@ const InputTextField = withStyles({
     "& input:valid:focus + fieldset": {
       bordertWidth: 4,
       borderColor: blueGrey[200],
-      padding: "4px !important", // override inline-style
+      padding: "4px !important", 
     },
     "& coreel.Mui-focused": {
       color: blueGrey[700],
@@ -38,7 +42,11 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-const Registration = ({ registration, registerError, closeError }) => {
+const Registration = ({
+  registration,
+  registerError,
+  closeErrorRegistration,
+}) => {
   const neweEmaildValue = createRef();
   const newLoginValue = createRef();
   const newPasswordValue = createRef();
@@ -85,6 +93,7 @@ const Registration = ({ registration, registerError, closeError }) => {
           inputRef={neweEmaildValue}
           className={classes.root}
         />
+
         <InputTextField
           id="outlined"
           placeholder="Пароль"
@@ -99,7 +108,7 @@ const Registration = ({ registration, registerError, closeError }) => {
       </Grid>
       <ErrorRegistration
         registerError={registerError}
-        closeError={closeError}
+        closeErrorRegistration={closeErrorRegistration}
       />
     </div>
   );

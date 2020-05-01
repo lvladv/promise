@@ -1,7 +1,7 @@
 import {
-  OPEN_CHENGES_CARD,
-  CLOSE_CHENGES_CARD,
-  PUT_ITEM_CHENGE,
+  OPEN_CHANGES_CARD,
+  CLOSE_CHANGES_CARD,
+  PUT_ITEM_CHANGE,
   NEW_ITEM_NAME,
   NEW_ITEM_DESCRIPTION,
 } from "./action";
@@ -13,19 +13,19 @@ const initialState = {
 
 export const changesCardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case OPEN_CHENGES_CARD:
+    case OPEN_CHANGES_CARD:
       return {
         ...state,
         isOpenChangesCard: action.payload,
       };
 
-    case CLOSE_CHENGES_CARD:
+    case CLOSE_CHANGES_CARD:
       return {
         ...state,
         isOpenChangesCard: action.payload,
       };
 
-    case PUT_ITEM_CHENGE:
+    case PUT_ITEM_CHANGE:
       return {
         ...state,
         itemChange: action.payload,

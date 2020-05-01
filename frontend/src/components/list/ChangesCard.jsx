@@ -80,8 +80,8 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-export const ChengesCard = ({
-  closeChengesCard,
+export const ChangesCard = ({
+  closeChangesCard,
   isOpenChangesCard,
   itemChange,
   putNewItem,
@@ -102,14 +102,14 @@ export const ChengesCard = ({
       anchor="top"
       open={isOpenChangesCard}
       onClose={() => {
-        closeChengesCard();
+        closeChangesCard();
       }}
     >
       <DialogTitle id="customized-dialog-title">
         <Title>Новая задача</Title>
         <IconButton
           className={classes.closeButton}
-          onClick={() => closeChengesCard()}
+          onClick={() => closeChangesCard()}
         >
           <CloseIcon />
         </IconButton>
@@ -147,7 +147,7 @@ export const ChengesCard = ({
           variant="contained"
           onClick={() => {
             changeItem(itemChange);
-            closeChengesCard();
+            closeChangesCard();
           }}
           style={{
             background: blueGrey[400],
