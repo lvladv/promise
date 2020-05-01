@@ -3,11 +3,13 @@ import {
   ERROR_REQUEST,
   PUT_NEW_TOKEN_FROM_REFRESH,
   EXIT_ACCAUNT,
+  CLOSE_ERROR,
 } from "./action";
 const hasToken = localStorage.getItem("Authorization");
 const initialState = {
   token: hasToken,
   isAutorisation: hasToken === null ? false : true,
+  errorAutorisation: false,
 };
 export const tokenReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -34,7 +36,14 @@ export const tokenReducer = (state = initialState, action) => {
       return {
         ...state,
         isAutorisation: false,
+        errorAutorisation: true,
       };
+    case CLOSE_ERROR: {
+      return {
+        ...state,
+        errorAutorisation: false,
+      };
+    }
 
     default:
       return state;

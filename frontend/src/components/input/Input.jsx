@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { OpenNewCard } from "./OpenNewCard";
-import List from "../List/List";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
+import List from "./../List/List";
+import { ChengesCard } from "./../List/ChangesCard";
+import { Grid, Button } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import { openNewCard } from "../../store/openNewCard/action";
-import { closeNewCard } from "../../store/openNewCard/action";
-import { newPointList } from "../../store/list/action";
-import { newStatus } from "../../store/list/action";
+import { openNewCard, closeNewCard } from "../../store/openNewCard/action";
+import { newPointList, newStatus, changeItem } from "../../store/list/action";
+import {
+  openChengesCard,
+  closeChengesCard,
+  putItemChenges,
+  putNewItem,
+} from "../../store/ChangesCard/action";
+
 import { styled } from "@material-ui/core/styles";
 
 const SmallButton = styled(({ ...other }) => (
@@ -30,14 +34,27 @@ class Input extends Component {
       closeNewCard,
       newPointList,
       newStatus,
+      openChengesCard,
+      closeChengesCard,
+      isOpenChangesCard,
+      putItemChenges,
+      itemChange,
+      putNewItem,
+      changeItem,
     } = this.props;
-
     return (
       <section>
         <OpenNewCard
           isOpenNewCard={isOpenNewCard}
           closeNewCard={closeNewCard}
           newPointList={newPointList}
+        />
+        <ChengesCard
+          closeChengesCard={closeChengesCard}
+          isOpenChangesCard={isOpenChangesCard}
+          itemChange={itemChange}
+          putNewItem={putNewItem}
+          changeItem={changeItem}
         />
         <div>
           <SmallButton
@@ -49,7 +66,15 @@ class Input extends Component {
           </SmallButton>
         </div>
         <Grid container direction="column" justify="center" alignItems="center">
-          <List newStatus={newStatus} list={list} />
+          <List
+            key={list.id}
+            newStatus={newStatus}
+            list={list}
+            openChengesCard={openChengesCard}
+            closeChengesCard={closeChengesCard}
+            isOpenChangesCard={isOpenChangesCard}
+            putItemChenges={putItemChenges}
+          />
         </Grid>
       </section>
     );
@@ -59,6 +84,8 @@ class Input extends Component {
 const mapStateToprops = (store) => {
   return {
     isOpenNewCard: store.newCardReducer.isOpenNewCard,
+    isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
+    itemChange: store.changesCardReducer.itemChange,
     list: store.listReducer.list,
   };
 };
@@ -67,7 +94,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
     closeNewCard: () => dispatch(closeNewCard()),
+    openChengesCard: () => dispatch(openChengesCard()),
+    closeChengesCard: () => dispatch(closeChengesCard()),
     newStatus: (newItem) => dispatch(newStatus(newItem)),
+    changeItem: (itemChange) => dispatch(changeItem(itemChange)),
+    putItemChenges: (itemChange) => dispatch(putItemChenges(itemChange)),
+    putNewItem: (name, value) => dispatch(putNewItem(name, value)),
     newPointList: (name, description) =>
       dispatch(newPointList(name, description)),
   };

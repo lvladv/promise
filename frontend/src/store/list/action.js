@@ -1,6 +1,7 @@
 export const GET_LIST = "GET_LIST";
 export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
+export const NEW_CHANGE = "NEW_CHANGE";
 
 export const newList = () => {
   return async (dispatch) => {
@@ -50,7 +51,7 @@ export const newPointList = (name, description) => {
       method: "POST",
     };
 
-    let response = await fetch(
+   await fetch(
       `http://77.244.65.15:3527/api/v1/data/promise/new/`,
       requestOptions
     );
@@ -78,6 +79,34 @@ export const newStatus = (newItem) => {
       `http://77.244.65.15:3527/api/v1/data/promise/${newItem.slug}/`,
       requestOptions
     );
-
   };
 };
+
+
+export const changeItem = (itemChange) => {
+  return async (dispatch) => {
+    await dispatch({
+      type: NEW_CHANGE,
+      payload: itemChange,
+    });
+
+    let formData = new FormData();
+    formData.append("name", itemChange.name);
+    formData.append("description", itemChange.description);
+    let requestOptions = {
+      body: formData,
+      headers: {
+        Authorization: localStorage.getItem("Authorization"),
+      },
+      method: "PATCH",
+    };
+
+    await fetch(
+      `http://77.244.65.15:3527/api/v1/data/promise/${itemChange.slug}/`,
+      requestOptions
+    );
+  };
+};
+
+
+

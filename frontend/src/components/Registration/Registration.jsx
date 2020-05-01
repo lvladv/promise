@@ -1,10 +1,8 @@
-import React, { Component, createRef } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
+import React, {createRef } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { Typography, Button, TextField, Grid } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
+import { ErrorRegistration } from "./Error";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,9 +38,7 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-
-
-const Registration = ({ registration }) => {
+const Registration = ({ registration, registerError, closeError }) => {
   const neweEmaildValue = createRef();
   const newLoginValue = createRef();
   const newPasswordValue = createRef();
@@ -53,9 +49,9 @@ const Registration = ({ registration }) => {
       neweEmaildValue.current.value,
       newLoginValue.current.value,
       newPasswordValue.current.value
-    )
+    );
   };
-  
+
   return (
     <div className="autor">
       <Grid
@@ -75,7 +71,7 @@ const Registration = ({ registration }) => {
 
         <InputTextField
           id="outlined"
-          coreel="Логин"
+          placeholder="Логин"
           variant="outlined"
           inputRef={newLoginValue}
           className={classes.root}
@@ -83,7 +79,7 @@ const Registration = ({ registration }) => {
 
         <InputTextField
           id="outlined"
-          coreel="Почта"
+          placeholder="Почта"
           variant="outlined"
           type="email"
           inputRef={neweEmaildValue}
@@ -91,21 +87,20 @@ const Registration = ({ registration }) => {
         />
         <InputTextField
           id="outlined"
-          coreel="Пароль"
+          placeholder="Пароль"
           variant="outlined"
           type="password"
           inputRef={newPasswordValue}
           className={classes.root}
         />
-        <Button
-         
-          size="large"
-          className={classes.root}
-          onClick={toAutrosation}
-        >
+        <Button size="large" className={classes.root} onClick={toAutrosation}>
           Создать
         </Button>
       </Grid>
+      <ErrorRegistration
+        registerError={registerError}
+        closeError={closeError}
+      />
     </div>
   );
 };

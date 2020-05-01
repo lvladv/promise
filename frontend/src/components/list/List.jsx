@@ -16,7 +16,7 @@ const ButtonBlock = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-evenly",
-  marginTop: '20px',
+  marginTop: "20px",
 });
 
 const SmallButton = styled(({ ...other }) => (
@@ -25,7 +25,6 @@ const SmallButton = styled(({ ...other }) => (
   background: blueGrey[400],
   color: blueGrey[50],
   width: "50%",
-
 });
 
 const DescriptionItem = styled(({ ...other }) => (
@@ -34,7 +33,7 @@ const DescriptionItem = styled(({ ...other }) => (
   color: blueGrey[400],
 });
 const Description = styled(({ ...other }) => (
-  <Typography component="hp" variant="body1" {...other} />
+  <Typography component="p" variant="body1" {...other} />
 ))({
   flexGrow: 1,
 });
@@ -60,6 +59,7 @@ const useStyles = makeStyles({
     borderBottom: "1px solid rgba(0, 0, 0, .125)",
     display: "flex",
     justifyContent: "space-between",
+    margin: "0px",
   },
   minWidth: {
     minWidth: 300,
@@ -70,19 +70,18 @@ const useStyles = makeStyles({
   },
 });
 
-const List = ({ list,newStatus }) => {
+const List = ({ list, newStatus, openChengesCard, putItemChenges }) => {
   const classes = useStyles();
-  console.log(list);
+
   return list.map((item) => (
     <Box key={item.id} m={1} width="80%">
       <ExpansionPanel>
         <ExpansionPanelSummary className={classes.root}>
-          <Title variant="h6" className={classes.color}>
-            {item.name}
-          </Title>
+          <Title>{item.name}</Title>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Grid
+            key={item.id}
             container
             direction="row"
             justify="space-between"
@@ -92,17 +91,21 @@ const List = ({ list,newStatus }) => {
               <DescriptionItem>Подробности:</DescriptionItem>
               <Description>{`${item.description}`}</Description>
               <ButtonBlock>
-                {
-                  item.status === "Y" ? null : <SmallButton onClick={()=>newStatus(item)}>Выполненно</SmallButton>
-                }
-                
+                {item.status === "Y" ? null : (
+                  <SmallButton onClick={() => newStatus(item)}>
+                    Выполненно
+                  </SmallButton>
+                )}
               </ButtonBlock>
             </Box>
 
             <Box width="50%" className={classes.minWidth}>
               <DescriptionItem>Описание:</DescriptionItem>
               <Item>
-                Статус: <span>{item.status === "Y" ? "Выполненно" : " Не выполненно"}</span>
+                Статус:
+                <span>
+                  {item.status === "Y" ? "Выполненно" : " Не выполненно"}
+                </span>
               </Item>
               <Item>Важность:</Item>
               <Item>Категория:</Item>
@@ -114,7 +117,14 @@ const List = ({ list,newStatus }) => {
                 Дата изменения: <span> {item.modify_time} </span>
               </Item>
               <ButtonBlock>
-                <SmallButton>Редактировать</SmallButton>
+                <SmallButton
+                  onClick={() => {
+                    openChengesCard();
+                    putItemChenges(item);
+                  }}
+                >
+                  Редактировать
+                </SmallButton>
               </ButtonBlock>
             </Box>
           </Grid>
@@ -125,22 +135,3 @@ const List = ({ list,newStatus }) => {
 };
 
 export default List;
-
-// id: 47
-// owner: "lvladv"
-// name: "2х"
-// slug: "lvladv-e816e158"
-// description: "111↵222"
-// deadline_row: ""
-// deadline: "29.04.2020 15:00:12"
-// status: "D"
-// is_approved: false
-// modify_time: "15.04.2020 21:17:06"
-// create_time: "15.04.2020 21:17:06"
-
-/* <input type="checkbox" onClick={() => props.onCheck(list.id)} /> */
-
-/* 
-      <a href="###" onClick={() => props.toCompleted(list.id)}>
-        выполненно
-      </a> */

@@ -1,10 +1,8 @@
-import React, { Component, createRef } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import React, { createRef } from "react";
+import { Button, TextField, Grid, Typography } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { ErrorAutorisation } from "./Error";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +38,12 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-const Autorisation = ({ autorisation, newList }) => {
+const Autorisation = ({
+  autorisation,
+  newList,
+  errorAutorisation,
+  closeError,
+}) => {
   const loginValue = createRef();
   const passwordValue = createRef();
   const classes = useStyles();
@@ -70,14 +73,14 @@ const Autorisation = ({ autorisation, newList }) => {
         <InputTextField
           className={classes.root}
           id="outlined"
-          coreel="Логин"
+          placeholder="Логин"
           variant="outlined"
           inputRef={loginValue}
         />
         <InputTextField
           className={classes.root}
           id="outlined-password-input"
-          coreel="Password"
+          placeholder="Password"
           type="password"
           autoComplete="current-password"
           variant="outlined"
@@ -87,6 +90,10 @@ const Autorisation = ({ autorisation, newList }) => {
           Авторизоваться
         </Button>
       </Grid>
+      <ErrorAutorisation
+        errorAutorisation={errorAutorisation}
+        closeError={closeError}
+      />
     </div>
   );
 };
