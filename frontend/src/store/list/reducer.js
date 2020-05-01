@@ -1,7 +1,7 @@
-import { GET_LIST, PUT_NEW_POINT_LIST } from "./action";
+import { GET_LIST, PUT_NEW_POINT_LIST, NEW_STATUS, NEW_CHANGE } from "./action";
 
 const initialState = {
-  list: []
+  list: [],
 };
 
 export const listReducer = (state = initialState, action) => {
@@ -9,12 +9,43 @@ export const listReducer = (state = initialState, action) => {
     case GET_LIST:
       return {
         ...state,
-        list: action.payload
+        list: action.payload,
       };
     case PUT_NEW_POINT_LIST:
       return {
         ...state,
-        list: [action.payload, ...state.list]
+        list: [action.payload, ...state.list],
+      };
+
+    case NEW_STATUS:
+      const { payload: newItem } = action;
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          if (item.id === newItem.id) {
+            return {
+              ...item,
+              status: "Y",
+            };
+          }
+          return item;
+        }),
+      };
+
+    case NEW_CHANGE:
+      const { payload: itemChange } = action;
+      return {
+        ...state,
+        list: state.list.map((item) => {
+          if (item.id === itemChange.id) {
+            return {
+              ...item,
+              name: itemChange.name,
+              description: itemChange.description,
+            };
+          }
+          return item;
+        }),
       };
     default:
       return state;
