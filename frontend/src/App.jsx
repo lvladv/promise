@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Input from "./components/Input/Input";
 import Header from "./components/Header/Header";
-import Perfom from "./components/Perform/Perfom";
 import Registration from "./components/Registration/Registration";
 import Autorisation from "./components/Autorisation/Autorisation";
 import { connect } from "react-redux";
@@ -9,6 +8,7 @@ import {
   newToken,
   newTokenFromRefresh,
   exitAccaunt,
+  closeError,
 } from "./store/token/action";
 import {
   openAuterisation,
@@ -17,21 +17,20 @@ import {
   closeAccauntMenu,
 } from "./store/entrance/action";
 
-import { newUser } from "./store/registration/action";
+import { newUser, closeErrorRegistration } from "./store/registration/action";
 import { newList } from "./store/list/action";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
   componentDidMount() {
     const { isAutorisation, newTokenFromRefresh, newList } = this.props;
+    const remember = localStorage.getItem("remember") === "true";
+    const tokenData = localStorage.getItem("tokenData");
 
     if (isAutorisation) {
       newList();
     }
-    const remember = localStorage.getItem("remember") === "true";
-    const tokenData = localStorage.getItem("tokenData");
-
+    newTokenFromRefresh();
     if (remember) {
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
@@ -47,8 +46,6 @@ class App extends Component {
       autorisation,
       registration,
       newList,
-      completedList,
-      isOpenTopDraw,
       entrance,
       openAuterisation,
       openRegistration,
@@ -56,6 +53,9 @@ class App extends Component {
       closeAccauntMenu,
       accauntMenu,
       exitAccaunt,
+      errorAutorisation,
+      closeError,
+      registerError,closeErrorRegistration
     } = this.props;
 
     return (
@@ -80,9 +80,18 @@ class App extends Component {
             style={{ height: "90vh" }}
           >
             {entrance ? (
-              <Autorisation autorisation={autorisation} newList={newList} />
+              <Autorisation
+                errorAutorisation={errorAutorisation}
+                autorisation={autorisation}
+                newList={newList}
+                closeError={closeError}
+              />
             ) : (
-              <Registration registration={registration} />
+              <Registration
+                registration={registration}
+                registerError={registerError}
+                closeErrorRegistration={closeErrorRegistration}
+              />
             )}
           </Grid>
         ) : (
@@ -97,11 +106,13 @@ class App extends Component {
 const mapStateToprops = (store) => {
   return {
     isAutorisation: store.tokenReducer.isAutorisation,
+    errorAutorisation: store.tokenReducer.errorAutorisation,
     token: store.tokenReducer.token,
     list: store.listReducer.list,
     completedList: store.completedListReducer.completedList,
     entrance: store.changeEntranceReduser.entrance,
     accauntMenu: store.changeEntranceReduser.accauntMenu,
+    registerError: store.registrationReducer.errors,
   };
 };
 
@@ -118,6 +129,8 @@ const mapDispatchToProps = (dispatch) => {
     openAccauntMenu: () => dispatch(openAccauntMenu()),
     closeAccauntMenu: () => dispatch(closeAccauntMenu()),
     exitAccaunt: () => dispatch(exitAccaunt()),
+    closeError: () => dispatch(closeError()),
+    closeErrorRegistration: () => dispatch(closeErrorRegistration()),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(App);

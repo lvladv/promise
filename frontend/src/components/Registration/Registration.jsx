@@ -1,10 +1,8 @@
-import React, { Component, createRef } from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
+import React, { createRef } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { Typography, Button, TextField, Grid } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
+import { ErrorRegistration } from "./Error";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +23,10 @@ const InputTextField = withStyles({
       borderColor: blueGrey[600],
       borderWidth: 1,
     },
+    "& input:valid + fieldset": {
+      borderColor: blueGrey[600],
+      borderWidth: 1,
+    },
     "& input:invalid + fieldset": {
       borderColor: blueGrey[200],
       borderWidth: 2,
@@ -32,7 +34,7 @@ const InputTextField = withStyles({
     "& input:valid:focus + fieldset": {
       bordertWidth: 4,
       borderColor: blueGrey[200],
-      padding: "4px !important", // override inline-style
+      padding: "4px !important", 
     },
     "& coreel.Mui-focused": {
       color: blueGrey[700],
@@ -40,18 +42,34 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-const Registration = ({ registration }) => {
+const Registration = ({
+  registration,
+  registerError,
+  closeErrorRegistration,
+}) => {
   const neweEmaildValue = createRef();
   const newLoginValue = createRef();
   const newPasswordValue = createRef();
   const classes = useStyles();
+
+  const toAutrosation = () => {
+    registration(
+      neweEmaildValue.current.value,
+      newLoginValue.current.value,
+      newPasswordValue.current.value
+    );
+  };
 
   return (
     <div className="autor">
       <Grid
         container
         direction="column"
- 
+        onKeyUp={(e) => {
+          if (e.key === "Enter") {
+            toAutrosation();
+          }
+        }}
         alignItems="center"
         justify="flex-start"
       >
@@ -61,7 +79,7 @@ const Registration = ({ registration }) => {
 
         <InputTextField
           id="outlined"
-          coreel="Логин"
+          placeholder="Логин"
           variant="outlined"
           inputRef={newLoginValue}
           className={classes.root}
@@ -69,35 +87,29 @@ const Registration = ({ registration }) => {
 
         <InputTextField
           id="outlined"
-          coreel="Почта"
+          placeholder="Почта"
           variant="outlined"
           type="email"
           inputRef={neweEmaildValue}
           className={classes.root}
         />
+
         <InputTextField
           id="outlined"
-          coreel="Пароль"
+          placeholder="Пароль"
           variant="outlined"
           type="password"
           inputRef={newPasswordValue}
           className={classes.root}
         />
-        <Button
-         
-          size="large"
-          className={classes.root}
-          onClick={() =>
-            registration(
-              neweEmaildValue.current.value,
-              newLoginValue.current.value,
-              newPasswordValue.current.value
-            )
-          }
-        >
+        <Button size="large" className={classes.root} onClick={toAutrosation}>
           Создать
         </Button>
       </Grid>
+      <ErrorRegistration
+        registerError={registerError}
+        closeErrorRegistration={closeErrorRegistration}
+      />
     </div>
   );
 };

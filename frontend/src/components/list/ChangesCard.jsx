@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React from "react";
 import { makeStyles, withStyles, styled } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import CloseIcon from "@material-ui/icons/Close";
@@ -19,6 +19,7 @@ const Title = styled(({ ...other }) => (
 ))({
   color: blueGrey[400],
 });
+
 const Point = styled(({ ...other }) => (
   <Typography variant="h6" gutterBottom {...other} />
 ))({
@@ -79,27 +80,36 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
+export const ChangesCard = ({
+  closeChangesCard,
+  isOpenChangesCard,
+  itemChange,
+  putNewItem,
+  changeItem,
+}) => {
   const classes = useStyles();
-  const inputDescription = createRef();
-  const inputName = createRef();
+
+  const Change = (e) => {
+    const { name, value } = e.target;
+    putNewItem(name, value);
+  };
+
   return (
     <Dialog
       id="customized-dialog-title"
       fullWidth={true}
       maxWidth={"sm"}
       anchor="top"
-      open={isOpenNewCard}
+      open={isOpenChangesCard}
       onClose={() => {
-        closeNewCard();
+        closeChangesCard();
       }}
-      style={{ background: "#78ubb3" }}
     >
       <DialogTitle id="customized-dialog-title">
         <Title>Новая задача</Title>
         <IconButton
           className={classes.closeButton}
-          onClick={() => closeNewCard()}
+          onClick={() => closeChangesCard()}
         >
           <CloseIcon />
         </IconButton>
@@ -113,14 +123,18 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
           coreel="Название"
           variant="outlined"
           className={classes.root}
-          inputRef={inputName}
+          name="name"
+          value={itemChange.name}
+          onChange={Change}
         />
 
         <InputTextField
           className={classes.root}
           coreel="Описание"
           variant="outlined"
-          inputRef={inputDescription}
+          name="description"
+          value={itemChange.description}
+          onChange={Change}
           multiline
           rows="5"
         />
@@ -130,19 +144,15 @@ export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
 
       <DialogActions className={classes.buttonPosition}>
         <Button
-          id="standard-multiline-flexible"
           variant="contained"
+          onClick={() => {
+            changeItem(itemChange);
+            closeChangesCard();
+          }}
           style={{
             background: blueGrey[400],
             color: blueGrey[50],
             minWidth: 280,
-          }}
-          onClick={() => {
-            newPointList(
-              inputName.current.value,
-              inputDescription.current.value
-            );
-            closeNewCard();
           }}
         >
           Добавить
