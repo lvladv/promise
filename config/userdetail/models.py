@@ -1,9 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class User(AbstractUser):
     # TODO add uniq email address field
+    email = models.EmailField(blank=True, unique=True)
     # name = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
@@ -14,4 +15,6 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['email', 'password']
 
     class Meta:
+        # ALTER TABLE auth_user ADD UNIQUE (email);
+        # unique_together = ('email',)
         db_table = 'dt_users'
