@@ -86,6 +86,7 @@ const mapStateToprops = (store) => {
     isOpenNewCard: store.newCardReducer.isOpenNewCard,
     isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
     itemChange: store.changesCardReducer.itemChange,
+
     list: store.listReducer.list,
   };
 };

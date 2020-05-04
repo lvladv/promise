@@ -55,7 +55,9 @@ class App extends Component {
       exitAccaunt,
       errorAutorisation,
       closeError,
-      registerError,closeErrorRegistration
+      registerError,
+      closeErrorRegistration,
+      okRegistration,
     } = this.props;
 
     return (
@@ -91,6 +93,7 @@ class App extends Component {
                 registration={registration}
                 registerError={registerError}
                 closeErrorRegistration={closeErrorRegistration}
+                okRegistration = {okRegistration}
               />
             )}
           </Grid>
@@ -113,6 +116,7 @@ const mapStateToprops = (store) => {
     entrance: store.changeEntranceReduser.entrance,
     accauntMenu: store.changeEntranceReduser.accauntMenu,
     registerError: store.registrationReducer.errors,
+    okRegistration: store.registrationReducer.okRegistration,
   };
 };
 
