@@ -1,14 +1,10 @@
-from django.db import models
+from datetime import datetime, timedelta
 from uuid import uuid4
+
+from django.db import models
+from django.utils.timezone import make_aware
 # from config.userdetail.models import User
 from userdetail.models import User
-from datetime import datetime, timedelta
-from django.utils.timezone import make_aware
-from django.utils.text import slugify
-from autoslug import AutoSlugField
-from autoslug.settings import slugify as default_slugify
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 def create_deadline(row):
@@ -24,13 +20,23 @@ def create_deadline(row):
 
 
 class Promise(models.Model):
+    # TODO choise field on important forms.ModelChoiceField(queryset=Sotrudniki.objects.all())
+
+    IMPORTANCE_CHOICES = [
+        ('1', 'not very important'),
+        ('2', 'medium'),
+        ('3', 'very important'), ]
+
+    STATUS_CHOICES = [('Y', 'done'), ('N', 'not ready')]
+
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=False)
     slug = models.SlugField(unique=True, blank=True, default=None)
     description = models.CharField(max_length=2024, blank=False, default='')
     deadline_row = models.CharField(max_length=255, blank=True)
     deadline = models.DateTimeField(blank=True, default=None)
-    status = models.CharField(max_length=1, blank=False, default='D')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='N')
+    importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='1')
     is_approved = models.BooleanField(default=False)
     modify_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
@@ -45,11 +51,9 @@ class Promise(models.Model):
 
     REQUIRED_FIELDS = ['name', 'description', 'deadline', 'status']
 
-
     class Meta:
         db_table = 'dt_promise'
         # verbose_name = 'DT_PROMISE'
-
 
 # class UserInfo(models.Model):
 #     # name = models.ForeignKey('auth.User', related_name='user', on_delete=models.CASCADE)
@@ -67,6 +71,3 @@ class Promise(models.Model):
 #     class Meta:
 #         db_table = 'DT_USER'
 #         verbose_name = 'DT_USER'
-
-
-
