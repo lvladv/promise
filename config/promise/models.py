@@ -51,7 +51,7 @@ class Promise(models.Model):
         if self.slug is None:
             prefix = self.owner.__str__()
             self.slug = prefix + '-' + str(uuid4())[:8]
-        self.deadline = make_aware(create_deadline(self.deadline_row))
+            self.deadline = make_aware(create_deadline(self.deadline_row))
         super(Promise, self).save(*args, **kwargs)
 
     REQUIRED_FIELDS = ['name', 'description', 'deadline', 'status']
