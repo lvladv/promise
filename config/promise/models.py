@@ -4,7 +4,7 @@ from uuid import uuid4
 from django.db import models
 from django.utils.timezone import make_aware
 # from config.userdetail.models import User
-from userdetail.models import User
+from userdetail.models import User, UserCategory
 
 
 def create_deadline(row):
@@ -20,7 +20,7 @@ def create_deadline(row):
 
 
 class Promise(models.Model):
-    # TODO choise field on important forms.ModelChoiceField(queryset=Sotrudniki.objects.all())
+    # TODO choise field on important forms.ModelChoiceField(queryset=Modelx.objects.all())
 
     IMPORTANCE_CHOICES = [
         ('1', 'not very important'),
@@ -28,6 +28,8 @@ class Promise(models.Model):
         ('3', 'very important'), ]
 
     STATUS_CHOICES = [('Y', 'done'), ('N', 'not ready')]
+
+    CATEGORY_CHOICES = UserCategory.objects.all()
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=False)
@@ -37,6 +39,9 @@ class Promise(models.Model):
     deadline = models.DateTimeField(blank=True, default=None)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='N')
     importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='1')
+    # category = models.CharField(max_length=255, queryset=CATEGORY_CHOICES)
+    # category = models.ManyToManyField(UserCategory)
+    category = models.ForeignKey(UserCategory, related_name='usercategory', on_delete=models.CASCADE, null=True)
     is_approved = models.BooleanField(default=False)
     modify_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)

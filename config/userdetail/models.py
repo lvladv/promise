@@ -18,3 +18,14 @@ class User(AbstractUser):
         # ALTER TABLE auth_user ADD UNIQUE (email);
         # unique_together = ('email',)
         db_table = 'dt_users'
+
+
+class UserCategory(models.Model):
+    name = models.CharField(max_length=255)
+    color = models.CharField(max_length=255)
+    owner = models.ForeignKey(User, related_name='usercategory', on_delete=models.CASCADE)
+
+    class Meta:
+        # ALTER TABLE auth_user ADD UNIQUE (email);
+        unique_together = ('name', 'owner')
+        db_table = 'dt_category'
