@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'userdetail',
     'corsheaders',
     'drf_yasg',
+    # 'schema_graph',
 ]
 
 # SWAGGER_SETTINGS = {

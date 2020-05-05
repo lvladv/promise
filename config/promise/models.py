@@ -1,14 +1,10 @@
-from django.db import models
-from uuid import uuid4
-# from config.userdetail.models import User
-from userdetail.models import User
 from datetime import datetime, timedelta
+from uuid import uuid4
+
+from django.db import models
 from django.utils.timezone import make_aware
-from django.utils.text import slugify
-from autoslug import AutoSlugField
-from autoslug.settings import slugify as default_slugify
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from config.userdetail.models import User
+from userdetail.models import User, UserCategory
 
 
 def create_deadline(row):
@@ -24,13 +20,28 @@ def create_deadline(row):
 
 
 class Promise(models.Model):
+    # TODO choise field on important forms.ModelChoiceField(queryset=Modelx.objects.all())
+
+    IMPORTANCE_CHOICES = [
+        ('1', 'not very important'),
+        ('2', 'medium'),
+        ('3', 'very important'), ]
+
+    STATUS_CHOICES = [('Y', 'done'), ('N', 'not ready')]
+
+    CATEGORY_CHOICES = UserCategory.objects.all()
+
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255, blank=False)
     slug = models.SlugField(unique=True, blank=True, default=None)
     description = models.CharField(max_length=2024, blank=False, default='')
     deadline_row = models.CharField(max_length=255, blank=True)
     deadline = models.DateTimeField(blank=True, default=None)
-    status = models.CharField(max_length=1, blank=False, default='D')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='N')
+    importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='1')
+    # category = models.CharField(max_length=255, queryset=CATEGORY_CHOICES)
+    # category = models.ManyToManyField(UserCategory)
+    category = models.ForeignKey(UserCategory, related_name='usercategory', on_delete=models.CASCADE, null=True)
     is_approved = models.BooleanField(default=False)
     modify_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
@@ -40,16 +51,14 @@ class Promise(models.Model):
         if self.slug is None:
             prefix = self.owner.__str__()
             self.slug = prefix + '-' + str(uuid4())[:8]
-        self.deadline = make_aware(create_deadline(self.deadline_row))
+            self.deadline = make_aware(create_deadline(self.deadline_row))
         super(Promise, self).save(*args, **kwargs)
 
     REQUIRED_FIELDS = ['name', 'description', 'deadline', 'status']
 
-
     class Meta:
         db_table = 'dt_promise'
         # verbose_name = 'DT_PROMISE'
-
 
 # class UserInfo(models.Model):
 #     # name = models.ForeignKey('auth.User', related_name='user', on_delete=models.CASCADE)
@@ -67,6 +76,3 @@ class Promise(models.Model):
 #     class Meta:
 #         db_table = 'DT_USER'
 #         verbose_name = 'DT_USER'
-
-
-
