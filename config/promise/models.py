@@ -1,22 +1,8 @@
-from datetime import datetime, timedelta
 from uuid import uuid4
 
 from django.db import models
-from django.utils.timezone import make_aware
 # from config.userdetail.models import User
 from userdetail.models import User, UserCategory
-
-
-def create_deadline(row):
-    delta = row.split(' ')
-    num = int(delta[0])
-    type = delta[1]
-    if type == 'min':
-        return datetime.now() + timedelta(minutes=num)
-    elif type == 'hour':
-        return datetime.now() + timedelta(hours=num)
-    elif type == 'day':
-        return datetime.now() + timedelta(days=num)
 
 
 class Promise(models.Model):
@@ -35,7 +21,7 @@ class Promise(models.Model):
     name = models.CharField(max_length=255, blank=False)
     slug = models.SlugField(unique=True, blank=True, default=None)
     description = models.CharField(max_length=2024, blank=False, default='')
-    deadline_row = models.CharField(max_length=255, blank=True)
+    # deadline_row = models.CharField(max_length=255, blank=True)
     deadline = models.DateTimeField(blank=True, default=None)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='N')
     importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='1')
@@ -51,7 +37,7 @@ class Promise(models.Model):
         if self.slug is None:
             prefix = self.owner.__str__()
             self.slug = prefix + '-' + str(uuid4())[:8]
-            self.deadline = make_aware(create_deadline(self.deadline_row))
+            # self.deadline = make_aware(create_deadline(self.deadline_row))
         super(Promise, self).save(*args, **kwargs)
 
     REQUIRED_FIELDS = ['name', 'description', 'deadline', 'status']
