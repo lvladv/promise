@@ -86,9 +86,9 @@ INSTALLED_APPS = [
     'rest_framework_social_oauth2',
     'django.contrib.sites',  # new
 
-    # 'allauth',  # new
-    # 'allauth.account',  # new
-    # 'allauth.socialaccount',  # new
+    'allauth',  # new
+    'allauth.account',  # new
+    'allauth.socialaccount',  # new
     # 'allauth.socialaccount.providers.github',  # new
 
     'djoser',
