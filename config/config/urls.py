@@ -29,6 +29,11 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('', start),
 
+
+    path('accounts/', include('allauth.urls')),
+    # url(r'^social/', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^auth/', include('rest_framework_social_oauth2.urls')),
+
 ]
 
 # from schema_graph.views import Schema
