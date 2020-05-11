@@ -18,7 +18,6 @@ export const newToken = (username, password) => {
       requestOptions
     );
     let autor = await response.json();
-    console.log(autor);
     if (response.ok) {
       await localStorage.setItem("Authorization", `Bearer ${autor.access}`);
       await localStorage.setItem("remember", "true");

@@ -1,9 +1,8 @@
 import {
   REGISTRATION,
   INPUT_ERROR,
-  ERROR_LOGIN,
+  ERROR,
   CLOSE_ERROR,
-  ERROR_EMAIL,
   OK_REGISTRATION,
 } from "./action";
 
@@ -11,9 +10,11 @@ const initialState = {
   token: "",
   okRegistration: false,
   errors: {
-    errorLogin: false,
-    errorEmail: false,
     inputError: false,
+    error: false,
+    errorLoginValue: "",
+    errorEmailValue: "",
+    errorPasswordValue: "",
   },
 };
 
@@ -30,16 +31,18 @@ export const registrationReducer = (state = initialState, action) => {
         ...state,
         errors: { ...state.errors, inputError: true },
       };
-    case ERROR_LOGIN:
+    case ERROR:
       return {
         ...state,
-        errors: { ...state.errors, errorLogin: true },
+        errors: {
+          ...state.errors,
+          error: true,
+          errorLoginValue: action.login,
+          errorEmailValue: action.email,
+          errorPasswordValue: action.password,
+        },
       };
-    case ERROR_EMAIL:
-      return {
-        ...state,
-        errors: { ...state.errors, errorEmail: true },
-      };
+
     case OK_REGISTRATION:
       return {
         ...state,
@@ -51,9 +54,8 @@ export const registrationReducer = (state = initialState, action) => {
         ...state,
         errors: {
           ...state.errors,
-          errorLogin: false,
+          error: false,
           inputError: false,
-          errorEmail: false,
         },
       };
 

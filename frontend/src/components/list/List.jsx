@@ -107,9 +107,21 @@ const List = ({ list, newStatus, openChangesCard, putItemChanges }) => {
                   {item.status === "Y" ? "Выполненно" : " Не выполненно"}
                 </span>
               </Item>
-              <Item>Важность:</Item>
+              <Item>
+                Важность:
+                <span>
+                  {item.importance === "1"
+                    ? " Не важно"
+                    : item.importance === "2"
+                    ? " Важно"
+                    : " Очень важно"}
+                </span>
+              </Item>
               <Item>Категория:</Item>
-              <Item>Дедлайн:</Item>
+              <Item>
+                Дедлайн:
+                <span>{item.deadline}</span>
+              </Item>
               <Item>
                 Дата создания: <span> {item.create_time} </span>
               </Item>

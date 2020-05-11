@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { OpenNewCard } from "./OpenNewCard";
+import OpenNewCard from "./OpenNewCard";
 import List from "./../List/List";
 import { ChangesCard } from "./../List/ChangesCard";
 import { Grid, Button } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
-import { openNewCard, closeNewCard } from "../../store/openNewCard/action";
-import { newPointList, newStatus, changeItem } from "../../store/list/action";
+import { openNewCard } from "../../store/openNewCard/action";
+import { newStatus, changeItem } from "../../store/list/action";
 import {
   openChangesCard,
   closeChangesCard,
@@ -30,9 +30,6 @@ class Input extends Component {
     const {
       list,
       openNewCard,
-      isOpenNewCard,
-      closeNewCard,
-      newPointList,
       newStatus,
       openChangesCard,
       closeChangesCard,
@@ -42,13 +39,10 @@ class Input extends Component {
       putNewItem,
       changeItem,
     } = this.props;
+    console.log(list);
     return (
       <section>
-        <OpenNewCard
-          isOpenNewCard={isOpenNewCard}
-          closeNewCard={closeNewCard}
-          newPointList={newPointList}
-        />
+        <OpenNewCard />
         <ChangesCard
           closeChangesCard={closeChangesCard}
           isOpenChangesCard={isOpenChangesCard}
@@ -67,7 +61,6 @@ class Input extends Component {
         </div>
         <Grid container direction="column" justify="center" alignItems="center">
           <List
-            key={list.id}
             newStatus={newStatus}
             list={list}
             openChangesCard={openChangesCard}
@@ -86,7 +79,6 @@ const mapStateToprops = (store) => {
     isOpenNewCard: store.newCardReducer.isOpenNewCard,
     isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
     itemChange: store.changesCardReducer.itemChange,
-
     list: store.listReducer.list,
   };
 };
@@ -94,15 +86,12 @@ const mapStateToprops = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
-    closeNewCard: () => dispatch(closeNewCard()),
     openChangesCard: () => dispatch(openChangesCard()),
     closeChangesCard: () => dispatch(closeChangesCard()),
     newStatus: (newItem) => dispatch(newStatus(newItem)),
     changeItem: (itemChange) => dispatch(changeItem(itemChange)),
     putItemChanges: (itemChange) => dispatch(putItemChanges(itemChange)),
     putNewItem: (name, value) => dispatch(putNewItem(name, value)),
-    newPointList: (name, description) =>
-      dispatch(newPointList(name, description)),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(Input);

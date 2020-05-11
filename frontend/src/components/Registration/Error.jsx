@@ -12,14 +12,10 @@ const AlertError = styled(Alert)({
   background: "#e57373",
 });
 
-
-
-
 export const ErrorRegistration = ({
   registerError,
   closeErrorRegistration,
 }) => {
-  console.log(registerError)
   return (
     <span>
       <Snackbar
@@ -27,7 +23,7 @@ export const ErrorRegistration = ({
           vertical: "bottom",
           horizontal: "center",
         }}
-        open={registerError.errorLogin}
+        open={registerError.error}
         autoHideDuration={6000}
       >
         <AlertError
@@ -45,39 +41,14 @@ export const ErrorRegistration = ({
             </React.Fragment>
           }
         >
-          Такой логин занят
+          <span>{registerError.errorLoginValue}</span>
+          <span>{registerError.errorEmailValue}</span>
+          <span>{registerError.errorPasswordValue}</span>
         </AlertError>
       </Snackbar>
 
       {/* ---------------------------------- */}
 
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={registerError.errorEmail}
-        autoHideDuration={6000}
-      >
-        <AlertError
-          severity="error"
-          action={
-            <React.Fragment>
-              <IconButton
-                onClick={() => closeErrorRegistration()}
-                size="small"
-                aria-label="close"
-                color="inherit"
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </React.Fragment>
-          }
-        >
-          Такой Email уже используется
-        </AlertError>
-      </Snackbar>
-      {/* -------------- */}
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
@@ -101,7 +72,7 @@ export const ErrorRegistration = ({
             </React.Fragment>
           }
         >
-         Нарушены правила регистраци
+          Нарушены правила регистраци
         </AlertError>
       </Snackbar>
       {/* ---------------------- */}

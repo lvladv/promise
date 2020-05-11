@@ -1,9 +1,20 @@
-import { OPEN_NEW_CARD, CLOSE_NEW_CARD } from "./action";
+import { format } from "date-fns";
+
+import {
+  OPEN_NEW_CARD,
+  CLOSE_NEW_CARD,
+  IMPORTANCE_CHANGE,
+  DEADLINE_CHANGE,
+  DEADLINE_TIME_CHANGE,
+} from "./action";
 
 const initialState = {
   isOpenNewCard: false,
+  importance: 1,
+  deadline: format(new Date(), "yyyy-MM-dd"),
+  deadlineTime: "00:00",
 };
-
+// yyyy-MM-dd HH:mm:ss
 export const newCardReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_NEW_CARD:
@@ -16,6 +27,22 @@ export const newCardReducer = (state = initialState, action) => {
       return {
         ...state,
         isOpenNewCard: action.payload,
+      };
+
+    case IMPORTANCE_CHANGE:
+      return {
+        ...state,
+        importance: action.payload,
+      };
+    case DEADLINE_CHANGE:
+      return {
+        ...state,
+        deadline: action.payload,
+      };
+    case DEADLINE_TIME_CHANGE:
+      return {
+        ...state,
+        deadlineTime: action.payload,
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React from "react";
 import InputRegistration from "./InputRegistration";
 import {GoodRegistration} from "./OkRegistration";
 const Registration = ({
