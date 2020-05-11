@@ -5,6 +5,7 @@ from django.db import models
 class User(AbstractUser):
     # TODO add uniq email address field
     email = models.EmailField(blank=True, null=True)
+    # email = models.EmailField(blank=True, unique=True)
     # name = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)

@@ -1,13 +1,9 @@
-import os
 from datetime import timedelta
 
 try:
     from .settings_dev import *
 except ImportError:
     from .settings_prod import *
-
-
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,7 +29,6 @@ DJOSER = {
     # 'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {},
 }
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=55),
@@ -61,44 +56,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=360),
 }
 # https://login.vk.com/?act=openapi&oauth=1&aid=7458524&location=127.0.0.1&new=1&response_type=code
-# https://oauth.vk.com/authorize?client_id=7458524&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=email&response_type=token
-# https://oauth.vk.com/authorize?client_id=7458524&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=email,phone&response_type=token
-# https://oauth.vk.com/authorize?client_id=7458524&display=popup&redirect_uri=https://oauth.vk.com/blank.html&scope=email,phone&response_type=token
-
-
-# https://oauth.vk.com/blank.html#access_token=7141c4cd3ac2f24ebd1f925c69c92543054e8e32992880eaabfff048650b17a5adbf9e01a55e8dd48d6d9&expires_in=86400&user_id=185545256&email=lvlad93@mail.ru
-# https://oauth.vk.com/blank.html#access_token=054420c66189b9656bb17e75a59c853b8b97f83bda219f4d8b2a93be2bc5e020f40b3d9113e8a43b6af93&expires_in=86400&user_id=185545256&email=lvlad93@mail.ru
-# https://oauth.vk.com/authorize?client_id=7458524&redirect_uri=https://oauth.vk.com/blank.html
-# https://oauth.vk.com/authorize?client_id=7458524&redirect_uri=https://oauth.vk.com/blank.html&display=popup&scope=email,status&response_type=code
-# https://oauth.vk.com/authorize?client_id=7458524&redirect_uri=https://oauth.vk.com/blank.html&response_type=code
-# https://oauth.vk.com/authorize?client_id=7458524&redirect_uri=https://oauth.vk.com/blank.html&response_type=code
-
-
-# https://oauth.vk.com/authorize?client_id=7458524&redirect_uri=https://oauth.vk.com/blank.html&display=popup&scope=email,status&response_type=token
-
-# ----
-# new
-
-# https://oauth.vk.com/authorize?client_id=7458524&display=page&redirect_uri=http://example.com/callback&scope=friends&response_type=code&v=5.103
-# https://oauth.vk.com/authorize?client_id=7458524&display=page&redirect_uri=127.0.0.1&scope=email,friends&response_type=code&v=5.103
-# https://oauth.vk.com/authorize?client_id=7458524&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=email,friends&response_type=code&v=5.103
-
-# 08d8c3844cc52d030d
-
-
-
-# https://oauth.vk.com/access_token?client_id=7458524&client_secret=WFvN1mPD4d4iU5mXTTkM&v=5.103&grant_type=client_credentials
-
-
-# https://oauth.vk.com/access_token?client_id=7458524&client_secret=WFvN1mPD4d4iU5mXTTkM&v=5.103&grant_type=client_credentials
-# https://api.vk.com/method/secure.checkToken?v=5.21&token=f16f0051f16f0051f13ff600c6f11ece8dff16ff16f0051afd6578c705281a52e7b181c&ip=<user_ip>&client_secret=<app_secret>&access_token=<access_token>
-# https://api.vk.com/method/secure.checkToken?v=5.21&token=6bf169f16bf169f16ba19fa0fb6b80a72d66bf16bf169f1354831ae32da6c7e3507b1c0&ip=<user_ip>&client_secret=<app_secret>&access_token=<access_token>
-
-
-
-
-
-
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -129,12 +86,10 @@ INSTALLED_APPS = [
     'rest_framework_social_oauth2',
     'django.contrib.sites',  # new
 
-    'allauth',  # new
-    'allauth.account',  # new
-    'allauth.socialaccount',  # new
-    'allauth.socialaccount.providers.github',  # new
-
-
+    # 'allauth',  # new
+    # 'allauth.account',  # new
+    # 'allauth.socialaccount',  # new
+    # 'allauth.socialaccount.providers.github',  # new
 
     'djoser',
     'rest_framework',
@@ -160,8 +115,6 @@ SOCIAL_AUTH_VK_OAUTH2_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email'
 }
 
-
-
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
@@ -169,7 +122,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -181,11 +133,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-   ]
+]
 
 ROOT_URLCONF = 'config.urls'
-
-
 
 TEMPLATES = [
     {
@@ -209,15 +159,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-
-
-
-
-
 
 
 # Password validation
@@ -237,7 +180,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -265,7 +207,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 # PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
-
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'basic': {
@@ -275,9 +216,7 @@ SWAGGER_SETTINGS = {
 }
 
 REDOC_SETTINGS = {
-   'LAZY_RENDERING': False,
+    'LAZY_RENDERING': False,
 }
 
-
 APPEND_SLASH = True
-
