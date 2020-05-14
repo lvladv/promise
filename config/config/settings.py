@@ -105,8 +105,6 @@ INSTALLED_APPS = [
 #     'VALIDATOR_URL': 'http://localhost:8189',
 # }
 
-SOCIAL_AUTH_VK_OAUTH_KEY = '7458524'
-SOCIAL_AUTH_VK_OAUTH2_SECRET = 'WFvN1mPD4d4iU5mXTTkM'
 
 # new?
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['friends', 'email']
@@ -115,8 +113,19 @@ SOCIAL_AUTH_VK_OAUTH2_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email'
 }
 
+
+# Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.
+# Email is not sent by default, to get it, you must request the email permission.
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, email'
+}
+
+
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',
+    'social_core.backends.facebook.FacebookAppOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )

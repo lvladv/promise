@@ -9,9 +9,9 @@ class Promise(models.Model):
     # TODO choise field on important forms.ModelChoiceField(queryset=Modelx.objects.all())
 
     IMPORTANCE_CHOICES = [
-        ('1', 'not very important'),
-        ('2', 'medium'),
-        ('3', 'very important'), ]
+        ('L', 'not very important'),
+        ('M', 'medium'),
+        ('H', 'very important'), ]
 
     STATUS_CHOICES = [('Y', 'done'), ('N', 'not ready')]
 
@@ -24,7 +24,7 @@ class Promise(models.Model):
     # deadline_row = models.CharField(max_length=255, blank=True)
     deadline = models.DateTimeField(blank=True, default=None)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='N')
-    importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='1')
+    importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='L')
     # category = models.CharField(max_length=255, queryset=CATEGORY_CHOICES)
     # category = models.ManyToManyField(UserCategory)
     category = models.ForeignKey(UserCategory, related_name='usercategory', on_delete=models.CASCADE, null=True)
