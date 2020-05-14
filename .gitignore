@@ -12,7 +12,7 @@ static/
 
 settings_dev.py
 secret_properties.py
-
+howto_OAuth_vk
 # If you are using PyCharm #
 .idea/*
 .idea/**/workspace.xml 
