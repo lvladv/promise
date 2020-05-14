@@ -1,163 +1,88 @@
-import React from "react";
-import { makeStyles, withStyles, styled } from "@material-ui/core/styles";
-import blueGrey from "@material-ui/core/colors/blueGrey";
+import React, { Component } from "react";
 import CloseIcon from "@material-ui/icons/Close";
+import { Drawer } from "@material-ui/core";
+import { connect } from "react-redux";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  IconButton,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-
-const Title = styled(({ ...other }) => (
-  <Typography variant="h5" gutterBottom {...other} />
-))({
-  color: blueGrey[400],
-});
-
-const Point = styled(({ ...other }) => (
-  <Typography variant="h6" gutterBottom {...other} />
-))({
-  color: blueGrey[500],
-});
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: "34em",
-    width: "100%",
-    "& > *": {
-      margin: theme.spacing(2),
-      color: blueGrey[300],
-    },
-  },
-
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-}));
-
-const InputTextField = withStyles({
-  root: {
-    "& input:valid + fieldset,": {
-      borderColor: blueGrey[500],
-      borderWidth: 1,
-    },
-    "& input:invalid + fieldset": {
-      borderColor: blueGrey[200],
-      borderWidth: 2,
-    },
-    "& input:valid:focus + fieldset": {
-      bordertWidth: 4,
-      borderColor: blueGrey[200],
-      padding: "4px !important",
-    },
-    "& coreel.Mui-focused": {
-      color: blueGrey[700],
-    },
-
-    "& textarea + fieldset,": {
-      borderColor: blueGrey[500],
-      borderWidth: 1,
-    },
-    "& textarea + fieldset": {
-      borderColor: blueGrey[200],
-      borderWidth: 1,
-    },
-
-    "& textarea:valid:focus + fieldset": {
-      bordertWidth: 4,
-      borderColor: blueGrey[200],
-      padding: "4px !important",
-    },
-  },
-})(TextField);
-
-export const ChangesCard = ({
   closeChangesCard,
-  isOpenChangesCard,
-  itemChange,
   putNewItem,
-  changeItem,
-}) => {
-  const classes = useStyles();
+} from "../../store/ChangesCard/action";
+import { changeItem } from "../../store/list/action";
+import {
+  Box,
+  СloseButton,
+  Title,
+  Point,
+  SubmitButton,
+  Input,
+  BorderBox,
+  RadioBtn,
+} from "../../componentsStyled/OpenNewCard.style";
 
-  const Change = (e) => {
+class ChangesCard extends Component {
+  Change = (e) => {
     const { name, value } = e.target;
-    putNewItem(name, value);
+    this.props.putNewItem(name, value);
   };
 
-  return (
-    <Dialog
-      id="customized-dialog-title"
-      fullWidth={true}
-      maxWidth={"sm"}
-      anchor="top"
-      open={isOpenChangesCard}
-      onClose={() => {
-        closeChangesCard();
-      }}
-    >
-      <DialogTitle id="customized-dialog-title">
-        <Title>Новая задача</Title>
-        <IconButton
-          className={classes.closeButton}
-          onClick={() => closeChangesCard()}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Введите название и описание карточки
-        </DialogContentText>
+  render() {
+    const {
+      closeChangesCard,
+      isOpenChangesCard,
+      itemChange,
+      changeItem,
+    } = this.props;
+    return (
+      <Drawer
+        anchor="right"
+        open={isOpenChangesCard}
+        onClose={() => {
+          closeChangesCard();
+        }}
+      >
+        <Box>
+          <Title>Изменить задачу</Title>
+          <СloseButton onClick={() => closeChangesCard()}>
+            <CloseIcon />
+          </СloseButton>
 
-        <InputTextField
-          coreel="Название"
-          variant="outlined"
-          className={classes.root}
-          name="name"
-          value={itemChange.name}
-          onChange={Change}
-        />
+          <Point>Название: </Point>
+          <Input name="name" value={itemChange.name} onChange={this.Change} />
 
-        <InputTextField
-          className={classes.root}
-          coreel="Описание"
-          variant="outlined"
-          name="description"
-          value={itemChange.description}
-          onChange={Change}
-          multiline
-          rows="5"
-        />
+          <Point>Описание: </Point>
+          <Input
+            name="description"
+            value={itemChange.description}
+            onChange={this.Change}
+            multiline
+            rows="5"
+          />
 
-        <Point>Установить делайн</Point>
-      </DialogContent>
+          <SubmitButton
+            onClick={() => {
+              changeItem(itemChange);
+              closeChangesCard();
+            }}
+          >
+            Редактировать
+          </SubmitButton>
+        </Box>
+      </Drawer>
+    );
+  }
+}
 
-      <DialogActions className={classes.buttonPosition}>
-        <Button
-          variant="contained"
-          onClick={() => {
-            changeItem(itemChange);
-            closeChangesCard();
-          }}
-          style={{
-            background: blueGrey[400],
-            color: blueGrey[50],
-            minWidth: 280,
-          }}
-        >
-          Добавить
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+const mapStateToprops = (store) => {
+  return {
+    isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
+    itemChange: store.changesCardReducer.itemChange,
+  };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeChangesCard: () => dispatch(closeChangesCard()),
+    changeItem: (itemChange) => dispatch(changeItem(itemChange)),
+    putNewItem: (name, value) => dispatch(putNewItem(name, value)),
+  };
+};
+export default connect(mapStateToprops, mapDispatchToProps)(ChangesCard);

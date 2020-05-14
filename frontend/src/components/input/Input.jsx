@@ -2,16 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import OpenNewCard from "./OpenNewCard";
 import List from "./../List/List";
-import { ChangesCard } from "./../List/ChangesCard";
+import ChangesCard from "./../List/ChangesCard";
 import { Grid, Button } from "@material-ui/core";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import { openNewCard } from "../../store/openNewCard/action";
-import { newStatus, changeItem } from "../../store/list/action";
+import { newStatus } from "../../store/list/action";
 import {
   openChangesCard,
-  closeChangesCard,
   putItemChanges,
-  putNewItem,
 } from "../../store/ChangesCard/action";
 
 import { styled } from "@material-ui/core/styles";
@@ -35,21 +33,12 @@ class Input extends Component {
       closeChangesCard,
       isOpenChangesCard,
       putItemChanges,
-      itemChange,
-      putNewItem,
-      changeItem,
     } = this.props;
     console.log(list);
     return (
       <section>
         <OpenNewCard />
-        <ChangesCard
-          closeChangesCard={closeChangesCard}
-          isOpenChangesCard={isOpenChangesCard}
-          itemChange={itemChange}
-          putNewItem={putNewItem}
-          changeItem={changeItem}
-        />
+        <ChangesCard />
         <div>
           <SmallButton
             onClick={() => {
@@ -87,11 +76,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
     openChangesCard: () => dispatch(openChangesCard()),
-    closeChangesCard: () => dispatch(closeChangesCard()),
     newStatus: (newItem) => dispatch(newStatus(newItem)),
-    changeItem: (itemChange) => dispatch(changeItem(itemChange)),
     putItemChanges: (itemChange) => dispatch(putItemChanges(itemChange)),
-    putNewItem: (name, value) => dispatch(putNewItem(name, value)),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(Input);

@@ -16,20 +16,25 @@ import {
   openAccauntMenu,
   closeAccauntMenu,
 } from "./store/entrance/action";
-
+import { newCategoryList } from "./store/category/action";
 import { newUser, closeErrorRegistration } from "./store/registration/action";
 import { newList } from "./store/list/action";
 import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
   componentDidMount() {
-    const { isAutorisation, newTokenFromRefresh, newList } = this.props;
+    const {
+ 
+      newTokenFromRefresh,
+      newList,
+      newCategoryList,
+    } = this.props;
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
 
-    if (isAutorisation) {
-      newList();
-    }
+    newList();
+    newCategoryList();
+
     newTokenFromRefresh();
     if (remember) {
       if (Date.now() >= tokenData * 5000) {
@@ -37,9 +42,6 @@ class App extends Component {
       }
     }
   }
-
-  // рендер -----------------------------------------------------------------------
-
   render() {
     const {
       isAutorisation,
@@ -93,7 +95,7 @@ class App extends Component {
                 registration={registration}
                 registerError={registerError}
                 closeErrorRegistration={closeErrorRegistration}
-                okRegistration = {okRegistration}
+                okRegistration={okRegistration}
               />
             )}
           </Grid>
@@ -135,25 +137,7 @@ const mapDispatchToProps = (dispatch) => {
     exitAccaunt: () => dispatch(exitAccaunt()),
     closeError: () => dispatch(closeError()),
     closeErrorRegistration: () => dispatch(closeErrorRegistration()),
+    newCategoryList: () => dispatch(newCategoryList()),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(App);
-
-// toCompleted = id => {
-
-//   const { list, completedList } = this.state;
-//   this.setState(() =>
-//     // eslint-disable-next-line
-//     list.map((item, index) => {
-//       if (item.id === id) {
-//         completedList.push(
-//           id: Date.now(),
-//           description: item.description,
-//           status: "no"
-//         });
-//         list.splice(index, 1);
-//       }
-//     })
-//   );
-//   console.log(completedList);
-// };

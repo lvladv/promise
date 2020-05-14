@@ -77,7 +77,9 @@ const List = ({ list, newStatus, openChangesCard, putItemChanges }) => {
     <Box key={item.id} m={1} width="80%">
       <ExpansionPanel>
         <ExpansionPanelSummary className={classes.root}>
-          <Title>{item.name}</Title>
+          <div>
+            <Title>{item.name}</Title>
+          </div>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <Grid
@@ -117,7 +119,10 @@ const List = ({ list, newStatus, openChangesCard, putItemChanges }) => {
                     : " Очень важно"}
                 </span>
               </Item>
-              <Item>Категория:</Item>
+              <Item>
+                Категория:
+                <span> {item.category}</span>
+              </Item>
               <Item>
                 Дедлайн:
                 <span>{item.deadline}</span>

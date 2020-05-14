@@ -29,7 +29,8 @@ export const newPointList = (
   description,
   importance,
   deadline,
-  deadlineTime
+  deadlineTime,
+  category
 ) => {
   return async (dispatch) => {
     await dispatch({
@@ -38,10 +39,10 @@ export const newPointList = (
         id: Date.now(),
         name: name,
         description: description,
-        // deadline_row: "3 min",
         status: "N",
         importance: importance,
         deadline: deadline + " " + deadlineTime,
+        category: category,
       },
     });
     let formData = new FormData();
@@ -49,13 +50,12 @@ export const newPointList = (
       new Date(deadline + " " + deadlineTime),
       "yyyy-MM-dd hh:mm"
     );
-    console.log(deadlineData);
     formData.append("name", name);
     formData.append("description", description);
-    // formData.append("deadline_row", "3 min");
     formData.append("status", "N");
     formData.append("importance", importance);
     formData.append("deadline", deadlineData);
+    formData.append("category", category);
 
     let requestOptions = {
       body: formData,

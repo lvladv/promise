@@ -6,6 +6,7 @@ import {
   IMPORTANCE_CHANGE,
   DEADLINE_CHANGE,
   DEADLINE_TIME_CHANGE,
+  OPEN_NEW_CATEGORY,
 } from "./action";
 
 const initialState = {
@@ -13,8 +14,9 @@ const initialState = {
   importance: 1,
   deadline: format(new Date(), "yyyy-MM-dd"),
   deadlineTime: "00:00",
+  newCategory: false,
+  getCategory: "",
 };
-// yyyy-MM-dd HH:mm:ss
 export const newCardReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_NEW_CARD:
@@ -43,6 +45,11 @@ export const newCardReducer = (state = initialState, action) => {
       return {
         ...state,
         deadlineTime: action.payload,
+      };
+    case OPEN_NEW_CATEGORY:
+      return {
+        ...state,
+        newCategory: !state.newCategory,
       };
     default:
       return state;

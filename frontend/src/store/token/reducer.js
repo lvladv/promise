@@ -5,10 +5,10 @@ import {
   EXIT_ACCAUNT,
   CLOSE_ERROR,
 } from "./action";
-const hasToken = localStorage.getItem("Authorization");
+const hasToken = localStorage.getItem("remember");
 const initialState = {
   token: hasToken,
-  isAutorisation: hasToken === null ? false : true,
+  isAutorisation: hasToken ,
   errorAutorisation: false,
 };
 export const tokenReducer = (state = initialState, action) => {
