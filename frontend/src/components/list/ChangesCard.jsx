@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import CloseIcon from "@material-ui/icons/Close";
-import { Drawer } from "@material-ui/core";
+import { Drawer, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { connect } from "react-redux";
+import { Category } from "./Category";
 import {
   closeChangesCard,
   putNewItem,
+  putNewChangeCategory,
+  putHandleChangeImportance,
 } from "../../store/ChangesCard/action";
 import { changeItem } from "../../store/list/action";
+import { openNewCategory } from "../../store/openNewCard/action";
+import { putNewCategory } from "./../../store/category/action";
 import {
   Box,
   СloseButton,
@@ -23,14 +28,23 @@ class ChangesCard extends Component {
     const { name, value } = e.target;
     this.props.putNewItem(name, value);
   };
-
+  handleChangeImportance = (e) => {
+    const { value } = e.target;
+    this.props.putHandleChangeImportance(value);
+  };
   render() {
     const {
       closeChangesCard,
       isOpenChangesCard,
       itemChange,
       changeItem,
+      openNewCategory,
+      newCategory,
+      putNewCategory,
+      categoryList,
+      putNewChangeCategory,
     } = this.props;
+    console.log(itemChange);
     return (
       <Drawer
         anchor="right"
@@ -57,6 +71,41 @@ class ChangesCard extends Component {
             rows="5"
           />
 
+          <Point>Категории: </Point>
+          <BorderBox>
+            <Category
+              newCategory={newCategory}
+              openNewCategory={openNewCategory}
+              putNewCategory={putNewCategory}
+              categoryList={categoryList}
+              category={itemChange.category}
+              putNewChangeCategory={putNewChangeCategory}
+            />
+          </BorderBox>
+          <Point>Уровень значимости: </Point>
+          <BorderBox>
+            <RadioGroup
+              name="importance"
+              value={itemChange.importance}
+              onChange={this.handleChangeImportance}
+            >
+              <FormControlLabel
+                value="L"
+                control={<RadioBtn />}
+                label="Не важно"
+              />
+              <FormControlLabel
+                value="M"
+                control={<RadioBtn />}
+                label="Важно"
+              />
+              <FormControlLabel
+                value="H"
+                control={<RadioBtn />}
+                label="Очень важно"
+              />
+            </RadioGroup>
+          </BorderBox>
           <SubmitButton
             onClick={() => {
               changeItem(itemChange);
@@ -75,11 +124,19 @@ const mapStateToprops = (store) => {
   return {
     isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
     itemChange: store.changesCardReducer.itemChange,
+    newCategory: store.newCardReducer.newCategory,
+    categoryList: store.categoryListReducer.categoryList,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    putNewCategory: (name) => dispatch(putNewCategory(name)),
+    putNewChangeCategory: (value) => dispatch(putNewChangeCategory(value)),
+    putHandleChangeImportance: (value) =>
+      dispatch(putHandleChangeImportance(value)),
+
+    openNewCategory: () => dispatch(openNewCategory()),
     closeChangesCard: () => dispatch(closeChangesCard()),
     changeItem: (itemChange) => dispatch(changeItem(itemChange)),
     putNewItem: (name, value) => dispatch(putNewItem(name, value)),

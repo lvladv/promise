@@ -106,6 +106,9 @@ export const changeItem = (itemChange) => {
     let formData = new FormData();
     formData.append("name", itemChange.name);
     formData.append("description", itemChange.description);
+    formData.append("category", itemChange.category);
+    formData.append("importance", itemChange.importance);
+
     let requestOptions = {
       body: formData,
       headers: {

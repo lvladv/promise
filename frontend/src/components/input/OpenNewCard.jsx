@@ -23,7 +23,6 @@ import {
   Input,
   BorderBox,
   RadioBtn,
- 
 } from "../../componentsStyled/OpenNewCard.style";
 
 class OpenNewCard extends Component {
@@ -51,7 +50,7 @@ class OpenNewCard extends Component {
       category,
       categoryChange,
     } = this.props;
-console.log(importance)
+    console.log(categoryList)
     return (
       <Drawer
         anchor="right"
@@ -84,10 +83,12 @@ console.log(importance)
 
           <Point>Категории: </Point>
           <BorderBox>
+            
             <Category
               newCategory={newCategory}
               openNewCategory={openNewCategory}
               putNewCategory={putNewCategory}
+
               categoryList={categoryList}
               category={category}
               categoryChange={categoryChange}
@@ -101,17 +102,17 @@ console.log(importance)
               onChange={this.handleChangeImportance}
             >
               <FormControlLabel
-                value="1"
+                value="L"
                 control={<RadioBtn />}
                 label="Не важно"
               />
               <FormControlLabel
-                value="2"
+                value="M"
                 control={<RadioBtn />}
                 label="Важно"
               />
               <FormControlLabel
-                value="3"
+                value="H"
                 control={<RadioBtn />}
                 label="Очень важно"
               />

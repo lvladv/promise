@@ -3,6 +3,8 @@ export const CLOSE_CHANGES_CARD = "CLOSE_ChangES_CARD";
 export const PUT_ITEM_CHANGE = "PUT_ITEM_ChangE";
 export const NEW_ITEM_NAME = "NEW_ITEM_NAME";
 export const NEW_ITEM_DESCRIPTION = "NEW_ITEM_DESCRIPTION";
+export const PUT_NEW_CHANGE_CATEGORY = "PUT_NEW_CHANGE_CATEGORY";
+export const PUT_HANDLE_CHANGE_IMPORTANCE = "PUT_HANDLE_CHANGE_IMPORTANCE";
 
 export function openChangesCard() {
   return {
@@ -21,6 +23,19 @@ export function closeChangesCard() {
 export function putItemChanges(itemChange) {
   return {
     type: PUT_ITEM_CHANGE,
+    payload: itemChange,
+  };
+}
+
+export function putNewChangeCategory(itemChange) {
+  return {
+    type: PUT_NEW_CHANGE_CATEGORY,
+    payload: itemChange,
+  };
+}
+export function putHandleChangeImportance(itemChange) {
+  return {
+    type: PUT_HANDLE_CHANGE_IMPORTANCE,
     payload: itemChange,
   };
 }

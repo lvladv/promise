@@ -4,6 +4,8 @@ import {
   PUT_ITEM_CHANGE,
   NEW_ITEM_NAME,
   NEW_ITEM_DESCRIPTION,
+  PUT_NEW_CHANGE_CATEGORY,
+  PUT_HANDLE_CHANGE_IMPORTANCE,
 } from "./action";
 
 const initialState = {
@@ -40,6 +42,16 @@ export const changesCardReducer = (state = initialState, action) => {
       return {
         ...state,
         itemChange: { ...state.itemChange, description: action.payload },
+      };
+    case PUT_NEW_CHANGE_CATEGORY:
+      return {
+        ...state,
+        itemChange: { ...state.itemChange, category: action.payload },
+      };
+    case PUT_HANDLE_CHANGE_IMPORTANCE:
+      return {
+        ...state,
+        itemChange: { ...state.itemChange, importance: action.payload },
       };
 
     default:

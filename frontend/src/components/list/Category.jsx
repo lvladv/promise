@@ -12,19 +12,17 @@ import {
 export const Category = ({
   newCategory,
   openNewCategory,
-
   putNewCategory,
   categoryList,
   category,
-  categoryChange,
+  putNewChangeCategory,
 }) => {
   const inputCategory = React.createRef();
 
   const handleChangeCategory = (e) => {
     const { value } = e.target;
-    categoryChange(value);
+    putNewChangeCategory(value);
   };
-
   console.log(category);
   return (
     <div>
@@ -35,7 +33,7 @@ export const Category = ({
       >
         {categoryList.map((item) => (
           <FormControlLabel
-            key={item.name}
+            key={item.id}
             value={item.id}
             control={<RadioBtn />}
             label={item.name}

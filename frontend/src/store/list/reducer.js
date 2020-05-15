@@ -42,6 +42,8 @@ export const listReducer = (state = initialState, action) => {
               ...item,
               name: itemChange.name,
               description: itemChange.description,
+              category: itemChange.category,
+              importance: itemChange.importance,
             };
           }
           return item;

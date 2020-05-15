@@ -11,12 +11,13 @@ import {
 
 const initialState = {
   isOpenNewCard: false,
-  importance: 1,
+  importance: "L",
   deadline: format(new Date(), "yyyy-MM-dd"),
   deadlineTime: "00:00",
   newCategory: false,
   getCategory: "",
 };
+
 export const newCardReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_NEW_CARD:
