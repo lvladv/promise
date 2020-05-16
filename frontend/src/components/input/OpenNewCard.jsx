@@ -50,7 +50,7 @@ class OpenNewCard extends Component {
       category,
       categoryChange,
     } = this.props;
-    console.log(categoryList)
+
     return (
       <Drawer
         anchor="right"
@@ -61,6 +61,7 @@ class OpenNewCard extends Component {
       >
         <Box>
           <Title>Новая задача</Title>
+          {/* eslint-disable-next-line */}
           <СloseButton onClick={() => closeNewCard()}>
             <CloseIcon />
           </СloseButton>
@@ -83,12 +84,10 @@ class OpenNewCard extends Component {
 
           <Point>Категории: </Point>
           <BorderBox>
-            
             <Category
               newCategory={newCategory}
               openNewCategory={openNewCategory}
               putNewCategory={putNewCategory}
-
               categoryList={categoryList}
               category={category}
               categoryChange={categoryChange}

@@ -2,7 +2,8 @@ export const PUT_NEW_TOKEN = "PUT_NEW_TOKEN";
 export const PUT_NEW_TOKEN_FROM_REFRESH = "PUT_NEW_TOKEN_FROM_REFRESH";
 export const ERROR_REQUEST = "ERROR_REQUEST";
 export const EXIT_ACCAUNT = "EXIT_ACCAUNT";
-export const CLOSE_ERROR = "CLOSE_ERROR"
+export const CLOSE_ERROR = "CLOSE_ERROR";
+
 export const newToken = (username, password) => {
   return async (dispatch) => {
     let formData = new FormData();

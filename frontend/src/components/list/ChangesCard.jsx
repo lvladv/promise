@@ -44,7 +44,7 @@ class ChangesCard extends Component {
       categoryList,
       putNewChangeCategory,
     } = this.props;
-    console.log(itemChange);
+
     return (
       <Drawer
         anchor="right"
@@ -55,6 +55,7 @@ class ChangesCard extends Component {
       >
         <Box>
           <Title>Изменить задачу</Title>
+           {/* eslint-disable-next-line */}
           <СloseButton onClick={() => closeChangesCard()}>
             <CloseIcon />
           </СloseButton>

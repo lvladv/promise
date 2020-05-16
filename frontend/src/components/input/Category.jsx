@@ -36,7 +36,7 @@ export const Category = ({
         {categoryList.map((item) => (
           <FormControlLabel
             key={item.name}
-            value={item.id}
+            value={String(item.id)}
             control={<RadioBtn />}
             label={item.name}
           />

@@ -14,11 +14,14 @@ export const BorderBox = styled("div")({
   borderRadius: "4px",
   padding: "10px",
 });
+
+
 export const СloseButton = styled(IconButton)({
   position: "absolute",
   right: 0,
   top: 0,
 });
+
 export const AddButton = styled(IconButton)({
   color: blueGrey[600],
   background: blueGrey[50],

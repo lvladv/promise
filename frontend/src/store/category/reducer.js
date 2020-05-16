@@ -2,7 +2,7 @@ import { GET_CATEGORY_LIST, PUT_NEW_CATEGORY, CATEGORY_CHANGE } from "./action";
 
 const initialState = {
   categoryList: [],
-  category: 0,
+  category: "",
 };
 
 export const categoryListReducer = (state = initialState, action) => {

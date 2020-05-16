@@ -1,6 +1,7 @@
 import React from "react";
 import { format, addDays } from "date-fns";
 import { withStyles } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import {
   KeyboardDatePicker,
@@ -13,6 +14,12 @@ import {
   DeadlineContainer,
   InputTime,
 } from "../../componentsStyled/OpenNewCard.style";
+
+const defaultMaterialTheme = createMuiTheme({
+  palette: {
+    primary: blueGrey,
+  },
+});
 
 const Picker = withStyles({
   root: {
@@ -73,20 +80,21 @@ export const Deadline = ({
           Через неделю
         </DeadlineButton>
       </RowBox>
-
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Picker
-          disableToolbar
-          variant="inline"
-          format="yyyy.MM.dd"
-          label="Выбрать свою дату"
-          value={deadline}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
-        />
-      </MuiPickersUtilsProvider>
+      <ThemeProvider theme={defaultMaterialTheme}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Picker
+            disableToolbar
+            variant="inline"
+            format="yyyy.MM.dd"
+            label="Выбрать свою дату"
+            value={deadline}
+            onChange={handleDateChange}
+            KeyboardButtonProps={{
+              "aria-label": "change date",
+            }}
+          />
+        </MuiPickersUtilsProvider>
+      </ThemeProvider>
       <RowBox>
         <span>Добавить время:</span>
         <InputTime initTime={deadlineTime} onTimeChange={handleChangeTime} />

@@ -24,24 +24,25 @@ import Grid from "@material-ui/core/Grid";
 class App extends Component {
   componentDidMount() {
     const {
- 
+      isAutorisation,
       newTokenFromRefresh,
       newList,
       newCategoryList,
     } = this.props;
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
-
-    newList();
-    newCategoryList();
-
     newTokenFromRefresh();
     if (remember) {
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
       }
     }
+    if (isAutorisation) {
+      newCategoryList();
+      newList();
+    }
   }
+
   render() {
     const {
       isAutorisation,

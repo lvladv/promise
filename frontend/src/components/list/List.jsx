@@ -21,8 +21,13 @@ import {
 
 class List extends Component {
   render() {
-    const { list, newStatus, openChangesCard, putItemChanges } = this.props;
-    console.log(list);
+    const {
+      list,
+      newStatus,
+      openChangesCard,
+      putItemChanges,
+      categoryList,
+    } = this.props;
     return (
       <Box>
         {list.map((item) => (
@@ -64,7 +69,17 @@ class List extends Component {
                 </Item>
                 <Item>
                   Категория:
-                  <span> {item.category}</span>
+                  <span>
+                    {" "}
+                    {categoryList.map((categoryItem) => {
+                      return (
+                        String(item.category) === String(categoryItem.id)
+                        ? categoryItem.name
+                        : null
+                      )
+                      
+                    })}
+                  </span>
                 </Item>
                 <Item>
                   Дедлайн:
@@ -93,6 +108,7 @@ class List extends Component {
 const mapStateToprops = (store) => {
   return {
     list: store.listReducer.list,
+    categoryList: store.categoryListReducer.categoryList,
   };
 };
 

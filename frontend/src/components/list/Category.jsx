@@ -23,7 +23,7 @@ export const Category = ({
     const { value } = e.target;
     putNewChangeCategory(value);
   };
-  console.log(category);
+  
   return (
     <div>
       <RadioGroup
@@ -34,7 +34,7 @@ export const Category = ({
         {categoryList.map((item) => (
           <FormControlLabel
             key={item.id}
-            value={item.id}
+            value={String(item.id)}
             control={<RadioBtn />}
             label={item.name}
           />
