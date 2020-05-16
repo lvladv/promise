@@ -14,6 +14,8 @@ try:
 except ImportError:
     from config.settings_prod import REST_URL
 
+from datetime import datetime
+
 
 TEST_USERNAME = 'testcase'
 TEST_PASSWORD = 'JKDbfh2f'
@@ -82,9 +84,9 @@ class RegistrationsTestCase(APITestCase):
         promise_data = {
             'name': 'example_name',
             'description': 'example_desc',
-            'deadline_row': '5 min',
+            'deadline': datetime.now(),
             'status': 'Y',
-            'importance': '3',
+            'importance': 'L',
             'iis_approved': False,
         }
         self.get_started()
@@ -110,19 +112,19 @@ class RegistrationsTestCase(APITestCase):
         promise_data = {
             'name': 'example_name',
             'description': 'example_desc',
-            'deadline_row': '5 hour',
+            'deadline': datetime.now(),
             'status': 'Y',
-            'importance': '3',
+            'importance': 'H',
             'iis_approved': False,
         }
 
         change_data = {
             'name': 'example_name',
             'status': 'Y',
-            'importance': '3',
+            'importance': 'M',
             'iis_approved': False,
             'description': 'example_desc',
-            'deadline_row': '5 hour',
+            'deadline': datetime.now(),
 
         }
         self.get_started()
@@ -148,7 +150,7 @@ class RegistrationsTestCase(APITestCase):
         # self.assertEqual(list_promise.data['count'], 1, list_promise.data['count'])
         self.assertEqual(list_promise.status_code, status.HTTP_200_OK, list_promise.status_code)
         # print(list_promise.data['results'][0])
-        self.assertEqual(len(list_promise.data['results'][0]), 13, list_promise.data)
+        self.assertEqual(len(list_promise.data['results'][0]), 12, list_promise.data)
         self.assertFalse(None in list_promise.data['results'][0])
         return slug
     #
