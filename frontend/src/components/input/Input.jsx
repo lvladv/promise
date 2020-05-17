@@ -1,107 +1,44 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { OpenNewCard } from "./OpenNewCard";
+import { openNewCard } from "../../store/openNewCard/action";
+import OpenNewCard from "./OpenNewCard";
 import List from "./../List/List";
-import { ChangesCard } from "./../List/ChangesCard";
-import { Grid, Button } from "@material-ui/core";
-import blueGrey from "@material-ui/core/colors/blueGrey";
-import { openNewCard, closeNewCard } from "../../store/openNewCard/action";
-import { newPointList, newStatus, changeItem } from "../../store/list/action";
+import ChangesCard from "./../List/ChangesCard";
 import {
-  openChangesCard,
-  closeChangesCard,
-  putItemChanges,
-  putNewItem,
-} from "../../store/ChangesCard/action";
+  SmallButton,
+  ListContainer,
 
-import { styled } from "@material-ui/core/styles";
-
-const SmallButton = styled(({ ...other }) => (
-  <Button variant="contained" {...other} />
-))({
-  background: blueGrey[400],
-  color: blueGrey[50],
-  minWwidth: "280px",
-  margin: "20px 0 30px 100px",
-});
+} from "./../../componentsStyled/Item.style";
 
 class Input extends Component {
   render() {
-    const {
-      list,
-      openNewCard,
-      isOpenNewCard,
-      closeNewCard,
-      newPointList,
-      newStatus,
-      openChangesCard,
-      closeChangesCard,
-      isOpenChangesCard,
-      putItemChanges,
-      itemChange,
-      putNewItem,
-      changeItem,
-    } = this.props;
+    const { openNewCard } = this.props;
+
     return (
-      <section>
-        <OpenNewCard
-          isOpenNewCard={isOpenNewCard}
-          closeNewCard={closeNewCard}
-          newPointList={newPointList}
-        />
-        <ChangesCard
-          closeChangesCard={closeChangesCard}
-          isOpenChangesCard={isOpenChangesCard}
-          itemChange={itemChange}
-          putNewItem={putNewItem}
-          changeItem={changeItem}
-        />
-        <div>
-          <SmallButton
-            onClick={() => {
-              openNewCard();
-            }}
-          >
-            Добавить новую запись
-          </SmallButton>
-        </div>
-        <Grid container direction="column" justify="center" alignItems="center">
-          <List
-            key={list.id}
-            newStatus={newStatus}
-            list={list}
-            openChangesCard={openChangesCard}
-            closeChangesCard={closeChangesCard}
-            isOpenChangesCard={isOpenChangesCard}
-            putItemChanges={putItemChanges}
-          />
-        </Grid>
-      </section>
+      <main>
+        <OpenNewCard />
+        <ChangesCard />
+
+        <SmallButton
+          onClick={() => {
+            openNewCard();
+          }}
+        >
+          Добавить новую запись
+        </SmallButton>
+
+        <ListContainer>
+          <List />
+        </ListContainer>
+      </main>
     );
   }
 }
 
-const mapStateToprops = (store) => {
-  return {
-    isOpenNewCard: store.newCardReducer.isOpenNewCard,
-    isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
-    itemChange: store.changesCardReducer.itemChange,
-    list: store.listReducer.list,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     openNewCard: () => dispatch(openNewCard()),
-    closeNewCard: () => dispatch(closeNewCard()),
-    openChangesCard: () => dispatch(openChangesCard()),
-    closeChangesCard: () => dispatch(closeChangesCard()),
-    newStatus: (newItem) => dispatch(newStatus(newItem)),
-    changeItem: (itemChange) => dispatch(changeItem(itemChange)),
-    putItemChanges: (itemChange) => dispatch(putItemChanges(itemChange)),
-    putNewItem: (name, value) => dispatch(putNewItem(name, value)),
-    newPointList: (name, description) =>
-      dispatch(newPointList(name, description)),
   };
 };
-export default connect(mapStateToprops, mapDispatchToProps)(Input);
+
+export default connect(null, mapDispatchToProps)(Input);

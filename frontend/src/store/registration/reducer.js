@@ -1,10 +1,20 @@
-import { REGISTRATION, INPUT_ERROR, ERROR_LOGIN, CLOSE_ERROR } from "./action";
+import {
+  REGISTRATION,
+  INPUT_ERROR,
+  ERROR,
+  CLOSE_ERROR,
+  OK_REGISTRATION,
+} from "./action";
 
 const initialState = {
   token: "",
+  okRegistration: false,
   errors: {
-    errorLogin: false,
     inputError: false,
+    error: false,
+    errorLoginValue: "",
+    errorEmailValue: "",
+    errorPasswordValue: "",
   },
 };
 
@@ -21,16 +31,32 @@ export const registrationReducer = (state = initialState, action) => {
         ...state,
         errors: { ...state.errors, inputError: true },
       };
-    case ERROR_LOGIN:
+    case ERROR:
       return {
         ...state,
-        errors: { ...state.errors, errorLogin: true },
+        errors: {
+          ...state.errors,
+          error: true,
+          errorLoginValue: action.login,
+          errorEmailValue: action.email,
+          errorPasswordValue: action.password,
+        },
+      };
+
+    case OK_REGISTRATION:
+      return {
+        ...state,
+        okRegistration: true,
       };
 
     case CLOSE_ERROR:
       return {
         ...state,
-        errors: { ...state.errors, errorLogin: false, inputError: false },
+        errors: {
+          ...state.errors,
+          error: false,
+          inputError: false,
+        },
       };
 
     default:

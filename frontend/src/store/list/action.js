@@ -1,8 +1,8 @@
+import { format } from "date-fns";
 export const GET_LIST = "GET_LIST";
 export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
 export const NEW_CHANGE = "NEW_CHANGE";
-
 export const newList = () => {
   return async (dispatch) => {
     let requestOptions = {
@@ -24,7 +24,14 @@ export const newList = () => {
   };
 };
 
-export const newPointList = (name, description) => {
+export const newPointList = (
+  name,
+  description,
+  importance,
+  deadline,
+  deadlineTime,
+  category
+) => {
   return async (dispatch) => {
     await dispatch({
       type: PUT_NEW_POINT_LIST,
@@ -32,16 +39,23 @@ export const newPointList = (name, description) => {
         id: Date.now(),
         name: name,
         description: description,
-        deadline_row: "3 min",
         status: "N",
+        importance: importance,
+        deadline: deadline + " " + deadlineTime,
+        category: category,
       },
     });
     let formData = new FormData();
-
+    let deadlineData = format(
+      new Date(deadline + " " + deadlineTime),
+      "yyyy-MM-dd hh:mm"
+    );
     formData.append("name", name);
     formData.append("description", description);
-    formData.append("deadline_row", "3 min");
     formData.append("status", "N");
+    formData.append("importance", importance);
+    formData.append("deadline", deadlineData);
+    formData.append("category", category);
 
     let requestOptions = {
       body: formData,
@@ -51,7 +65,7 @@ export const newPointList = (name, description) => {
       method: "POST",
     };
 
-   await fetch(
+    await fetch(
       `http://77.244.65.15:3527/api/v1/data/promise/new/`,
       requestOptions
     );
@@ -82,7 +96,6 @@ export const newStatus = (newItem) => {
   };
 };
 
-
 export const changeItem = (itemChange) => {
   return async (dispatch) => {
     await dispatch({
@@ -93,6 +106,9 @@ export const changeItem = (itemChange) => {
     let formData = new FormData();
     formData.append("name", itemChange.name);
     formData.append("description", itemChange.description);
+    formData.append("category", itemChange.category);
+    formData.append("importance", itemChange.importance);
+
     let requestOptions = {
       body: formData,
       headers: {
@@ -107,6 +123,3 @@ export const changeItem = (itemChange) => {
     );
   };
 };
-
-
-

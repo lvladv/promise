@@ -16,29 +16,32 @@ import {
   openAccauntMenu,
   closeAccauntMenu,
 } from "./store/entrance/action";
-
+import { newCategoryList } from "./store/category/action";
 import { newUser, closeErrorRegistration } from "./store/registration/action";
 import { newList } from "./store/list/action";
 import Grid from "@material-ui/core/Grid";
 
 class App extends Component {
   componentDidMount() {
-    const { isAutorisation, newTokenFromRefresh, newList } = this.props;
+    const {
+      isAutorisation,
+      newTokenFromRefresh,
+      newList,
+      newCategoryList,
+    } = this.props;
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
-
-    if (isAutorisation) {
-      newList();
-    }
-    newTokenFromRefresh();
     if (remember) {
+      newTokenFromRefresh();
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
       }
     }
+    if (isAutorisation) {
+      newCategoryList();
+      newList();
+    }
   }
-
-  // рендер -----------------------------------------------------------------------
 
   render() {
     const {
@@ -55,7 +58,9 @@ class App extends Component {
       exitAccaunt,
       errorAutorisation,
       closeError,
-      registerError,closeErrorRegistration
+      registerError,
+      closeErrorRegistration,
+      okRegistration,
     } = this.props;
 
     return (
@@ -91,6 +96,7 @@ class App extends Component {
                 registration={registration}
                 registerError={registerError}
                 closeErrorRegistration={closeErrorRegistration}
+                okRegistration={okRegistration}
               />
             )}
           </Grid>
@@ -113,6 +119,7 @@ const mapStateToprops = (store) => {
     entrance: store.changeEntranceReduser.entrance,
     accauntMenu: store.changeEntranceReduser.accauntMenu,
     registerError: store.registrationReducer.errors,
+    okRegistration: store.registrationReducer.okRegistration,
   };
 };
 
@@ -131,25 +138,7 @@ const mapDispatchToProps = (dispatch) => {
     exitAccaunt: () => dispatch(exitAccaunt()),
     closeError: () => dispatch(closeError()),
     closeErrorRegistration: () => dispatch(closeErrorRegistration()),
+    newCategoryList: () => dispatch(newCategoryList()),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(App);
-
-// toCompleted = id => {
-
-//   const { list, completedList } = this.state;
-//   this.setState(() =>
-//     // eslint-disable-next-line
-//     list.map((item, index) => {
-//       if (item.id === id) {
-//         completedList.push(
-//           id: Date.now(),
-//           description: item.description,
-//           status: "no"
-//         });
-//         list.splice(index, 1);
-//       }
-//     })
-//   );
-//   console.log(completedList);
-// };
