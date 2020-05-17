@@ -61,7 +61,11 @@ export const newTokenFromRefresh = () => {
         type: PUT_NEW_TOKEN_FROM_REFRESH,
         payload: `Bearer ${newToken.access}`,
       });
-    
+    } else {
+      await localStorage.clear();
+      await dispatch({
+        type: ERROR_REQUEST,
+      });
     }
   };
 };
@@ -73,8 +77,8 @@ export function exitAccaunt() {
   };
 }
 
-export function closeError(){
-  return{
-    type: CLOSE_ERROR
-  }
+export function closeError() {
+  return {
+    type: CLOSE_ERROR,
+  };
 }

@@ -31,8 +31,8 @@ class App extends Component {
     } = this.props;
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
-    newTokenFromRefresh();
     if (remember) {
+      newTokenFromRefresh();
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
       }
