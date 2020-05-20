@@ -12,7 +12,10 @@ const AlertError = styled(Alert)({
   background: "#e57373",
 });
 
-export const ErrorRegistration = ({ registerError,closeErrorRegistration }) => {
+export const ErrorRegistration = ({
+  registerError,
+  closeErrorRegistration,
+}) => {
   return (
     <span>
       <Snackbar
@@ -20,7 +23,7 @@ export const ErrorRegistration = ({ registerError,closeErrorRegistration }) => {
           vertical: "bottom",
           horizontal: "center",
         }}
-        open={registerError.errorLogin}
+        open={registerError.error}
         autoHideDuration={6000}
       >
         <AlertError
@@ -38,16 +41,18 @@ export const ErrorRegistration = ({ registerError,closeErrorRegistration }) => {
             </React.Fragment>
           }
         >
-          Такой логин занят
+          <span>{registerError.errorLoginValue}</span>
+          <span>{registerError.errorEmailValue}</span>
+          <span>{registerError.errorPasswordValue}</span>
         </AlertError>
       </Snackbar>
 
-{/* ---------------------------------- */}
+      {/* ---------------------------------- */}
 
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "center",
         }}
         open={registerError.inputError}
         autoHideDuration={6000}
@@ -67,9 +72,10 @@ export const ErrorRegistration = ({ registerError,closeErrorRegistration }) => {
             </React.Fragment>
           }
         >
-          Нарушены правила регистрации
+          Нарушены правила регистраци
         </AlertError>
       </Snackbar>
+      {/* ---------------------- */}
     </span>
   );
 };

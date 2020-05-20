@@ -2,12 +2,12 @@ import isEmail from "validator/lib/isEmail";
 
 export const REGISTRATION = "REGISTRATION";
 export const INPUT_ERROR = "INPUT_ERROR";
-export const ERROR_LOGIN = "ERROR_LOGIN";
+export const ERROR = "ERROR";
 export const CLOSE_ERROR = "CLOSE_ERROR";
+export const OK_REGISTRATION = "OK_REGISTRATION";
 
 export const newUser = (newEmail, newUsername, newPassword) => {
   return async (dispatch) => {
-    console.log(newPassword.length);
     if (
       newEmail !== "" &&
       isEmail(newEmail) &&
@@ -31,11 +31,19 @@ export const newUser = (newEmail, newUsername, newPassword) => {
         requestOptions
       );
       let autor = await response.json();
-      console.log(autor);
-      if ((autor.username = "A user with that username already exists.")) {
+
+      if (response.ok) {
         await dispatch({
-          type: ERROR_LOGIN,
+          type: OK_REGISTRATION,
         });
+      } else if (!response.ok) {
+        await dispatch({
+          type: ERROR,
+          login: autor.username,
+          email: autor.email,
+          password: autor.password,
+        });
+        console.log(autor);
       }
     } else {
       await dispatch({

@@ -1,8 +1,9 @@
 import React, { createRef } from "react";
-import { Button, TextField, Grid, Typography } from "@material-ui/core";
-import blueGrey from "@material-ui/core/colors/blueGrey";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { ErrorAutorisation } from "./Error";
+import { Typography, Button, TextField, Grid } from "@material-ui/core";
+import blueGrey from "@material-ui/core/colors/blueGrey";
+import { ErrorRegistration } from "./Error";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "25em",
@@ -22,6 +23,10 @@ const InputTextField = withStyles({
       borderColor: blueGrey[600],
       borderWidth: 1,
     },
+    "& input:valid + fieldset": {
+      borderColor: blueGrey[600],
+      borderWidth: 1,
+    },
     "& input:invalid + fieldset": {
       borderColor: blueGrey[200],
       borderWidth: 2,
@@ -29,7 +34,7 @@ const InputTextField = withStyles({
     "& input:valid:focus + fieldset": {
       bordertWidth: 4,
       borderColor: blueGrey[200],
-      padding: "4px !important", // override inline-style
+      padding: "4px !important",
     },
     "& coreel.Mui-focused": {
       color: blueGrey[700],
@@ -37,64 +42,76 @@ const InputTextField = withStyles({
   },
 })(TextField);
 
-const Autorisation = ({
-  autorisation,
-  newList,
-  errorAutorisation,
-  closeError,
+const InputRegistration = ({
+  registration,
+  registerError,
+  closeErrorRegistration,
 }) => {
-  const loginValue = createRef();
-  const passwordValue = createRef();
+  const neweEmaildValue = createRef();
+  const newLoginValue = createRef();
+  const newPasswordValue = createRef();
   const classes = useStyles();
 
-  const toAutrosation = async () => {
-    await autorisation(loginValue.current.value, passwordValue.current.value);
-    await newList();
+  const toAutrosation = () => {
+    registration(
+      neweEmaildValue.current.value,
+      newLoginValue.current.value,
+      newPasswordValue.current.value
+    );
   };
 
   return (
-    <div className={classes.root}>
+    <div className="autor">
       <Grid
         container
         direction="column"
-        alignItems="center"
-        justify="flex-start"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
             toAutrosation();
           }
         }}
+        alignItems="center"
+        justify="flex-start"
       >
         <Typography variant="h2" gutterBottom className={classes.color}>
-          Авторизация
+          Регистрация
         </Typography>
 
         <InputTextField
-          className={classes.root}
           id="outlined"
           placeholder="Логин"
           variant="outlined"
-          inputRef={loginValue}
-        />
-        <InputTextField
+          inputRef={newLoginValue}
           className={classes.root}
-          id="outlined-password-input"
-          placeholder="Password"
-          type="password"
-          autoComplete="current-password"
+        />
+
+        <InputTextField
+          id="outlined"
+          placeholder="Почта"
           variant="outlined"
-          inputRef={passwordValue}
+          type="email"
+          inputRef={neweEmaildValue}
+          className={classes.root}
+        />
+
+        <InputTextField
+          id="outlined"
+          placeholder="Пароль"
+          variant="outlined"
+          type="password"
+          inputRef={newPasswordValue}
+          className={classes.root}
         />
         <Button size="large" className={classes.root} onClick={toAutrosation}>
-          Авторизоваться
+          Создать
         </Button>
       </Grid>
-      <ErrorAutorisation
-        errorAutorisation={errorAutorisation}
-        closeError={closeError}
+      <ErrorRegistration
+        registerError={registerError}
+        closeErrorRegistration={closeErrorRegistration}
       />
     </div>
   );
 };
 
-export default Autorisation;
+export default InputRegistration;

@@ -1,153 +1,183 @@
-import React, { createRef } from "react";
-import { makeStyles, withStyles, styled } from "@material-ui/core/styles";
-import blueGrey from "@material-ui/core/colors/blueGrey";
-import CloseIcon from "@material-ui/icons/Close";
+import React, { createRef, Component } from "react";
+import { connect } from "react-redux";
+import { Deadline } from "./Deadline";
+import { Category } from "./Category";
+import { Drawer, RadioGroup, FormControlLabel } from "@material-ui/core";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-  IconButton,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+  closeNewCard,
+  importanceChange,
+  deadlineChange,
+  deadlineTimeChange,
+  openNewCategory,
+} from "../../store/openNewCard/action";
+import { putNewCategory, categoryChange } from "./../../store/category/action";
+import { newPointList } from "../../store/list/action";
+import CloseIcon from "@material-ui/icons/Close";
 
-const Title = styled(({ ...other }) => (
-  <Typography variant="h5" gutterBottom {...other} />
-))({
-  color: blueGrey[400],
-});
-const Point = styled(({ ...other }) => (
-  <Typography variant="h6" gutterBottom {...other} />
-))({
-  color: blueGrey[500],
-});
+import {
+  Box,
+  СloseButton,
+  Title,
+  Point,
+  SubmitButton,
+  Input,
+  BorderBox,
+  RadioBtn,
+} from "../../componentsStyled/OpenNewCard.style";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: "34em",
-    width: "100%",
-    "& > *": {
-      margin: theme.spacing(2),
-      color: blueGrey[300],
-    },
-  },
+class OpenNewCard extends Component {
+  inputDescription = createRef();
+  inputName = createRef();
 
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
-}));
+  handleChangeImportance = (e) => {
+    const { value } = e.target;
+    this.props.importanceChange(value);
+  };
+  render() {
+    const {
+      isOpenNewCard,
+      closeNewCard,
+      newPointList,
+      importance,
+      deadline,
+      deadlineTime,
+      deadlineChange,
+      deadlineTimeChange,
+      newCategory,
+      openNewCategory,
+      putNewCategory,
+      categoryList,
+      category,
+      categoryChange,
+    } = this.props;
 
-const InputTextField = withStyles({
-  root: {
-    "& input:valid + fieldset,": {
-      borderColor: blueGrey[500],
-      borderWidth: 1,
-    },
-    "& input:invalid + fieldset": {
-      borderColor: blueGrey[200],
-      borderWidth: 2,
-    },
-    "& input:valid:focus + fieldset": {
-      bordertWidth: 4,
-      borderColor: blueGrey[200],
-      padding: "4px !important",
-    },
-    "& coreel.Mui-focused": {
-      color: blueGrey[700],
-    },
+    return (
+      <Drawer
+        anchor="right"
+        open={isOpenNewCard}
+        onClose={() => {
+          closeNewCard();
+        }}
+      >
+        <Box>
+          <Title>Новая задача</Title>
+          {/* eslint-disable-next-line */}
+          <СloseButton onClick={() => closeNewCard()}>
+            <CloseIcon />
+          </СloseButton>
 
-    "& textarea + fieldset,": {
-      borderColor: blueGrey[500],
-      borderWidth: 1,
-    },
-    "& textarea + fieldset": {
-      borderColor: blueGrey[200],
-      borderWidth: 1,
-    },
+          <Point>Название: </Point>
+          <Input inputRef={this.inputName} />
 
-    "& textarea:valid:focus + fieldset": {
-      bordertWidth: 4,
-      borderColor: blueGrey[200],
-      padding: "4px !important",
-    },
-  },
-})(TextField);
+          <Point>Описание: </Point>
+          <Input inputRef={this.inputDescription} multiline rows="5" />
 
-export const OpenNewCard = ({ isOpenNewCard, closeNewCard, newPointList }) => {
-  const classes = useStyles();
-  const inputDescription = createRef();
-  const inputName = createRef();
-  return (
-    <Dialog
-      id="customized-dialog-title"
-      fullWidth={true}
-      maxWidth={"sm"}
-      anchor="top"
-      open={isOpenNewCard}
-      onClose={() => {
-        closeNewCard();
-      }}
-      style={{ background: "#78ubb3" }}
-    >
-      <DialogTitle id="customized-dialog-title">
-        <Title>Новая задача</Title>
-        <IconButton
-          className={classes.closeButton}
-          onClick={() => closeNewCard()}
-        >
-          <CloseIcon />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Введите название и описание карточки
-        </DialogContentText>
+          <Point>Дедлайн: </Point>
+          <BorderBox>
+            <Deadline
+              deadline={deadline}
+              deadlineChange={deadlineChange}
+              deadlineTimeChange={deadlineTimeChange}
+              deadlineTime={deadlineTime}
+            />
+          </BorderBox>
 
-        <InputTextField
-          coreel="Название"
-          variant="outlined"
-          className={classes.root}
-          inputRef={inputName}
-        />
+          <Point>Категории: </Point>
+          <BorderBox>
+            <Category
+              newCategory={newCategory}
+              openNewCategory={openNewCategory}
+              putNewCategory={putNewCategory}
+              categoryList={categoryList}
+              category={category}
+              categoryChange={categoryChange}
+            />
+          </BorderBox>
+          <Point>Уровень значимости: </Point>
+          <BorderBox>
+            <RadioGroup
+              name="importance"
+              value={importance}
+              onChange={this.handleChangeImportance}
+            >
+              <FormControlLabel
+                value="L"
+                control={<RadioBtn />}
+                label="Не важно"
+              />
+              <FormControlLabel
+                value="M"
+                control={<RadioBtn />}
+                label="Важно"
+              />
+              <FormControlLabel
+                value="H"
+                control={<RadioBtn />}
+                label="Очень важно"
+              />
+            </RadioGroup>
+          </BorderBox>
+          <SubmitButton
+            onClick={() => {
+              newPointList(
+                this.inputName.current.value,
+                this.inputDescription.current.value,
+                importance,
+                deadline,
+                deadlineTime,
+                category
+              );
+              closeNewCard();
+            }}
+          >
+            Добавить
+          </SubmitButton>
+        </Box>
+      </Drawer>
+    );
+  }
+}
 
-        <InputTextField
-          className={classes.root}
-          coreel="Описание"
-          variant="outlined"
-          inputRef={inputDescription}
-          multiline
-          rows="5"
-        />
-
-        <Point>Установить делайн</Point>
-      </DialogContent>
-
-      <DialogActions className={classes.buttonPosition}>
-        <Button
-          id="standard-multiline-flexible"
-          variant="contained"
-          style={{
-            background: blueGrey[400],
-            color: blueGrey[50],
-            minWidth: 280,
-          }}
-          onClick={() => {
-            newPointList(
-              inputName.current.value,
-              inputDescription.current.value
-            );
-            closeNewCard();
-          }}
-        >
-          Добавить
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+const mapStateToprops = (store) => {
+  return {
+    isOpenNewCard: store.newCardReducer.isOpenNewCard,
+    importance: store.newCardReducer.importance,
+    deadline: store.newCardReducer.deadline,
+    deadlineTime: store.newCardReducer.deadlineTime,
+    newCategory: store.newCardReducer.newCategory,
+    categoryList: store.categoryListReducer.categoryList,
+    category: store.categoryListReducer.category,
+  };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    closeNewCard: () => dispatch(closeNewCard()),
+    putNewCategory: (name) => dispatch(putNewCategory(name)),
+    openNewCategory: () => dispatch(openNewCategory()),
+    importanceChange: (value) => dispatch(importanceChange(value)),
+    categoryChange: (value) => dispatch(categoryChange(value)),
+    deadlineChange: (date) => dispatch(deadlineChange(date)),
+    deadlineTimeChange: (time) => dispatch(deadlineTimeChange(time)),
+    newPointList: (
+      name,
+      description,
+      importance,
+      deadline,
+      deadlineTime,
+      category
+    ) =>
+      dispatch(
+        newPointList(
+          name,
+          description,
+          importance,
+          deadline,
+          deadlineTime,
+          category
+        )
+      ),
+  };
+};
+
+export default connect(mapStateToprops, mapDispatchToProps)(OpenNewCard);
