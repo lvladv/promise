@@ -45,10 +45,11 @@ export const newPointList = (
         category: category,
       },
     });
+    console.log(deadlineTime)
     let formData = new FormData();
     let deadlineData = format(
       new Date(deadline + " " + deadlineTime),
-      "yyyy-MM-dd hh:mm"
+      "yyyy-MM-dd HH:mm"
     );
     formData.append("name", name);
     formData.append("description", description);
