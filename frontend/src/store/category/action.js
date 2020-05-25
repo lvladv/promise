@@ -1,3 +1,4 @@
+import {url} from "./../url"
 export const GET_CATEGORY_LIST = "GET_CATEGORY_LIST";
 export const PUT_NEW_CATEGORY = "PUT_NEW_CATEGORY";
 export const CATEGORY_CHANGE = "CATEGORY_CHANGE";
@@ -12,7 +13,7 @@ export const newCategoryList = () => {
     };
 
     let response = await fetch(
-      ` http://77.244.65.15:3527/api/v1/data/category/`,
+      ` http://${url}/api/v1/data/category/`,
       requestOptions
     );
     let list = await response.json();
@@ -45,7 +46,7 @@ export const putNewCategory = (name) => {
     };
 
     await fetch(
-      `http://77.244.65.15:3527/api/v1/data/category/new/`,
+      `http://${url}/api/v1/data/category/new/`,
       requestOptions
     );
   };

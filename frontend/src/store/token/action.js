@@ -1,3 +1,4 @@
+import {url} from "./../url"
 export const PUT_NEW_TOKEN = "PUT_NEW_TOKEN";
 export const PUT_NEW_TOKEN_FROM_REFRESH = "PUT_NEW_TOKEN_FROM_REFRESH";
 export const ERROR_REQUEST = "ERROR_REQUEST";
@@ -15,7 +16,7 @@ export const newToken = (username, password) => {
       body: formData,
     };
     let response = await fetch(
-      `http://77.244.65.15:3527/api/v1/data/auth/jwt/create/`,
+      `http://${url}/api/v1/data/auth/jwt/create/`,
       requestOptions
     );
     let autor = await response.json();
@@ -49,7 +50,7 @@ export const newTokenFromRefresh = () => {
     };
 
     let resp = await fetch(
-      `http://77.244.65.15:3527/api/v1/data/auth/jwt/refresh/`,
+      `http://${url}/api/v1/data/auth/jwt/refresh/`,
       requestOptions2
     );
 
