@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import {url} from "./../url"
 export const GET_LIST = "GET_LIST";
 export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
@@ -13,7 +14,7 @@ export const newList = () => {
     };
 
     let response = await fetch(
-      `http://77.244.65.15:3527/api/v1/data/promise/`,
+      `http://${url}/api/v1/data/promise/`,
       requestOptions
     );
     let list = await response.json();
@@ -67,7 +68,7 @@ export const newPointList = (
     };
 
     await fetch(
-      `http://77.244.65.15:3527/api/v1/data/promise/new/`,
+      `http://${url}/api/v1/data/promise/new/`,
       requestOptions
     );
   };
@@ -91,7 +92,7 @@ export const newStatus = (newItem) => {
     };
 
     await fetch(
-      `http://77.244.65.15:3527/api/v1/data/promise/${newItem.slug}/`,
+      `http://${url}/api/v1/data/promise/${newItem.slug}/`,
       requestOptions
     );
   };
@@ -119,7 +120,7 @@ export const changeItem = (itemChange) => {
     };
 
     await fetch(
-      `http://77.244.65.15:3527/api/v1/data/promise/${itemChange.slug}/`,
+      `http://${url}/api/v1/data/promise/${itemChange.slug}/`,
       requestOptions
     );
   };

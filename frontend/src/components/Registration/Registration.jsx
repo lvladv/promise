@@ -1,25 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import InputRegistration from "./InputRegistration";
-import {GoodRegistration} from "./OkRegistration";
-const Registration = ({
-  registration,
-  registerError,
-  closeErrorRegistration,
-  okRegistration,
-}) => {
-  return (
-    <React.Fragment>
-      {okRegistration ? (
-        <GoodRegistration />
-      ) : (
-        <InputRegistration
-          registration={registration}
-          registerError={registerError}
-          closeErrorRegistration={closeErrorRegistration}
-        />
-      )}
-    </React.Fragment>
-  );
+import { GoodRegistration } from "./OkRegistration";
+import { newUser, closeErrorRegistration } from "./../../store/registration/action";
+
+class Registration extends Component {
+  render() {
+    const { registration, registerError, closeErrorRegistration } = this.props;
+    return (
+      <React.Fragment>
+        {this.props.okRegistration ? (
+          <GoodRegistration />
+        ) : (
+          <InputRegistration
+            registration={registration}
+            registerError={registerError}
+            closeErrorRegistration={closeErrorRegistration}
+          />
+        )}
+      </React.Fragment>
+    );
+  }
+}
+
+const mapStateToProps = (store) => {
+  return {
+    registerError: store.registrationReducer.errors,
+    okRegistration: store.registrationReducer.okRegistration,
+  };
 };
 
-export default Registration;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    registration: (newEmail, newUsername, newPassword) =>
+      dispatch(newUser(newEmail, newUsername, newPassword)),
+    closeErrorRegistration: () => dispatch(closeErrorRegistration()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Registration);
