@@ -8,7 +8,7 @@
 # testing
 /coverage
 
-/src/store/url.js
+# /src/store/url.js
 # misc
 .DS_Store
 .env.local
