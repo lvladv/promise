@@ -8,12 +8,25 @@ export const SmallButton = styled(({ ...other }) => (
 ))({
   background: blueGrey[400],
   color: blueGrey[50],
-  minWwidth: "280px",
-  margin: "20px 10%",
+  maxWidth: "280px",
+
 });
 
 export const ListContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+});
+
+export const HeadBlock = styled("div")({
+  width: "80%",
+  height: "auto",
+  margin: "20px auto",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "spaceBetween",
+});
+export const ButtonBlock = styled("div")({
+  flexGrow: 1,
 });

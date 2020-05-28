@@ -1,9 +1,12 @@
 import { format } from "date-fns";
-import {url} from "./../url"
+import { url } from "./../url";
 export const GET_LIST = "GET_LIST";
 export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
 export const NEW_CHANGE = "NEW_CHANGE";
+export const SET_PAGE = "SET_PAGE";
+
+
 export const newList = () => {
   return async (dispatch) => {
     let requestOptions = {
@@ -17,10 +20,35 @@ export const newList = () => {
       `http://${url}/api/v1/data/promise/`,
       requestOptions
     );
+
     let list = await response.json();
     await dispatch({
       type: GET_LIST,
       payload: list.results,
+      page: list,
+    });
+  };
+};
+
+export const setPage = (value) => {
+  return async (dispatch) => {
+    let requestOptions = {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("Authorization"),
+      },
+    };
+
+    let response = await fetch(
+      `http://${url}/api/v1/data/promise/?page=${value}`,
+      requestOptions
+    );
+
+    let list = await response.json();
+    await dispatch({
+      type: SET_PAGE,
+      payload: list.results,
+      pageNumber: value
     });
   };
 };
@@ -46,7 +74,7 @@ export const newPointList = (
         category: category,
       },
     });
-    console.log(deadlineTime)
+    console.log(deadlineTime);
     let formData = new FormData();
     let deadlineData = format(
       new Date(deadline + " " + deadlineTime),
@@ -67,10 +95,7 @@ export const newPointList = (
       method: "POST",
     };
 
-    await fetch(
-      `http://${url}/api/v1/data/promise/new/`,
-      requestOptions
-    );
+    await fetch(`http://${url}/api/v1/data/promise/new/`, requestOptions);
   };
 };
 

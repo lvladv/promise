@@ -28,7 +28,8 @@ class List extends Component {
       putItemChanges,
       categoryList,
     } = this.props;
-   
+
+
     return (
       <Box>
         {list.map((item) => (
