@@ -11,7 +11,8 @@ import blueGrey from "@material-ui/core/colors/blueGrey";
 
 export const Box = styled("div")({
   width: "80%",
-
+  marginTop: "120px",
+  zIndex: "100",
 });
 export const ButtonBlock = styled("div")({
   width: "100%",

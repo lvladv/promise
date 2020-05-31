@@ -22,7 +22,7 @@ class Input extends Component {
     const pageCount = Math.ceil(page.count / 15);
     console.log(page);
     return (
-      <main>
+      <main style={{ flexGrow: 1 }}>
         <OpenNewCard />
         <ChangesCard />
         <HeadBlock>

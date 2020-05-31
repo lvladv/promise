@@ -7,6 +7,7 @@ import {changeEntranceReduser} from "./entrance/reducer"
 import {changesCardReducer} from "./ChangesCard/reducer"
 import {registrationReducer} from "./registration/reducer"
 import {categoryListReducer} from "./category/reducer"
+import {menuReducer} from "./menu/reducer"
 
 export const rootReducer = combineReducers({
     tokenReducer: tokenReducer,
@@ -17,4 +18,5 @@ export const rootReducer = combineReducers({
     changesCardReducer: changesCardReducer,
     registrationReducer: registrationReducer,
     categoryListReducer: categoryListReducer,
+    menuReducer: menuReducer,
 })

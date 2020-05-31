@@ -4,6 +4,7 @@ import {
   NEW_STATUS,
   NEW_CHANGE,
   SET_PAGE,
+  FILTER_STATUS_LIST,
 } from "./action";
 
 const initialState = {
@@ -26,6 +27,12 @@ export const listReducer = (state = initialState, action) => {
         ...state,
         list: action.payload,
         pageNumber: action.pageNumber,
+      };
+
+    case FILTER_STATUS_LIST:
+      return {
+        ...state,
+        list: action.payload,
       };
 
     case PUT_NEW_POINT_LIST:

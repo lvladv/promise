@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Input from "./components/Input/Input";
 import Header from "./components/Header/Header";
 import Registration from "./components/Registration/Registration";
@@ -7,11 +7,10 @@ import { connect } from "react-redux";
 import { newTokenFromRefresh } from "./store/token/action";
 import { newCategoryList } from "./store/category/action";
 import { newList } from "./store/list/action";
-import { Container, AuthBox } from "./componentsStyled/App.style";
-
+import { Container, AuthBox, Main } from "./componentsStyled/App.style";
+import Menu from "./components/Menu/Menu";
 class App extends Component {
-  
-  componentDidMount() {
+  componentWillMount() {
     const {
       isAutorisation,
       newTokenFromRefresh,
@@ -20,9 +19,8 @@ class App extends Component {
     } = this.props;
     const remember = localStorage.getItem("remember") === "true";
     const tokenData = localStorage.getItem("tokenData");
-
+    newTokenFromRefresh();
     if (remember) {
-      newTokenFromRefresh();
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
       }
@@ -45,9 +43,10 @@ class App extends Component {
             {entrance ? <Authorisation newList={newList} /> : <Registration />}
           </AuthBox>
         ) : (
-          <Fragment>
+          <Main>
+            <Menu />
             <Input />
-          </Fragment>
+          </Main>
         )}
       </Container>
     );

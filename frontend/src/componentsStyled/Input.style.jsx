@@ -9,7 +9,6 @@ export const SmallButton = styled(({ ...other }) => (
   background: blueGrey[400],
   color: blueGrey[50],
   maxWidth: "280px",
-
 });
 
 export const ListContainer = styled("div")({
@@ -19,13 +18,16 @@ export const ListContainer = styled("div")({
 });
 
 export const HeadBlock = styled("div")({
-  width: "80%",
+  position: "fixed",
+  width: "calc(80% - 240px)",
   height: "auto",
-  margin: "20px auto",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
-  justifyContent: "spaceBetween",
+  padding: "20px 10%",
+  margin: "55px auto",
+  zIndex: "200",
+  background: "#f7f7f7",
 });
 export const ButtonBlock = styled("div")({
   flexGrow: 1,

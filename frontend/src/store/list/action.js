@@ -5,17 +5,17 @@ export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
 export const NEW_CHANGE = "NEW_CHANGE";
 export const SET_PAGE = "SET_PAGE";
+export const FILTER_STATUS_LIST = "FILTER_STATUS_LIST";
 
+const requestOptions = {
+  method: "GET",
+  headers: {
+    Authorization: localStorage.getItem("Authorization"),
+  },
+};
 
 export const newList = () => {
   return async (dispatch) => {
-    let requestOptions = {
-      method: "GET",
-      headers: {
-        Authorization: localStorage.getItem("Authorization"),
-      },
-    };
-
     let response = await fetch(
       `http://${url}/api/v1/data/promise/`,
       requestOptions
@@ -32,23 +32,29 @@ export const newList = () => {
 
 export const setPage = (value) => {
   return async (dispatch) => {
-    let requestOptions = {
-      method: "GET",
-      headers: {
-        Authorization: localStorage.getItem("Authorization"),
-      },
-    };
-
     let response = await fetch(
       `http://${url}/api/v1/data/promise/?page=${value}`,
       requestOptions
     );
-
     let list = await response.json();
     await dispatch({
       type: SET_PAGE,
       payload: list.results,
-      pageNumber: value
+      pageNumber: value,
+    });
+  };
+};
+
+export const filterStatusList = (value) => {
+  return async (dispatch) => {
+    let response = await fetch(
+      `http://${url}/api/v1/data/promise/?status=${value}`,
+      requestOptions
+    );
+    let list = await response.json();
+    await dispatch({
+      type: FILTER_STATUS_LIST,
+      payload: list.results,
     });
   };
 };
