@@ -21,6 +21,8 @@ class PromisePaginations(pagination.PageNumberPagination):
 class PromiseFilter(rest_filter.FilterSet):
     # slug = rest_filter.CharFilter(field_name='slug', lookup_expr='icontains')
     status = rest_filter.CharFilter(field_name='status', lookup_expr='icontains')
+    importance = rest_filter.CharFilter(field_name='importance', lookup_expr='icontains')
+    category = rest_filter.CharFilter(field_name='category')
     owner = rest_filter.CharFilter(field_name='owner_id__username')
     # promise_name = rest_filter.CharFilter(field_name='name', lookup_expr='icontains')
 
