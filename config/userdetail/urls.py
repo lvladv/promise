@@ -8,7 +8,9 @@ from django.urls import path
 urlpatterns = [
     url(r'^users/$', UserList.as_view()),
     url(r'^users/(?P<pk>[0-9]+)/$', UserDetail.as_view()),
-    url(r'category/$', CategoryListView.as_view()),
-    url(r'category/new/$', CategoryCreateView.as_view()),
+    url(r'^category/$', CategoryListView.as_view()),
+    url(r'^category/new/$', CategoryCreateView.as_view()),
+    url(r'^category/(?P<pk>[0-9]+)/$', CategoryDetailView.as_view()),
+    # path(r'category/<pk>/', CategoryDetailView.as_view()),
 
 ]
