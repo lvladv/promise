@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,KACE,QAAS,CACT,SAAU,CACV,wBAAyB,CACzB,6BAAiC,CACjC,qBACF","file":"main.a2942bf6.chunk.css","sourcesContent":["body {\r\n  margin: 0;\r\n  padding: 0;\r\n  background-color: #f7f7f7;\r\n  font-family: \"Roboto\", sans-serif;\r\n  box-sizing: border-box;\r\n}\r\n\r\n"]}

@@ -1,7 +1,18 @@
-import { GET_LIST, PUT_NEW_POINT_LIST, NEW_STATUS, NEW_CHANGE } from "./action";
+import {
+  GET_LIST,
+  PUT_NEW_POINT_LIST,
+  NEW_STATUS,
+  NEW_CHANGE,
+  SET_PAGE,
+  FILTER_LIST,
+  OPEN_PARAMETERS,
+} from "./action";
 
 const initialState = {
   list: [],
+  page: {},
+  pageNumber: 1,
+  parameters: false
 };
 
 export const listReducer = (state = initialState, action) => {
@@ -10,7 +21,30 @@ export const listReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload,
+        page: action.page,
+        parameters: false,
       };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        list: action.payload,
+        pageNumber: action.pageNumber,
+      };
+
+    case FILTER_LIST:
+      return {
+        ...state,
+        list: action.payload,
+        parameters: false,
+      };
+
+    case OPEN_PARAMETERS:
+      return {
+        ...state,
+        parameters: true,
+      };
+
     case PUT_NEW_POINT_LIST:
       return {
         ...state,

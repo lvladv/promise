@@ -3,7 +3,6 @@ import {
   OPEN_REGISTRATION,
   OPEN_ACCAUNT_MENU,
   CLOSE_ACCAUNT_MENU,
-
 } from "./action";
 
 const initialState = {

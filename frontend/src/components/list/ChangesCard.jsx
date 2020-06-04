@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { Drawer, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { connect } from "react-redux";
-import { Category } from "./Category";
+import { Category } from "./CategoryList";
 import {
   closeChangesCard,
   putNewItem,
@@ -10,8 +10,6 @@ import {
   putHandleChangeImportance,
 } from "../../store/ChangesCard/action";
 import { changeItem } from "../../store/list/action";
-import { openNewCategory } from "../../store/openNewCard/action";
-import { putNewCategory } from "./../../store/category/action";
 import {
   Box,
   СloseButton,
@@ -38,9 +36,6 @@ class ChangesCard extends Component {
       isOpenChangesCard,
       itemChange,
       changeItem,
-      openNewCategory,
-      newCategory,
-      putNewCategory,
       categoryList,
       putNewChangeCategory,
     } = this.props;
@@ -55,7 +50,7 @@ class ChangesCard extends Component {
       >
         <Box>
           <Title>Изменить задачу</Title>
-           {/* eslint-disable-next-line */}
+          {/* eslint-disable-next-line */}
           <СloseButton onClick={() => closeChangesCard()}>
             <CloseIcon />
           </СloseButton>
@@ -75,9 +70,6 @@ class ChangesCard extends Component {
           <Point>Категории: </Point>
           <BorderBox>
             <Category
-              newCategory={newCategory}
-              openNewCategory={openNewCategory}
-              putNewCategory={putNewCategory}
               categoryList={categoryList}
               category={itemChange.category}
               putNewChangeCategory={putNewChangeCategory}
@@ -125,19 +117,15 @@ const mapStateToprops = (store) => {
   return {
     isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
     itemChange: store.changesCardReducer.itemChange,
-    newCategory: store.newCardReducer.newCategory,
     categoryList: store.categoryListReducer.categoryList,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    putNewCategory: (name) => dispatch(putNewCategory(name)),
     putNewChangeCategory: (value) => dispatch(putNewChangeCategory(value)),
     putHandleChangeImportance: (value) =>
       dispatch(putHandleChangeImportance(value)),
-
-    openNewCategory: () => dispatch(openNewCategory()),
     closeChangesCard: () => dispatch(closeChangesCard()),
     changeItem: (itemChange) => dispatch(changeItem(itemChange)),
     putNewItem: (name, value) => dispatch(putNewItem(name, value)),

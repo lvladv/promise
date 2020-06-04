@@ -28,7 +28,6 @@ class List extends Component {
       putItemChanges,
       categoryList,
     } = this.props;
-   
     return (
       <Box>
         {list.map((item) => (
@@ -71,14 +70,10 @@ class List extends Component {
                 <Item>
                   Категория:
                   <span>
-                    {" "}
                     {categoryList.map((categoryItem) => {
-                      return (
-                        String(item.category) === String(categoryItem.id)
+                      return String(item.category) === String(categoryItem.id)
                         ? categoryItem.name
-                        : null
-                      )
-                      
+                        : "";
                     })}
                   </span>
                 </Item>

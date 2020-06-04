@@ -15,16 +15,10 @@ export const BorderBox = styled("div")({
   padding: "10px",
 });
 
-
 export const СloseButton = styled(IconButton)({
   position: "absolute",
   right: 0,
   top: 0,
-});
-
-export const AddButton = styled(IconButton)({
-  color: blueGrey[600],
-  background: blueGrey[50],
 });
 
 export const Title = styled("span")({
@@ -44,15 +38,6 @@ export const SubmitButton = styled(({ ...other }) => (
   margin: "20px 0 10px",
   background: blueGrey[400],
   color: blueGrey[50],
-  width: "100%",
-});
-
-export const AddCategoryButton = styled(({ ...other }) => (
-  <Button variant="outlined" {...other} />
-))({
-  margin: "10px 0",
-  fontSize: "12px",
-  color: blueGrey[500],
   width: "100%",
 });
 
@@ -81,6 +66,7 @@ export const RowBox = styled("div")({
     color: blueGrey[400],
   },
 });
+
 export const DeadlineButton = styled(Button)({
   color: blueGrey[400],
 });
@@ -93,17 +79,6 @@ export const InputTime = styled(TimeInput)({
   width: "130px",
   padding: "5px 10px",
   outline: "none",
-});
-
-export const InputCategory = styled(InputBase)({
-  fontSize: "15px",
-  textAlign: "center",
-  border: `1px solid ${blueGrey[500]}`,
-  borderRadius: "5px",
-  width: "80%",
-  padding: "5px 10px",
-  outline: "none",
-  margin: "10px 0",
 });
 
 export const RadioBtn = (props) => {
