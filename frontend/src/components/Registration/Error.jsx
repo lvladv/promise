@@ -46,36 +46,6 @@ export const ErrorRegistration = ({
           <span>{registerError.errorPasswordValue}</span>
         </AlertError>
       </Snackbar>
-
-      {/* ---------------------------------- */}
-
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "center",
-        }}
-        open={registerError.inputError}
-        autoHideDuration={6000}
-      >
-        <AlertError
-          severity="error"
-          action={
-            <React.Fragment>
-              <IconButton
-                onClick={() => closeErrorRegistration()}
-                size="small"
-                aria-label="close"
-                color="inherit"
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </React.Fragment>
-          }
-        >
-          Нарушены правила регистраци
-        </AlertError>
-      </Snackbar>
-      {/* ---------------------- */}
     </span>
   );
 };

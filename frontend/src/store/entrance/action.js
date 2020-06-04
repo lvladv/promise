@@ -4,30 +4,30 @@ export const OPEN_ACCAUNT_MENU = "OPEN_ACCAUNT_MENU";
 export const CLOSE_ACCAUNT_MENU = "CLOSE_ACCAUNT_MENU";
 
 export function openAuterisation() {
-    return {
-      type: OPEN_AUTORISATION,
-      payload: true,
-    }
-  }
+  return {
+    type: OPEN_AUTORISATION,
+    payload: true,
+  };
+}
 
 export function openRegistration() {
-    return {
-      type: OPEN_REGISTRATION,
-      payload: false,
-    }
-  }
+  return {
+    type: OPEN_REGISTRATION,
+    payload: false,
+  };
+}
 
 export function openAccauntMenu() {
-    return {
-      type: OPEN_ACCAUNT_MENU,
-      payload: true,
-    }
-  }
+  return {
+    type: OPEN_ACCAUNT_MENU,
+    payload: true,
+  };
+}
 
 export function closeAccauntMenu() {
-    return {
-      type: CLOSE_ACCAUNT_MENU,
-      payload: false,
-    }
-  }
+  return {
+    type: CLOSE_ACCAUNT_MENU,
+    payload: false,
+  };
+}
 

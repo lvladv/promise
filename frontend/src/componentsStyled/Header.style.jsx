@@ -16,7 +16,9 @@ export const EnterButton = styled(Button)({
 
 export const HeaderBox = styled(AppBar)({
   background: "#607d8b",
-  position: "static",
+  position: "fixed",
+  zIndex: "500",
+  height: "55px"
 });
 
 export const AccountMenu = styled(AccountCircle)({

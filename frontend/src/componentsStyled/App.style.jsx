@@ -11,3 +11,6 @@ export const AuthBox = styled("div")({
   alignItems: "center",
   justifyContent: "center",
 });
+export const Main = styled("div")({
+display: "flex",
+});

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Input from "./components/Input/Input";
 import Header from "./components/Header/Header";
 import Registration from "./components/Registration/Registration";
@@ -7,34 +7,34 @@ import { connect } from "react-redux";
 import { newTokenFromRefresh } from "./store/token/action";
 import { newCategoryList } from "./store/category/action";
 import { newList } from "./store/list/action";
-import { Container, AuthBox } from "./componentsStyled/App.style";
-
+import { Container, AuthBox, Main } from "./componentsStyled/App.style";
+import Menu from "./components/Menu/Menu";
+import Parameters from "./components/Parameters/Parameters";
+import OpenNewCard from "./components/Input/OpenNewCard";
 class App extends Component {
-  
-  componentDidMount() {
+  async componentDidMount () {
     const {
       isAutorisation,
       newTokenFromRefresh,
       newList,
       newCategoryList,
     } = this.props;
-    const remember = localStorage.getItem("remember") === "true";
-    const tokenData = localStorage.getItem("tokenData");
-
+    const remember = (await localStorage.getItem("remember")) === "true";
+    const tokenData = await localStorage.getItem("tokenData");
+    await newTokenFromRefresh();
     if (remember) {
-      newTokenFromRefresh();
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
       }
     }
     if (isAutorisation) {
-      newCategoryList();
-      newList();
+      await newCategoryList();
+      await newList();
     }
   }
 
   render() {
-    const { isAutorisation, newList, entrance } = this.props;
+    const { isAutorisation, newList, entrance, parameters } = this.props;
 
     return (
       <Container>
@@ -45,9 +45,11 @@ class App extends Component {
             {entrance ? <Authorisation newList={newList} /> : <Registration />}
           </AuthBox>
         ) : (
-          <Fragment>
-            <Input />
-          </Fragment>
+          <Main>
+            <Menu />
+            <OpenNewCard />
+            {parameters ? <Parameters /> : <Input />}
+          </Main>
         )}
       </Container>
     );
@@ -58,6 +60,7 @@ const mapStateToProps = (store) => {
   return {
     isAutorisation: store.tokenReducer.isAutorisation,
     entrance: store.changeEntranceReduser.entrance,
+    parameters: store.listReducer.parameters,
   };
 };
 

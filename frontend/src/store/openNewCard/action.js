@@ -3,7 +3,6 @@ export const CLOSE_NEW_CARD = "CLOSE_TOP_CARD";
 export const IMPORTANCE_CHANGE = "IMPORTANCE_CHANGE";
 export const DEADLINE_CHANGE = "DEADLINE_CHANGE";
 export const DEADLINE_TIME_CHANGE = "DEADLINE_TIME_CHANGE";
-export const OPEN_NEW_CATEGORY = "OPEN_NEW_CATEGORY";
 
 export function openNewCard() {
   return {
@@ -36,10 +35,5 @@ export function deadlineTimeChange(time) {
   return {
     type: DEADLINE_TIME_CHANGE,
     payload: time,
-  };
-}
-export function openNewCategory() {
-  return {
-    type: OPEN_NEW_CATEGORY,
   };
 }
