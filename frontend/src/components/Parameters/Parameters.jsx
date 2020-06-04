@@ -1,5 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { ChangeCategory } from "./ChangeCategory";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import { colors } from "./colors";
+import { Point } from "../../componentsStyled/Registration.style";
 import {
   putNewCategory,
   putItemChangesCategory,
@@ -7,6 +12,8 @@ import {
   closeChangeCategory,
   changeItemCategory,
   deleteItemCategory,
+  putSelectCategoryColor,
+  putNewColorCategory,
 } from "./../../store/category/action";
 import {
   ParamContainer,
@@ -18,10 +25,7 @@ import {
   PointCategory,
   TitlePoint,
 } from "../../componentsStyled/Parameters.style";
-import { Point } from "../../componentsStyled/Registration.style";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import { ChangeCategory } from "./ChangeCategory";
+
 class Parameters extends Component {
   inputCategory = React.createRef();
   render() {
@@ -35,6 +39,9 @@ class Parameters extends Component {
       putNewItemCategory,
       changeItemCategory,
       deleteItemCategory,
+      putSelectCategoryColor,
+      selectCategoryColor,
+      putNewColorCategory,
     } = this.props;
 
     console.log(categoryList);
@@ -44,6 +51,7 @@ class Parameters extends Component {
         putNewItemCategory={putNewItemCategory}
         closeChangeCategory={closeChangeCategory}
         changeItemCategory={changeItemCategory}
+        putNewColorCategory={putNewColorCategory}
       />
     ) : null;
 
@@ -70,19 +78,31 @@ class Parameters extends Component {
           ))}
         </div>
         <div>
-          <InputCategory inputRef={this.inputCategory} />
+          <InputCategory
+            inputRef={this.inputCategory}
+            style={{ color: selectCategoryColor }}
+          />
         </div>
         <RowBox>
-          <ColorBox style={{ background: "red" }} />
-          <ColorBox style={{ background: "pink" }} />
-          <ColorBox style={{ background: "purple" }} />
-          <ColorBox style={{ background: "blue" }} />
-          <ColorBox style={{ background: "lightGreen" }} />
-          <ColorBox style={{ background: "yellow" }} />
-          <ColorBox style={{ background: "brown" }} />
+          {colors.map((color) => (
+            <ColorBox
+              key={color}
+              style={{
+                background: color,
+                border:
+                  selectCategoryColor === color ? `1px solid black` : "none",
+              }}
+              onClick={() => putSelectCategoryColor(color)}
+            />
+          ))}
         </RowBox>
         <SmallButton
-          onClick={() => putNewCategory(this.inputCategory.current.value)}
+          onClick={() =>
+            putNewCategory(
+              this.inputCategory.current.value,
+              selectCategoryColor
+            )
+          }
         >
           Добавить
         </SmallButton>
@@ -97,14 +117,17 @@ const mapStateToprops = (store) => {
     categoryList: store.categoryListReducer.categoryList,
     itemChangeCategory: store.categoryListReducer.itemChangeCategory,
     openChangeCategory: store.categoryListReducer.openChangeCategory,
+    selectCategoryColor: store.categoryListReducer.selectCategoryColor,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    putNewCategory: (name) => dispatch(putNewCategory(name)),
+    putNewCategory: (name, color) => dispatch(putNewCategory(name, color)),
+    putSelectCategoryColor: (color) => dispatch(putSelectCategoryColor(color)),
     closeChangeCategory: () => dispatch(closeChangeCategory()),
     putNewItemCategory: (value) => dispatch(putNewItemCategory(value)),
+    putNewColorCategory: (color) => dispatch(putNewColorCategory(color)),
     changeItemCategory: (itemChangeCategory) =>
       dispatch(changeItemCategory(itemChangeCategory)),
     putItemChangesCategory: (itemChangeCategory) =>

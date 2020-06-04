@@ -7,6 +7,8 @@ import {
   CLOSE_CATEGORY_CHANGE,
   CHANGE_ITEM_CATEGORY,
   DELETE_ITEM_CATEGORY,
+  PUT_SELECT_CATEGORY_COLOR,
+  PUT_NEW_COLOR_CATEGORY,
 } from "./action";
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   category: "",
   itemChangeCategory: {},
   openChangeCategory: false,
+  selectCategoryColor: "",
 };
 
 export const categoryListReducer = (state = initialState, action) => {
@@ -33,6 +36,11 @@ export const categoryListReducer = (state = initialState, action) => {
       return {
         ...state,
         category: action.payload,
+      };
+    case PUT_SELECT_CATEGORY_COLOR:
+      return {
+        ...state,
+        selectCategoryColor: action.payload,
       };
 
     case PUT_ITEM_CHANGE_CATEGORY:
@@ -57,6 +65,14 @@ export const categoryListReducer = (state = initialState, action) => {
           name: action.payload,
         },
       };
+    case PUT_NEW_COLOR_CATEGORY:
+      return {
+        ...state,
+        itemChangeCategory: {
+          ...state.itemChangeCategory,
+          color: action.payload,
+        },
+      };
 
     case DELETE_ITEM_CATEGORY:
       return {
@@ -67,14 +83,15 @@ export const categoryListReducer = (state = initialState, action) => {
       };
 
     case CHANGE_ITEM_CATEGORY:
-      const { itemChangeCategory } = action.payload;
       return {
         ...state,
+
         categoryList: state.categoryList.map((item) => {
-          if (item.id === itemChangeCategory.id) {
+          if (item.id === action.payload.id) {
             return {
               ...item,
-              name: itemChangeCategory.name,
+              name: action.payload.name,
+              color: action.payload.color,
             };
           }
           return item;

@@ -11,6 +11,7 @@ import {
 const initialState = {
   isOpenChangesCard: false,
   itemChange: "",
+  
 };
 
 export const changesCardReducer = (state = initialState, action) => {

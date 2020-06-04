@@ -1,15 +1,18 @@
 import React from "react";
+import { colors } from "./colors";
 import {
   InputCategory,
   SmallButton,
   ColorBox,
   RowBox,
 } from "../../componentsStyled/Parameters.style";
+
 export const ChangeCategory = ({
   itemChangeCategory,
   putNewItemCategory,
   closeChangeCategory,
   changeItemCategory,
+  putNewColorCategory,
 }) => {
   const Change = (e) => {
     const { value } = e.target;
@@ -18,20 +21,29 @@ export const ChangeCategory = ({
   return (
     <div>
       <div>
-        <InputCategory value={itemChangeCategory.name} onChange={Change} />
+        <InputCategory
+          value={itemChangeCategory.name}
+          onChange={Change}
+          style={{ color: itemChangeCategory.color }}
+        />
       </div>
       <RowBox>
-        <ColorBox style={{ background: "red" }} />
-        <ColorBox style={{ background: "pink" }} />
-        <ColorBox style={{ background: "purple" }} />
-        <ColorBox style={{ background: "blue" }} />
-        <ColorBox style={{ background: "lightGreen" }} />
-        <ColorBox style={{ background: "yellow" }} />
-        <ColorBox style={{ background: "brown" }} />
+        {colors.map((color) => (
+          <ColorBox
+            key={color}
+            style={{
+              background: color,
+              border:
+                itemChangeCategory.color === color ? `1px solid black` : "none",
+            }}
+            onClick={() => putNewColorCategory(color)}
+          />
+        ))}
       </RowBox>
       <SmallButton
         onClick={() => {
           changeItemCategory(itemChangeCategory);
+        
           closeChangeCategory();
         }}
       >
