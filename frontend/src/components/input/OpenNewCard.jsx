@@ -8,9 +8,8 @@ import {
   importanceChange,
   deadlineChange,
   deadlineTimeChange,
-  openNewCategory,
 } from "../../store/openNewCard/action";
-import { putNewCategory, categoryChange } from "./../../store/category/action";
+import {categoryChange } from "./../../store/category/action";
 import { newPointList } from "../../store/list/action";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -43,9 +42,6 @@ class OpenNewCard extends Component {
       deadlineTime,
       deadlineChange,
       deadlineTimeChange,
-      newCategory,
-      openNewCategory,
-      putNewCategory,
       categoryList,
       category,
       categoryChange,
@@ -85,9 +81,6 @@ class OpenNewCard extends Component {
           <Point>Категории: </Point>
           <BorderBox>
             <Category
-              newCategory={newCategory}
-              openNewCategory={openNewCategory}
-              putNewCategory={putNewCategory}
               categoryList={categoryList}
               category={category}
               categoryChange={categoryChange}
@@ -144,7 +137,6 @@ const mapStateToprops = (store) => {
     importance: store.newCardReducer.importance,
     deadline: store.newCardReducer.deadline,
     deadlineTime: store.newCardReducer.deadlineTime,
-    newCategory: store.newCardReducer.newCategory,
     categoryList: store.categoryListReducer.categoryList,
     category: store.categoryListReducer.category,
   };
@@ -153,8 +145,6 @@ const mapStateToprops = (store) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     closeNewCard: () => dispatch(closeNewCard()),
-    putNewCategory: (name) => dispatch(putNewCategory(name)),
-    openNewCategory: () => dispatch(openNewCategory()),
     importanceChange: (value) => dispatch(importanceChange(value)),
     categoryChange: (value) => dispatch(categoryChange(value)),
     deadlineChange: (date) => dispatch(deadlineChange(date)),

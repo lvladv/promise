@@ -5,7 +5,8 @@ export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
 export const NEW_CHANGE = "NEW_CHANGE";
 export const SET_PAGE = "SET_PAGE";
-export const FILTER_STATUS_LIST = "FILTER_STATUS_LIST";
+export const FILTER_LIST = "FILTER_LIST";
+export const OPEN_PARAMETERS = "OPEN_PARAMETERS";
 
 const requestOptions = {
   method: "GET",
@@ -45,15 +46,15 @@ export const setPage = (value) => {
   };
 };
 
-export const filterStatusList = (value) => {
+export const filterList = (name, value) => {
   return async (dispatch) => {
     let response = await fetch(
-      `http://${url}/api/v1/data/promise/?status=${value}`,
+      `http://${url}/api/v1/data/promise/?${name}=${value}`,
       requestOptions
     );
     let list = await response.json();
     await dispatch({
-      type: FILTER_STATUS_LIST,
+      type: FILTER_LIST,
       payload: list.results,
     });
   };
@@ -156,3 +157,9 @@ export const changeItem = (itemChange) => {
     );
   };
 };
+
+export function openParameters() {
+  return {
+    type: OPEN_PARAMETERS,
+  };
+}

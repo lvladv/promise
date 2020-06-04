@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { openNewCard } from "../../store/openNewCard/action";
 import { setPage } from "./../../store/list/action";
-import OpenNewCard from "./OpenNewCard";
 import List from "./../List/List";
 import ChangesCard from "./../List/ChangesCard";
 import Pagination from "@material-ui/lab/Pagination";
@@ -11,6 +10,7 @@ import {
   ListContainer,
   HeadBlock,
   ButtonBlock,
+  InputContainer,
 } from "../../componentsStyled/Input.style";
 
 class Input extends Component {
@@ -20,10 +20,9 @@ class Input extends Component {
   render() {
     const { openNewCard, page, pageNumber } = this.props;
     const pageCount = Math.ceil(page.count / 15);
-    console.log(page);
     return (
-      <main style={{ flexGrow: 1 }}>
-        <OpenNewCard />
+      <InputContainer>
+ 
         <ChangesCard />
         <HeadBlock>
           <ButtonBlock>
@@ -48,7 +47,7 @@ class Input extends Component {
         <ListContainer>
           <List />
         </ListContainer>
-      </main>
+      </InputContainer>
     );
   }
 }

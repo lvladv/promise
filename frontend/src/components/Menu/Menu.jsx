@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clickCategory, clickImportence } from "./../../store/menu/action";
 import { openNewCard } from "../../store/openNewCard/action";
-import { filterStatusList, newList } from "../../store/list/action";
+
+import {
+  filterList,
+  newList,
+  openParameters,
+} from "../../store/list/action";
 import {
   MenuContainer,
   ListBox,
@@ -19,9 +24,10 @@ class Menu extends Component {
       isOpenImportance,
       categoryList,
       openNewCard,
-      filterStatusList,
+      filterList,
+      newList,
+      openParameters,
     } = this.props;
-    console.log(isOpenImportance);
     return (
       <>
         <MenuContainer>
@@ -34,20 +40,20 @@ class Menu extends Component {
               >
                 Добавить новую запись
               </Point>
-              <Point>Настройки</Point>
+              <Point onClick={() => openParameters()}>Настройки</Point>
             </ListBox>
             <ListBox>
-              <Point onClick={() => newList()}>Полный список</Point>
+              <Point onClick={() => newList()}>Cписок</Point>
               <Point
                 onClick={() => {
-                  filterStatusList("N");
+                  filterList("status", "N");
                 }}
               >
                 Не выполненно
               </Point>
               <Point
                 onClick={() => {
-                  filterStatusList("Y");
+                  filterList("status", "Y");
                 }}
               >
                 Выполненно
@@ -59,9 +65,27 @@ class Menu extends Component {
               </TitlePoint>
               {isOpenImportance ? (
                 <>
-                  <Point>Не важно</Point>
-                  <Point>Важно</Point>
-                  <Point>Очень выжно</Point>
+                  <Point
+                    onClick={() => {
+                      filterList("importance", "L");
+                    }}
+                  >
+                    Не важно
+                  </Point>
+                  <Point
+                    onClick={() => {
+                      filterList("importance", "M");
+                    }}
+                  >
+                    Важно
+                  </Point>
+                  <Point
+                    onClick={() => {
+                      filterList("importance", "H");
+                    }}
+                  >
+                    Очень выжно
+                  </Point>
                 </>
               ) : null}
             </ListBox>
@@ -72,7 +96,14 @@ class Menu extends Component {
               {isOpenCategory ? (
                 <>
                   {categoryList.map((categoryItem) => (
-                    <Point>{categoryItem.name}</Point>
+                    <Point
+                      key={categoryItem.id}
+                      onClick={() => {
+                        filterList("category", categoryItem.id);
+                      }}
+                    >
+                      {categoryItem.name}
+                    </Point>
                   ))}
                 </>
               ) : null}
@@ -98,7 +129,8 @@ const mapDispatchToProps = (dispatch) => {
     clickImportence: () => dispatch(clickImportence()),
     openNewCard: () => dispatch(openNewCard()),
     newList: () => dispatch(newList()),
-    filterStatusList: (value) => dispatch(filterStatusList(value)),
+    filterList: (name, value) => dispatch(filterList(name, value)),
+    openParameters: () => dispatch(openParameters()),
   };
 };
 

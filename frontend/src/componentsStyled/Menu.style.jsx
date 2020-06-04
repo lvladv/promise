@@ -12,7 +12,7 @@ export const MenuContainer = styled(({ ...other }) => (
 
   "& .MuiDrawer-paper": {
     top: "57px",
-    height: "calc(100% - 55px)"
+    height: "calc(100% - 55px)",
   },
 });
 
@@ -41,11 +41,9 @@ export const TitlePoint = styled("span")({
   margin: "0px",
   padding: "10px 20px",
   color: "#78909c",
-
   "& h3": {
     margin: 0,
   },
-
   "&:hover": {
     cursor: "pointer",
   },

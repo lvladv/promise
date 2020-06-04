@@ -4,13 +4,15 @@ import {
   NEW_STATUS,
   NEW_CHANGE,
   SET_PAGE,
-  FILTER_STATUS_LIST,
+  FILTER_LIST,
+  OPEN_PARAMETERS,
 } from "./action";
 
 const initialState = {
   list: [],
   page: {},
   pageNumber: 1,
+  parameters: false
 };
 
 export const listReducer = (state = initialState, action) => {
@@ -20,6 +22,7 @@ export const listReducer = (state = initialState, action) => {
         ...state,
         list: action.payload,
         page: action.page,
+        parameters: false,
       };
 
     case SET_PAGE:
@@ -29,10 +32,17 @@ export const listReducer = (state = initialState, action) => {
         pageNumber: action.pageNumber,
       };
 
-    case FILTER_STATUS_LIST:
+    case FILTER_LIST:
       return {
         ...state,
         list: action.payload,
+        parameters: false,
+      };
+
+    case OPEN_PARAMETERS:
+      return {
+        ...state,
+        parameters: true,
       };
 
     case PUT_NEW_POINT_LIST:

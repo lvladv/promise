@@ -3,6 +3,9 @@ import { styled } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core/";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 
+export const InputContainer = styled("div")({
+  flexGrow: 1,
+});
 export const SmallButton = styled(({ ...other }) => (
   <Button variant="contained" {...other} />
 ))({

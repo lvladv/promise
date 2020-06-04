@@ -2,10 +2,10 @@ import React from "react";
 import { RadioGroup, FormControlLabel } from "@material-ui/core";
 import { RadioBtn } from "../../componentsStyled/OpenNewCard.style";
 
-export const Category = ({ categoryList, category, categoryChange }) => {
+export const Category = ({ categoryList, category, putNewChangeCategory }) => {
   const handleChangeCategory = (e) => {
     const { value } = e.target;
-    categoryChange(value);
+    putNewChangeCategory(value);
   };
 
   return (
@@ -17,7 +17,7 @@ export const Category = ({ categoryList, category, categoryChange }) => {
       >
         {categoryList.map((item) => (
           <FormControlLabel
-            key={item.name}
+            key={item.id}
             value={String(item.id)}
             control={<RadioBtn />}
             label={item.name}
