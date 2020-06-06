@@ -1,1 +1,1 @@
-export const url = '77.244.65.15:3527'
+export const url = '35.208.239.109'
