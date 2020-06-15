@@ -11,14 +11,17 @@ export const Logo = styled(({ ...other }) => (
 });
 
 export const EnterButton = styled(Button)({
-  color: "#ffffff",
+  "& a": {
+    color: "#ffffff",
+    textDecoration: "none",
+  },
 });
 
 export const HeaderBox = styled(AppBar)({
   background: "#607d8b",
   position: "fixed",
   zIndex: "500",
-  height: "55px"
+  height: "55px",
 });
 
 export const AccountMenu = styled(AccountCircle)({

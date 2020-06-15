@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clickCategory, clickImportence } from "./../../store/menu/action";
 import { openNewCard } from "../../store/openNewCard/action";
-
-import {
-  filterList,
-  newList,
-  openParameters,
-} from "../../store/list/action";
+import { NavLink  } from "react-router-dom";
+import { filterList, openParameters } from "../../store/list/action";
 import {
   MenuContainer,
   ListBox,
@@ -25,7 +21,6 @@ class Menu extends Component {
       categoryList,
       openNewCard,
       filterList,
-      newList,
       openParameters,
     } = this.props;
     return (
@@ -40,23 +35,24 @@ class Menu extends Component {
               >
                 Добавить новую запись
               </Point>
-              <Point onClick={() => openParameters()}>Настройки</Point>
+              <Point onClick={() => openParameters()}>
+                <NavLink  to="/settings">настройки</NavLink >
+              </Point>
             </ListBox>
             <ListBox>
-              <Point onClick={() => newList()}>Cписок</Point>
+              <Point
+                onClick={() => {
+                  filterList("status", "Y");
+                }}
+              >
+                <NavLink  to="/">Выполненно</NavLink >
+              </Point>
               <Point
                 onClick={() => {
                   filterList("status", "N");
                 }}
               >
                 Не выполненно
-              </Point>
-              <Point
-                onClick={() => {
-                  filterList("status", "Y");
-                }}
-              >
-                Выполненно
               </Point>
             </ListBox>
             <ListBox>
@@ -95,16 +91,18 @@ class Menu extends Component {
               </TitlePoint>
               {isOpenCategory ? (
                 <>
-                  {categoryList.map((categoryItem) => (
-                    <Point
-                      key={categoryItem.id}
-                      onClick={() => {
-                        filterList("category", categoryItem.id);
-                      }}
-                    >
-                      {categoryItem.name}
-                    </Point>
-                  ))}
+                  {categoryList.map((categoryItem) => {
+                    return (
+                      <Point
+                        key={categoryItem.id}
+                        onClick={() => {
+                          filterList("category", categoryItem.id);
+                        }}
+                      >
+                        {categoryItem.name}
+                      </Point>
+                    );
+                  })}
                 </>
               ) : null}
             </ListBox>
@@ -128,7 +126,6 @@ const mapDispatchToProps = (dispatch) => {
     clickCategory: () => dispatch(clickCategory()),
     clickImportence: () => dispatch(clickImportence()),
     openNewCard: () => dispatch(openNewCard()),
-    newList: () => dispatch(newList()),
     filterList: (name, value) => dispatch(filterList(name, value)),
     openParameters: () => dispatch(openParameters()),
   };

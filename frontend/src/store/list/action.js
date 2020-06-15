@@ -18,7 +18,7 @@ const requestOptions = {
 export const newList = () => {
   return async (dispatch) => {
     let response = await fetch(
-      `http://${url}/api/v1/data/promise/`,
+      `http://${url}/api/v1/data/promise/?status=N`,
       requestOptions
     );
 

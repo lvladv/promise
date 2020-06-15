@@ -4,12 +4,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import {
-  openAuterisation,
-  openRegistration,
-  openAccauntMenu,
-  closeAccauntMenu,
-} from "./../../store/entrance/action";
+import { NavLink  } from "react-router-dom";
+import { openAccauntMenu } from "./../../store/entrance/action";
 import { exitAccaunt } from "./../../store/token/action";
 import {
   Logo,
@@ -22,11 +18,7 @@ class Header extends Component {
   render() {
     const {
       isAutorisation,
-      entrance,
-      openAuterisation,
-      openRegistration,
       openAccauntMenu,
-      closeAccauntMenu,
       accauntMenu,
       exitAccaunt,
     } = this.props;
@@ -36,15 +28,13 @@ class Header extends Component {
           <Logo>Promise</Logo>
           {!isAutorisation ? (
             <Fragment>
-              {entrance ? (
-                <EnterButton onClick={() => openRegistration()}>
-                  Регистрация
-                </EnterButton>
-              ) : (
-                <EnterButton onClick={() => openAuterisation()}>
-                  Вход
-                </EnterButton>
-              )}
+              <EnterButton>
+                <NavLink  to="/registration">Регистрация</NavLink >
+              </EnterButton>
+
+              <EnterButton>
+                <NavLink  to="/">Вход</NavLink >
+              </EnterButton>
             </Fragment>
           ) : (
             <Fragment>
@@ -63,7 +53,7 @@ class Header extends Component {
                   horizontal: "left",
                 }}
                 open={accauntMenu}
-                onClick={() => closeAccauntMenu()}
+                onClick={() => openAccauntMenu()}
               >
                 <MenuItem>Профиль</MenuItem>
                 <MenuItem
@@ -84,16 +74,13 @@ class Header extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    accauntMenu: store.changeEntranceReduser.accauntMenu,
+    accauntMenu: store.changeEntranceReducer.accauntMenu,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    openAuterisation: () => dispatch(openAuterisation()),
-    openRegistration: () => dispatch(openRegistration()),
     openAccauntMenu: () => dispatch(openAccauntMenu()),
-    closeAccauntMenu: () => dispatch(closeAccauntMenu()),
     exitAccaunt: () => dispatch(exitAccaunt()),
   };
 };
