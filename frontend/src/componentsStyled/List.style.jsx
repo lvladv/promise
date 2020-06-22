@@ -45,7 +45,8 @@ export const Description = styled(({ ...other }) => (
 export const Title = styled(({ ...other }) => (
   <Typography component="h6" variant="body1" {...other} />
 ))({
-  color: blueGrey[400],
+  color: "#333333",
+  flexGrow: 1,
 });
 
 export const Item = styled(({ ...other }) => (

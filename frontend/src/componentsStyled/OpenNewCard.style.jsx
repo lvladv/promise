@@ -9,6 +9,10 @@ export const Box = styled("div")({
   width: "350px",
 });
 
+export const WarrningText = styled("p")({
+  color: "#8d8d8d",
+  fontSize: "12px",
+});
 export const BorderBox = styled("div")({
   border: "1px solid #bdbdbd",
   borderRadius: "4px",

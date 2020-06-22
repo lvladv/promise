@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { newStatus } from "../../store/list/action";
+import { ExpendedCategory } from "./ExpendedCategory";
 import {
   openChangesCard,
   putItemChanges,
@@ -20,6 +21,16 @@ import {
 } from "../../componentsStyled/List.style";
 
 class List extends Component {
+  importanceColor = (importance) => {
+    if (importance === "L") {
+      return "51,153,0";
+    } else if (importance === "M") {
+      return "255,204,51";
+    } else if (importance === "H") {
+      return "204,0,0";
+    }
+  };
+
   render() {
     const {
       list,
@@ -28,25 +39,35 @@ class List extends Component {
       putItemChanges,
       categoryList,
     } = this.props;
+    console.log(list);
     return (
       <Box>
         {list.map((item) => (
           <Card key={item.id}>
-            <TitleCard>
-              <div>
-                <Title>{item.name}</Title>
-              </div>
+            <TitleCard
+              style={{
+                border: `1.5px solid rgba(${this.importanceColor(
+                  item.importance
+                )})`,
+                background: `rgba(${this.importanceColor(
+                  item.importance
+                )},0.3)`,
+              }}
+            >
+              <Title>{item.name}</Title>
+              <ExpendedCategory
+                category={item.category}
+                categoryList={categoryList}
+              />
             </TitleCard>
             <DetailsCard>
               <SmallBox>
                 <DescriptionItem>Подробности:</DescriptionItem>
                 <Description>{`${item.description}`}</Description>
                 <ButtonBlock>
-                  {item.status === "Y" ? null : (
-                    <SmallButton onClick={() => newStatus(item)}>
-                      Выполненно
-                    </SmallButton>
-                  )}
+                  <SmallButton onClick={() => newStatus(item)}>
+                    {item.status === "Y" ? "Не выполненно" : "Выполненно"}
+                  </SmallButton>
                 </ButtonBlock>
               </SmallBox>
 
@@ -67,16 +88,7 @@ class List extends Component {
                       : " Очень важно"}
                   </span>
                 </Item>
-                <Item>
-                  Категория:
-                  <span>
-                    {categoryList.map((categoryItem) => {
-                      return String(item.category) === String(categoryItem.id)
-                        ? categoryItem.name
-                        : "";
-                    })}
-                  </span>
-                </Item>
+
                 <Item>
                   Дедлайн:
                   <span>{item.deadline}</span>

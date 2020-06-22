@@ -24,7 +24,7 @@ export const ChangeCategory = ({
         <InputCategory
           value={itemChangeCategory.name}
           onChange={Change}
-          style={{ color: itemChangeCategory.color }}
+          style={{ border: `1.5px solid ${itemChangeCategory.color}` }}
         />
       </div>
       <RowBox>
@@ -33,8 +33,11 @@ export const ChangeCategory = ({
             key={color}
             style={{
               background: color,
-              border:
-                itemChangeCategory.color === color ? `1px solid black` : "none",
+              borderRadius: itemChangeCategory.color === color ? "50%" : "5px",
+              boxShadow:
+                itemChangeCategory.color === color
+                  ? "0px 0px 12px 1px #78909C"
+                  : "none",
             }}
             onClick={() => putNewColorCategory(color)}
           />
@@ -43,7 +46,7 @@ export const ChangeCategory = ({
       <SmallButton
         onClick={() => {
           changeItemCategory(itemChangeCategory);
-        
+
           closeChangeCategory();
         }}
       >

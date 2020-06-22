@@ -1,6 +1,7 @@
 import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { newToken, closeError } from "./../../store/token/action";
+import { newList } from "./../../store/list/action";
 import { ErrorAutorisation } from "./Error";
 import {
   Input,
@@ -10,7 +11,7 @@ import {
 } from "./../../componentsStyled/Registration.style";
 
 class Authorisation extends Component {
-  loginValue = createRef();
+    loginValue = createRef();
   passwordValue = createRef();
 
   toAutrosation = async () => {
@@ -20,7 +21,7 @@ class Authorisation extends Component {
       this.passwordValue.current.value
     );
     await newList();
-  };
+ };
 
   render() {
     const { errorAutorisation, closeError } = this.props;
@@ -63,6 +64,7 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    newList: () => dispatch(newList()),
     autorisation: (username, password) =>
       dispatch(newToken(username, password)),
     closeError: () => dispatch(closeError()),

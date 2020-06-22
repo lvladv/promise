@@ -3,13 +3,14 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Drawer, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { connect } from "react-redux";
 import { Category } from "./CategoryList";
+import { MessageCard } from "../Messages/MessageCard";
 import {
   closeChangesCard,
   putNewItem,
   putNewChangeCategory,
   putHandleChangeImportance,
 } from "../../store/ChangesCard/action";
-import { changeItem } from "../../store/list/action";
+import { changeItem, closeMessage } from "../../store/list/action";
 import {
   Box,
   СloseButton,
@@ -19,6 +20,7 @@ import {
   Input,
   BorderBox,
   RadioBtn,
+  WarrningText,
 } from "../../componentsStyled/OpenNewCard.style";
 
 class ChangesCard extends Component {
@@ -38,77 +40,86 @@ class ChangesCard extends Component {
       changeItem,
       categoryList,
       putNewChangeCategory,
+      message,
+      closeMessage,
     } = this.props;
 
     return (
-      <Drawer
-        anchor="right"
-        open={isOpenChangesCard}
-        onClose={() => {
-          closeChangesCard();
-        }}
-      >
-        <Box>
-          <Title>Изменить задачу</Title>
-          {/* eslint-disable-next-line */}
-          <СloseButton onClick={() => closeChangesCard()}>
-            <CloseIcon />
-          </СloseButton>
+      <>
+        <Drawer
+          anchor="right"
+          open={isOpenChangesCard}
+          onClose={() => {
+            closeChangesCard();
+          }}
+        >
+          <Box>
+            <Title>Изменить задачу</Title>
+            {/* eslint-disable-next-line */}
+            <СloseButton onClick={() => closeChangesCard()}>
+              <CloseIcon />
+            </СloseButton>
 
-          <Point>Название: </Point>
-          <Input name="name" value={itemChange.name} onChange={this.Change} />
+            <Point>Название: </Point>
+            <WarrningText>
+              *Обязательно для заполнения. Не более 20 символов
+            </WarrningText>
+            <Input name="name" value={itemChange.name} onChange={this.Change} />
 
-          <Point>Описание: </Point>
-          <Input
-            name="description"
-            value={itemChange.description}
-            onChange={this.Change}
-            multiline
-            rows="5"
-          />
+            <Point>Описание: </Point>
 
-          <Point>Категории: </Point>
-          <BorderBox>
-            <Category
-              categoryList={categoryList}
-              category={itemChange.category}
-              putNewChangeCategory={putNewChangeCategory}
+            <Input
+              name="description"
+              value={itemChange.description}
+              onChange={this.Change}
+              multiline
+              rows="5"
             />
-          </BorderBox>
-          <Point>Уровень значимости: </Point>
-          <BorderBox>
-            <RadioGroup
-              name="importance"
-              value={itemChange.importance}
-              onChange={this.handleChangeImportance}
+
+            <Point>Категории: </Point>
+            <BorderBox>
+              <Category
+                categoryList={categoryList}
+                category={itemChange.category}
+                putNewChangeCategory={putNewChangeCategory}
+              />
+            </BorderBox>
+            <Point>Уровень значимости: </Point>
+            <BorderBox>
+              <RadioGroup
+                name="importance"
+                value={itemChange.importance}
+                onChange={this.handleChangeImportance}
+              >
+                <FormControlLabel
+                  value="L"
+                  control={<RadioBtn />}
+                  label="Не важно"
+                />
+                <FormControlLabel
+                  value="M"
+                  control={<RadioBtn />}
+                  label="Важно"
+                />
+                <FormControlLabel
+                  value="H"
+                  control={<RadioBtn />}
+                  label="Очень важно"
+                />
+              </RadioGroup>
+            </BorderBox>
+            <SubmitButton
+              onClick={() => {
+                changeItem(itemChange);
+                closeChangesCard();
+              }}
             >
-              <FormControlLabel
-                value="L"
-                control={<RadioBtn />}
-                label="Не важно"
-              />
-              <FormControlLabel
-                value="M"
-                control={<RadioBtn />}
-                label="Важно"
-              />
-              <FormControlLabel
-                value="H"
-                control={<RadioBtn />}
-                label="Очень важно"
-              />
-            </RadioGroup>
-          </BorderBox>
-          <SubmitButton
-            onClick={() => {
-              changeItem(itemChange);
-              closeChangesCard();
-            }}
-          >
-            Редактировать
-          </SubmitButton>
-        </Box>
-      </Drawer>
+              Редактировать
+            </SubmitButton>
+          </Box>
+        </Drawer>
+        <MessageCard message={message} closeMessage={closeMessage} />
+      </>
     );
   }
 }
@@ -118,6 +129,7 @@ const mapStateToprops = (store) => {
     isOpenChangesCard: store.changesCardReducer.isOpenChangesCard,
     itemChange: store.changesCardReducer.itemChange,
     categoryList: store.categoryListReducer.categoryList,
+    message: store.listReducer.message,
   };
 };
 
@@ -129,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     closeChangesCard: () => dispatch(closeChangesCard()),
     changeItem: (itemChange) => dispatch(changeItem(itemChange)),
     putNewItem: (name, value) => dispatch(putNewItem(name, value)),
+    closeMessage: () => dispatch(closeMessage()),
   };
 };
 export default connect(mapStateToprops, mapDispatchToProps)(ChangesCard);

@@ -80,7 +80,7 @@ class Parameters extends Component {
         <div>
           <InputCategory
             inputRef={this.inputCategory}
-            style={{ color: selectCategoryColor }}
+            style={{ border: `1.5px solid ${selectCategoryColor}` }}
           />
         </div>
         <RowBox>
@@ -89,8 +89,11 @@ class Parameters extends Component {
               key={color}
               style={{
                 background: color,
-                border:
-                  selectCategoryColor === color ? `1px solid black` : "none",
+                borderRadius: selectCategoryColor === color ? "50%" : "5px",
+                boxShadow:
+                  selectCategoryColor === color
+                    ? "0px 0px 12px 1px #78909C"
+                    : "none",
               }}
               onClick={() => putSelectCategoryColor(color)}
             />

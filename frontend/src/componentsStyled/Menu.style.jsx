@@ -28,7 +28,13 @@ export const Point = styled("span")({
   padding: "10px 20px",
   "&:hover": {
     cursor: "pointer",
-    background: "#cfd8dc    ",
+    background: "#cfd8dc",
+    opacity: 0.7,
+  },
+
+  "& a": {
+    color: 'rgba(0, 0, 0, 0.87)',
+    textDecoration: "none",
   },
 });
 
