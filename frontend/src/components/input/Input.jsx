@@ -1,39 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { openNewCard } from "../../store/openNewCard/action";
 import { setPage } from "./../../store/list/action";
 import List from "./../List/List";
 import ChangesCard from "./../List/ChangesCard";
 import Pagination from "@material-ui/lab/Pagination";
 import {
-  SmallButton,
   ListContainer,
   HeadBlock,
-  ButtonBlock,
   InputContainer,
 } from "../../componentsStyled/Input.style";
 
 class Input extends Component {
-  handlePagination = (event, value) => {
+  handlePagination = (value) => {
     this.props.setPage(value);
   };
   render() {
-    const { openNewCard, page, pageNumber } = this.props;
+    const { page, pageNumber } = this.props;
     const pageCount = Math.ceil(page.count / 15);
     return (
       <InputContainer>
- 
         <ChangesCard />
         <HeadBlock>
-          <ButtonBlock>
-            <SmallButton
-              onClick={() => {
-                openNewCard();
-              }}
-            >
-              Добавить новую запись
-            </SmallButton>
-          </ButtonBlock>
           {pageCount < 1 ? null : (
             <Pagination
               count={pageCount}
@@ -61,7 +48,6 @@ const mapStateToprops = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    openNewCard: () => dispatch(openNewCard()),
     setPage: (value) => dispatch(setPage(value)),
   };
 };
