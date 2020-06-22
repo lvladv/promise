@@ -8,7 +8,9 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "./store/reducersCombaine";
 import { BrowserRouter as Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
+export const history = createBrowserHistory();
 const store = createStore(
   rootReducer,
   compose(

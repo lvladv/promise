@@ -1,36 +1,31 @@
 import React from "react";
 import { Snackbar, IconButton } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import { styled } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const AlertError = styled(Alert)({
-  background: "#e57373",
-});
-
-export const ErrorAutorisation = ({ errorAutorisation, closeError }) => {
+export const MessageCard = ({ message, closeMessage }) => {
   return (
     <span>
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "center",
+          horizontal: "right",
         }}
-        open={errorAutorisation}
+        open={Boolean(message)}
         autoHideDuration={6000}
       >
-        <AlertError
+        <Alert
+          style={{ background: message === "error" ? "#da1e28" : "#198038" }}
           severity="error"
           action={
             <React.Fragment>
               <IconButton
-                onClick={() => closeError()}
+                onClick={() => closeMessage()}
                 size="small"
-                aria-label="close"
                 color="inherit"
               >
                 <CloseIcon fontSize="small" />
@@ -38,8 +33,10 @@ export const ErrorAutorisation = ({ errorAutorisation, closeError }) => {
             </React.Fragment>
           }
         >
-          Неверный логин или пароль
-        </AlertError>
+          {message === "error"
+            ? "Ошибка!  Проверьте вправильность ввода или подключение к сети"
+            : "Запись успешно создана "}
+        </Alert>
       </Snackbar>
     </span>
   );

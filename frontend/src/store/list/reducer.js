@@ -5,14 +5,19 @@ import {
   NEW_CHANGE,
   SET_PAGE,
   FILTER_LIST,
-  OPEN_PARAMETERS,
+  MESSAGE_NEW_CARD,
+  CLOSE_MESSAGE,
+  PUT_NEW_DESCRIPTION,
+  PUT_NEW_NAME,
 } from "./action";
 
 const initialState = {
   list: [],
   page: {},
   pageNumber: 1,
-  parameters: false
+  message: "",
+  name: "",
+  description: "",
 };
 
 export const listReducer = (state = initialState, action) => {
@@ -22,7 +27,6 @@ export const listReducer = (state = initialState, action) => {
         ...state,
         list: action.payload,
         page: action.page,
-        parameters: false,
       };
 
     case SET_PAGE:
@@ -32,17 +36,32 @@ export const listReducer = (state = initialState, action) => {
         pageNumber: action.pageNumber,
       };
 
+    case PUT_NEW_NAME:
+      return {
+        ...state,
+        name: action.payload,
+      };
+    case PUT_NEW_DESCRIPTION:
+      return {
+        ...state,
+        description: action.payload,
+      };
+
+    case MESSAGE_NEW_CARD:
+      return {
+        ...state,
+        message: action.payload,
+      };
+    case CLOSE_MESSAGE:
+      return {
+        ...state,
+        message: "",
+      };
+
     case FILTER_LIST:
       return {
         ...state,
         list: action.payload,
-        parameters: false,
-      };
-
-    case OPEN_PARAMETERS:
-      return {
-        ...state,
-        parameters: true,
       };
 
     case PUT_NEW_POINT_LIST:
@@ -59,7 +78,7 @@ export const listReducer = (state = initialState, action) => {
           if (item.id === newItem.id) {
             return {
               ...item,
-              status: "Y",
+              status: item.status === "Y" ? "N" : "Y",
             };
           }
           return item;

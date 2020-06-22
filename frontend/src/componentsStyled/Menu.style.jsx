@@ -29,7 +29,12 @@ export const Point = styled("span")({
   "&:hover": {
     cursor: "pointer",
     background: "#cfd8dc",
-    opacity: 0.7
+    opacity: 0.7,
+  },
+
+  "& a": {
+    color: 'rgba(0, 0, 0, 0.87)',
+    textDecoration: "none",
   },
 });
 

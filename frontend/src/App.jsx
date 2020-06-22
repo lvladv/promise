@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Input from "./components/Input/Input";
 import Header from "./components/Header/Header";
 import Registration from "./components/Registration/Registration";
@@ -11,7 +11,7 @@ import { newTokenFromRefresh } from "./store/token/action";
 import { newCategoryList } from "./store/category/action";
 import { newList } from "./store/list/action";
 import { Container, AuthBox, Main } from "./componentsStyled/App.style";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
   async componentDidMount() {
@@ -37,32 +37,33 @@ class App extends Component {
   }
 
   render() {
-    const { isAutorisation, parameters } = this.props;
+    const { isAutorisation } = this.props;
 
     return (
-      <Switch>
-        <Container>
-          <Header isAutorisation={isAutorisation} />
+      <Container>
+        <Header isAutorisation={isAutorisation} />
+        <Switch>
           {!isAutorisation ? (
-            <AuthBox>
-              <Route
-                exact
-                component={Authorisation}
-                path="/"
-                
-              />
-              <Route exact component={Registration} path="/registration" />
-            </AuthBox>
+            <Fragment>
+              <AuthBox>
+                <Route exact component={Authorisation} path="/" />
+
+                <Route exact component={Registration} path="/registration" />
+              </AuthBox>
+            </Fragment>
           ) : (
-            <Main>
-              <Menu />
-              <OpenNewCard />
-              <Route component={Input} path="/" exact />
-              <Route component={Parameters} path="/settings" />
-            </Main>
+            <Fragment>
+              <Main>
+                <Menu />
+                <OpenNewCard />
+
+                <Route component={Input} path="/" exact />
+                <Route component={Parameters} path="/settings" />
+              </Main>
+            </Fragment>
           )}
-        </Container>
-       </Switch>
+        </Switch>
+      </Container>
     );
   }
 }

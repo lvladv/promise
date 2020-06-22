@@ -1,9 +1,4 @@
-import {
-  OPEN_AUTORISATION,
-  OPEN_REGISTRATION,
-  OPEN_ACCAUNT_MENU,
-  CLOSE_ACCAUNT_MENU,
-} from "./action";
+import { OPEN_ACCAUNT_MENU } from "./action";
 
 const initialState = {
   entrance: true,

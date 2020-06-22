@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clickCategory, clickImportence } from "./../../store/menu/action";
 import { openNewCard } from "../../store/openNewCard/action";
-import { NavLink  } from "react-router-dom";
-import { filterList, openParameters } from "../../store/list/action";
+import { NavLink } from "react-router-dom";
+import { filterList } from "../../store/list/action";
 import {
   MenuContainer,
   ListBox,
@@ -21,7 +21,6 @@ class Menu extends Component {
       categoryList,
       openNewCard,
       filterList,
-      openParameters,
     } = this.props;
     return (
       <>
@@ -35,24 +34,24 @@ class Menu extends Component {
               >
                 Добавить новую запись
               </Point>
-              <Point onClick={() => openParameters()}>
-                <NavLink  to="/settings">настройки</NavLink >
+              <Point>
+                <NavLink to="/settings">Настройки</NavLink>
               </Point>
             </ListBox>
             <ListBox>
-              <Point
-                onClick={() => {
-                  filterList("status", "Y");
-                }}
-              >
-                <NavLink  to="/">Выполненно</NavLink >
-              </Point>
               <Point
                 onClick={() => {
                   filterList("status", "N");
                 }}
               >
                 Не выполненно
+              </Point>
+              <Point
+                onClick={() => {
+                  filterList("status", "Y");
+                }}
+              >
+                <NavLink to="/">Выполненно</NavLink>
               </Point>
             </ListBox>
             <ListBox>
@@ -103,6 +102,13 @@ class Menu extends Component {
                       </Point>
                     );
                   })}
+                  <Point
+                    onClick={() => {
+                      filterList("category", null);
+                    }}
+                  >
+                    Без категории
+                  </Point>
                 </>
               ) : null}
             </ListBox>
@@ -127,7 +133,6 @@ const mapDispatchToProps = (dispatch) => {
     clickImportence: () => dispatch(clickImportence()),
     openNewCard: () => dispatch(openNewCard()),
     filterList: (name, value) => dispatch(filterList(name, value)),
-    openParameters: () => dispatch(openParameters()),
   };
 };
 

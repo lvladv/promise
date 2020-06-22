@@ -6,7 +6,23 @@ export const NEW_STATUS = "NEW_STATUS";
 export const NEW_CHANGE = "NEW_CHANGE";
 export const SET_PAGE = "SET_PAGE";
 export const FILTER_LIST = "FILTER_LIST";
-export const OPEN_PARAMETERS = "OPEN_PARAMETERS";
+export const MESSAGE_NEW_CARD = "MESSAGE_NEW_CARD";
+export const CLOSE_MESSAGE = "CLOSE_MESSAGE";
+export const PUT_NEW_NAME = "PUT_NEW_NAME";
+export const PUT_NEW_DESCRIPTION = "PUT_NEW_DESCRIPTION";
+
+export function putNewRecord(name, value) {
+  switch (name) {
+    case "name":
+      return { type: PUT_NEW_NAME, payload: value.slice(0, 20) };
+
+    case "description":
+      return { type: PUT_NEW_DESCRIPTION, payload: value };
+
+    default:
+      break;
+  }
+}
 
 const requestOptions = {
   method: "GET",
@@ -102,7 +118,22 @@ export const newPointList = (
       method: "POST",
     };
 
-    await fetch(`http://${url}/api/v1/data/promise/new/`, requestOptions);
+    let response = await fetch(
+      `http://${url}/api/v1/data/promise/new/`,
+      requestOptions
+    );
+
+    if (response.ok) {
+      await dispatch({
+        type: MESSAGE_NEW_CARD,
+        payload: "good",
+      });
+    } else if (!response.ok) {
+      await dispatch({
+        type: MESSAGE_NEW_CARD,
+        payload: "error",
+      });
+    }
   };
 };
 
@@ -114,7 +145,7 @@ export const newStatus = (newItem) => {
     });
 
     let formData = new FormData();
-    formData.append("status", "Y");
+    formData.append("status", newItem.status === "Y" ? "N" : "Y");
     let requestOptions = {
       body: formData,
       headers: {
@@ -151,15 +182,27 @@ export const changeItem = (itemChange) => {
       method: "PATCH",
     };
 
-    await fetch(
+    const response = await fetch(
       `http://${url}/api/v1/data/promise/${itemChange.slug}/`,
       requestOptions
     );
+
+    if (response.ok) {
+      await dispatch({
+        type: MESSAGE_NEW_CARD,
+        payload: "good",
+      });
+    } else if (!response.ok) {
+      await dispatch({
+        type: MESSAGE_NEW_CARD,
+        payload: "error",
+      });
+    }
   };
 };
 
-export function openParameters() {
+export const closeMessage = () => {
   return {
-    type: OPEN_PARAMETERS,
+    type: CLOSE_MESSAGE,
   };
-}
+};
