@@ -27,7 +27,7 @@ class Promise(models.Model):
     importance = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default='L')
     # category = models.CharField(max_length=255, queryset=CATEGORY_CHOICES)
     # category = models.ManyToManyField(UserCategory)
-    category = models.ForeignKey(UserCategory, related_name='usercategory', on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(UserCategory, related_name='usercategory', on_delete=models.CASCADE, null=True, default=1)
     is_approved = models.BooleanField(default=False)
     modify_time = models.DateTimeField(auto_now=True)
     create_time = models.DateTimeField(auto_now_add=True)
