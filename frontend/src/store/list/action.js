@@ -14,7 +14,7 @@ export const PUT_NEW_DESCRIPTION = "PUT_NEW_DESCRIPTION";
 export function putNewRecord(name, value) {
   switch (name) {
     case "name":
-      return { type: PUT_NEW_NAME, payload: value.slice(0, 20) };
+      return { type: PUT_NEW_NAME, payload: value.slice(0, 32) };
 
     case "description":
       return { type: PUT_NEW_DESCRIPTION, payload: value };

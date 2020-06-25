@@ -135,8 +135,8 @@ class OpenNewCard extends Component {
             <SubmitButton
               onClick={() => {
                 newPointList(
-                  this.inputName.current.value,
-                  this.inputDescription.current.value,
+                  name,
+                  description,
                   importance,
                   deadline,
                   deadlineTime,

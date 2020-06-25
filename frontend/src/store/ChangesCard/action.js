@@ -43,7 +43,7 @@ export function putHandleChangeImportance(itemChange) {
 export function putNewItem(name, value) {
   switch (name) {
     case "name":
-      return { type: NEW_ITEM_NAME, payload: value.slice(0, 20) };
+      return { type: NEW_ITEM_NAME, payload: value.slice(0, 32) };
 
     case "description":
       return { type: NEW_ITEM_DESCRIPTION, payload: value };
