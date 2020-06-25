@@ -10,6 +10,13 @@ http://77.244.65.15:3527/admin/
   
 http://77.244.65.15:3527/api/v1/data/
 
+```buildoutcfg
+insert into promise_rest.dt_category 
+select 1, 'emplty', '#00000', 1;
+commit;
+
+```
+
 
 ## Регистрация
 POST

@@ -1,15 +1,31 @@
-from rest_framework.response import Response
-from django.contrib.auth import get_user_model
-from .permissions import IsOwnerOrReadOnly
-from .models import Promise
-from .serializers import PromiseSerializer
-from rest_framework import generics, views
-from rest_framework import permissions
-from rest_framework import pagination
-from datetime import datetime, timedelta
+import logging
+
+from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as rest_filter
 from rest_framework import filters
+from rest_framework import generics
+from rest_framework import pagination
+from rest_framework import permissions
+from userdetail.models import User
 
+from .models import Promise
+from .serializers import PromiseSerializer
+
+loggger = logging.getLogger(__name__)
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s %(levelname)s [%(module)s] %(process)d:%(thread)d %(message)s',
+)
+
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[-1].strip()
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 
 class PromisePaginations(pagination.PageNumberPagination):
@@ -30,11 +46,11 @@ class PromiseFilter(rest_filter.FilterSet):
         model = Promise
         fields = ['owner']
 
-    @property
-    def qs(self):
-        parent = super(PromiseFilter, self).qs
-        # print(self.request.user)
-        return parent.filter(owner_id__username=self.request.user)
+    # @property
+    # def qs(self):
+    #     parent = super(PromiseFilter, self).qs
+    #     # print(self.request.user)
+    #     return parent.filter(owner_id__username=self.request.user)
 
 
 class PromiseCreateView(generics.CreateAPIView):
@@ -43,13 +59,15 @@ class PromiseCreateView(generics.CreateAPIView):
     queryset = Promise.objects.all()
 
     def perform_create(self, serializer):
+        # print(self.request.META)
+        loggger.info(f'PromiseCreateView: user: {str(self.request.user)}:{str(get_client_ip(self.request))}, query_params: {str(self.request.query_params.dict())}, data: {str(self.request.data.dict())}')
         serializer.save(owner=self.request.user)
 
 
 class PromiseListView(generics.ListAPIView):
+    # TODO: modity to Promise.objects
     permission_classes = [permissions.IsAuthenticated]
     queryset = Promise.objects.all().order_by('-create_time')
-    # queryset = Promise.objects.filter(create_time__lte=datetime.datetime.now())
     serializer_class = PromiseSerializer
     pagination_class = PromisePaginations
     # filter_backends = (filters.SearchFilter,)
@@ -58,12 +76,38 @@ class PromiseListView(generics.ListAPIView):
     filterset_class = PromiseFilter
     search_fields = ['owner_id__username', 'name']  # ?search
 
+    def get(self, request, *args, **kwargs):
+        loggger.info(f'PromiseListView: user: {str(self.request.user)}:{str(get_client_ip(self.request))}, query_params: {str(self.request.query_params.dict())}')
+        # return Promise.objects.filter(owner_id__username=self.request.user)
+        return self.list(request, *args, **kwargs)
+
+    def get_queryset(self):
+        user = get_object_or_404(User, username=self.request.user)
+        return Promise.objects.filter(owner_id__username=user).order_by('-create_time')
+
 
 class PromiseDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = PromiseSerializer
     queryset = Promise.objects.all()
     lookup_field = 'slug'
+
+    def get(self, request, *args, **kwargs):
+        loggger.info(f'PromiseDetailView [GET]: user: {str(self.request.user)}:{str(get_client_ip(self.request))}, query_params: {str(self.request.query_params.dict())}')
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        loggger.info(f'PromiseDetailView [PUT]: user: {str(self.request.user)}:{str(get_client_ip(self.request))}, query_params: {str(self.request.query_params.dict())}, data: {str(self.request.data.dict())}')
+        return self.update(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        loggger.info(f'PromiseDetailView [PATCH]: user: {str(self.request.user)}:{str(get_client_ip(self.request))}, query_params: {str(self.request.query_params.dict())}, data: {str(self.request.data.dict())}')
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        loggger.info(f'PromiseDetailView [DELETE]: user: {str(self.request.user)}:{str(get_client_ip(self.request))}, query_params: {str(self.request.query_params.dict())}')
+        return self.destroy(request, *args, **kwargs)
+
     # lookup_field = ('name', 'owner')
     #
     # def get(self, request, owner=None, name=None, format=None):
