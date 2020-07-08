@@ -34,6 +34,7 @@ class Menu extends Component {
               >
                 Добавить новую запись
               </Point>
+        
               <Point>
                 <NavLink to="/settings">Настройки</NavLink>
               </Point>

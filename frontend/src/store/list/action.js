@@ -24,14 +24,14 @@ export function putNewRecord(name, value) {
   }
 }
 
-const requestOptions = {
-  method: "GET",
-  headers: {
-    Authorization: localStorage.getItem("Authorization"),
-  },
-};
-
 export const newList = () => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+  };
+
   return async (dispatch) => {
     let response = await fetch(
       `http://${url}/api/v1/data/promise/?status=N`,
@@ -48,6 +48,13 @@ export const newList = () => {
 };
 
 export const setPage = (value) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+  };
+  
   return async (dispatch) => {
     let response = await fetch(
       `http://${url}/api/v1/data/promise/?page=${value}`,
@@ -63,6 +70,13 @@ export const setPage = (value) => {
 };
 
 export const filterList = (name, value) => {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: localStorage.getItem("Authorization"),
+    },
+  };
+  
   return async (dispatch) => {
     let response = await fetch(
       `http://${url}/api/v1/data/promise/?${name}=${value}`,

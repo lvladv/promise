@@ -1,16 +1,14 @@
-import React, { Component, Fragment } from "react";
-import Input from "./components/Input/Input";
+import React, { Component } from "react";
+import ContentPage from "./components/ContentPage/ContentPage";
 import Header from "./components/Header/Header";
 import Registration from "./components/Registration/Registration";
 import Authorisation from "./components/Autorisation/Autorisation";
-import Menu from "./components/Menu/Menu";
-import Parameters from "./components/Parameters/Parameters";
-import OpenNewCard from "./components/Input/OpenNewCard";
+
 import { connect } from "react-redux";
 import { newTokenFromRefresh } from "./store/token/action";
 import { newCategoryList } from "./store/category/action";
 import { newList } from "./store/list/action";
-import { Container, AuthBox, Main } from "./componentsStyled/App.style";
+import { Container, AuthBox } from "./componentsStyled/App.style";
 import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -38,30 +36,24 @@ class App extends Component {
 
   render() {
     const { isAutorisation } = this.props;
-
+    console.log(isAutorisation);
     return (
       <Container>
         <Header isAutorisation={isAutorisation} />
         <Switch>
-          {!isAutorisation ? (
-            <Fragment>
-              <AuthBox>
-                <Route exact component={Authorisation} path="/" />
-
-                <Route exact component={Registration} path="/registration" />
-              </AuthBox>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Main>
-                <Menu />
-                <OpenNewCard />
-
-                <Route component={Input} path="/" exact />
-                <Route component={Parameters} path="/settings" />
-              </Main>
-            </Fragment>
-          )}
+          <>
+            <Route
+              path="/"
+              render={() => <ContentPage isAutorisation={isAutorisation} />}
+            />
+            <AuthBox>
+              <Route
+                path="/authorisation"
+                render={() => <Authorisation isAutorisation={isAutorisation} />}
+              />
+              <Route path="/registration" component={Registration} />
+            </AuthBox>
+          </>
         </Switch>
       </Container>
     );
