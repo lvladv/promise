@@ -12,13 +12,21 @@ import { Container, AuthBox } from "./componentsStyled/App.style";
 import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
+
+  refresh(){
+    this.props.newTokenFromRefresh();
+  }
+  
+
   async componentDidMount() {
+
     const {
       isAutorisation,
       newTokenFromRefresh,
       newList,
       newCategoryList,
     } = this.props;
+
     const remember = (await localStorage.getItem("remember")) === "true";
     const tokenData = await localStorage.getItem("tokenData");
 
@@ -46,6 +54,7 @@ class App extends Component {
               path="/"
               render={() => <ContentPage isAutorisation={isAutorisation} />}
             />
+       
             <AuthBox>
               <Route
                 path="/authorisation"

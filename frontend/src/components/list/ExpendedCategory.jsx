@@ -15,7 +15,9 @@ export const ExpendedCategory = ({ category, categoryList }) => {
   const getNameCategory = () => {
     let name = "";
     categoryList.map((categoryItem) => {
-      if (+categoryItem.id === +category) {
+      if (+category === 1) {
+        name = "Без категории";
+      } else if (+categoryItem.id === +category) {
         name = categoryItem.name;
       }
     });

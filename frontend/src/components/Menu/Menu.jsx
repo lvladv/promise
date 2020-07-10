@@ -34,7 +34,7 @@ class Menu extends Component {
               >
                 Добавить новую запись
               </Point>
-        
+
               <Point>
                 <NavLink to="/settings">Настройки</NavLink>
               </Point>
@@ -66,21 +66,21 @@ class Menu extends Component {
                       filterList("importance", "L");
                     }}
                   >
-                    Не важно
+                    <NavLink to="/"> Не важно</NavLink>
                   </Point>
                   <Point
                     onClick={() => {
                       filterList("importance", "M");
                     }}
                   >
-                    Важно
+                    <NavLink to="/:id">Важно</NavLink>
                   </Point>
                   <Point
                     onClick={() => {
                       filterList("importance", "H");
                     }}
                   >
-                    Очень выжно
+                    <NavLink to="/"> Очень выжно</NavLink>
                   </Point>
                 </>
               ) : null}
@@ -99,16 +99,17 @@ class Menu extends Component {
                           filterList("category", categoryItem.id);
                         }}
                       >
-                        {categoryItem.name}
+                        <NavLink to="/"> {categoryItem.name}</NavLink>
                       </Point>
                     );
                   })}
+
                   <Point
                     onClick={() => {
-                      filterList("category", null);
+                      filterList("category", 1);
                     }}
                   >
-                    Без категории
+                    <NavLink to="/"> Без категории</NavLink>
                   </Point>
                 </>
               ) : null}

@@ -54,7 +54,7 @@ export const setPage = (value) => {
       Authorization: localStorage.getItem("Authorization"),
     },
   };
-  
+
   return async (dispatch) => {
     let response = await fetch(
       `http://${url}/api/v1/data/promise/?page=${value}`,
@@ -76,7 +76,7 @@ export const filterList = (name, value) => {
       Authorization: localStorage.getItem("Authorization"),
     },
   };
-  
+
   return async (dispatch) => {
     let response = await fetch(
       `http://${url}/api/v1/data/promise/?${name}=${value}`,
@@ -122,7 +122,9 @@ export const newPointList = (
     formData.append("status", "N");
     formData.append("importance", importance);
     formData.append("deadline", deadlineData);
-    formData.append("category", category);
+    if (category) {
+      formData.append("category", category);
+    }
 
     let requestOptions = {
       body: formData,

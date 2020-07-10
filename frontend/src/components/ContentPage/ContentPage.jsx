@@ -21,10 +21,11 @@ class ContentPage extends Component {
   };
 
   render() {
-    console.log(this.match);
+    
     const { page, pageNumber, isAutorisation } = this.props;
     const pageCount = Math.ceil(page.count / 15);
-
+   
+    
     if (!isAutorisation) {
       return <Redirect to="/authorisation" />;
     }
