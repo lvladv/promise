@@ -45,14 +45,14 @@ class Menu extends Component {
                   filterList("status", "N");
                 }}
               >
-                Не выполненно
+                <NavLink to={`/`}> Не выполненно</NavLink>
               </Point>
               <Point
                 onClick={() => {
                   filterList("status", "Y");
                 }}
               >
-                <NavLink to="/">Выполненно</NavLink>
+                <NavLink to={`/`}>Выполненно</NavLink>
               </Point>
             </ListBox>
             <ListBox>
@@ -73,7 +73,7 @@ class Menu extends Component {
                       filterList("importance", "M");
                     }}
                   >
-                    <NavLink to="/:id">Важно</NavLink>
+                    <NavLink to="/">Важно</NavLink>
                   </Point>
                   <Point
                     onClick={() => {

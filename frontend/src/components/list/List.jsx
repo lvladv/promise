@@ -39,7 +39,6 @@ class List extends Component {
       putItemChanges,
       categoryList,
     } = this.props;
-    console.log(list);
     return (
       <Box>
         {list.map((item) => (

@@ -34,7 +34,7 @@ export const newList = () => {
 
   return async (dispatch) => {
     let response = await fetch(
-      `http://${url}/api/v1/data/promise/?status=N`,
+      `${url}/api/v1/data/promise/?status=N`,
       requestOptions
     );
 
@@ -57,7 +57,7 @@ export const setPage = (value) => {
 
   return async (dispatch) => {
     let response = await fetch(
-      `http://${url}/api/v1/data/promise/?page=${value}`,
+      `${url}/api/v1/data/promise/?page=${value}`,
       requestOptions
     );
     let list = await response.json();
@@ -79,7 +79,7 @@ export const filterList = (name, value) => {
 
   return async (dispatch) => {
     let response = await fetch(
-      `http://${url}/api/v1/data/promise/?${name}=${value}`,
+      `${url}/api/v1/data/promise/?${name}=${value}&`,
       requestOptions
     );
     let list = await response.json();
@@ -135,7 +135,7 @@ export const newPointList = (
     };
 
     let response = await fetch(
-      `http://${url}/api/v1/data/promise/new/`,
+      `${url}/api/v1/data/promise/new/`,
       requestOptions
     );
 
@@ -171,7 +171,7 @@ export const newStatus = (newItem) => {
     };
 
     await fetch(
-      `http://${url}/api/v1/data/promise/${newItem.slug}/`,
+      `${url}/api/v1/data/promise/${newItem.slug}/`,
       requestOptions
     );
   };
@@ -199,7 +199,7 @@ export const changeItem = (itemChange) => {
     };
 
     const response = await fetch(
-      `http://${url}/api/v1/data/promise/${itemChange.slug}/`,
+      `${url}/api/v1/data/promise/${itemChange.slug}/`,
       requestOptions
     );
 

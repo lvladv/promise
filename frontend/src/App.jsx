@@ -44,12 +44,11 @@ class App extends Component {
 
   render() {
     const { isAutorisation } = this.props;
-    console.log(isAutorisation);
     return (
       <Container>
         <Header isAutorisation={isAutorisation} />
         <Switch>
-          <>
+         
             <Route
               path="/"
               render={() => <ContentPage isAutorisation={isAutorisation} />}
@@ -62,7 +61,7 @@ class App extends Component {
               />
               <Route path="/registration" component={Registration} />
             </AuthBox>
-          </>
+        
         </Switch>
       </Container>
     );

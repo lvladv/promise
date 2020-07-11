@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { setPage } from "../../store/list/action";
 import List from "../List/List";
@@ -19,13 +19,10 @@ class ContentPage extends Component {
   handlePagination = (value) => {
     this.props.setPage(value);
   };
-
   render() {
-    
     const { page, pageNumber, isAutorisation } = this.props;
     const pageCount = Math.ceil(page.count / 15);
-   
-    
+
     if (!isAutorisation) {
       return <Redirect to="/authorisation" />;
     }
@@ -34,25 +31,28 @@ class ContentPage extends Component {
         <Menu />
         <OpenNewCard />
         <Switch>
-          <Route component={Parameters} path="/settings" />
-          <InputContainer>
-            <ChangesCard />
-            <HeadBlock>
-              {pageCount < 1 ? null : (
-                <Pagination
-                  count={pageCount}
-                  variant="outlined"
-                  shape="rounded"
-                  page={pageNumber}
-                  onChange={this.handlePagination}
-                />
-              )}
-            </HeadBlock>
+          <Fragment>
+            <Route component={Parameters} path="/settings" />
+            <InputContainer>
+              <ChangesCard />
+              <HeadBlock>
+                {pageCount < 1 ? null : (
+                  <Pagination
+                    count={pageCount}
+                    variant="outlined"
+                    shape="rounded"
+                    page={pageNumber}
+                    onChange={this.handlePagination}
+                  />
+                )}
+              </HeadBlock>
 
-            <ListContainer>
-              <List />
-            </ListContainer>
-          </InputContainer>
+              <ListContainer>
+                <Route component={List} path="/" />
+                {/* <List /> */}
+              </ListContainer>
+            </InputContainer>
+          </Fragment>
         </Switch>
       </Main>
     );
