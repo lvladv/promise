@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import ContentPage from "./components/ContentPage/ContentPage";
 import Header from "./components/Header/Header";
 import Registration from "./components/Registration/Registration";
@@ -12,14 +12,11 @@ import { Container, AuthBox } from "./componentsStyled/App.style";
 import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
-
-  refresh(){
+  refresh() {
     this.props.newTokenFromRefresh();
   }
-  
 
   async componentDidMount() {
-
     const {
       isAutorisation,
       newTokenFromRefresh,
@@ -45,25 +42,24 @@ class App extends Component {
   render() {
     const { isAutorisation } = this.props;
     return (
-      <Container>
-        <Header isAutorisation={isAutorisation} />
-        <Switch>
-         
+      <Switch>
+        <Fragment>
+          <Container>
+            <Header isAutorisation={isAutorisation} />
+
             <Route
               path="/"
               render={() => <ContentPage isAutorisation={isAutorisation} />}
             />
-       
-            <AuthBox>
-              <Route
-                path="/authorisation"
-                render={() => <Authorisation isAutorisation={isAutorisation} />}
-              />
-              <Route path="/registration" component={Registration} />
-            </AuthBox>
-        
-        </Switch>
-      </Container>
+
+            <Route
+              path="/authorisation"
+              render={() => <Authorisation isAutorisation={isAutorisation} />}
+            />
+            <Route path="/registration" component={Registration} />
+          </Container>
+        </Fragment>
+      </Switch>
     );
   }
 }

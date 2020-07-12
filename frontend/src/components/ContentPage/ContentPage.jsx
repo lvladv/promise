@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { setPage } from "../../store/list/action";
+import { filterList } from "../../store/list/action";
 import List from "../List/List";
 import { Main } from "./../../componentsStyled/App.style";
 import ChangesCard from "../List/ChangesCard";
@@ -9,6 +9,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import OpenNewCard from "./OpenNewCard";
 import Menu from "./../Menu/Menu";
 import Parameters from "./../Parameters/Parameters";
+
 import {
   ListContainer,
   HeadBlock,
@@ -16,9 +17,11 @@ import {
 } from "../../componentsStyled/Input.style";
 
 class ContentPage extends Component {
-  handlePagination = (value) => {
-    this.props.setPage(value);
+  handlePagination = (event, value) => {
+    console.log(value);
+    this.props.filterList("page", value);
   };
+
   render() {
     const { page, pageNumber, isAutorisation } = this.props;
     const pageCount = Math.ceil(page.count / 15);
@@ -32,7 +35,7 @@ class ContentPage extends Component {
         <OpenNewCard />
         <Switch>
           <Fragment>
-            <Route component={Parameters} path="/settings" />
+            <Route  component={Parameters} path="/settings" />
             <InputContainer>
               <ChangesCard />
               <HeadBlock>
@@ -48,8 +51,7 @@ class ContentPage extends Component {
               </HeadBlock>
 
               <ListContainer>
-                <Route component={List} path="/" />
-                {/* <List /> */}
+                <Route exact component={List} path="/" />
               </ListContainer>
             </InputContainer>
           </Fragment>
@@ -68,7 +70,7 @@ const mapStateToprops = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setPage: (value) => dispatch(setPage(value)),
+    filterList: (name, value) => dispatch(filterList(name, value)),
   };
 };
 

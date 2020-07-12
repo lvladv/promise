@@ -11,6 +11,7 @@ import {
   Point,
   Box,
 } from "./../../componentsStyled/Registration.style";
+import { AuthBox } from "./../../componentsStyled/App.style";
 
 class Authorisation extends Component {
   loginValue = createRef();
@@ -31,7 +32,7 @@ class Authorisation extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <div>
+      <AuthBox>
         <Box
           onKeyUp={(e) => {
             if (e.key === "Enter") {
@@ -56,7 +57,7 @@ class Authorisation extends Component {
           errorAutorisation={errorAutorisation}
           closeError={closeError}
         />
-      </div>
+      </AuthBox>
     );
   }
 }

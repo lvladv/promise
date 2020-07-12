@@ -3,7 +3,6 @@ import {
   PUT_NEW_POINT_LIST,
   NEW_STATUS,
   NEW_CHANGE,
-  SET_PAGE,
   FILTER_LIST,
   MESSAGE_NEW_CARD,
   CLOSE_MESSAGE,
@@ -27,13 +26,6 @@ export const listReducer = (state = initialState, action) => {
         ...state,
         list: action.payload,
         page: action.page,
-      };
-
-    case SET_PAGE:
-      return {
-        ...state,
-        list: action.payload,
-        pageNumber: action.pageNumber,
       };
 
     case PUT_NEW_NAME:
@@ -62,6 +54,8 @@ export const listReducer = (state = initialState, action) => {
       return {
         ...state,
         list: action.payload,
+        page: action.page,
+        pageNumber: action.pageNumber,
       };
 
     case PUT_NEW_POINT_LIST:

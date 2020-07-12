@@ -16,7 +16,7 @@ export const newToken = (username, password) => {
       body: formData,
     };
     let response = await fetch(
-      `${url}/api/v1/data/auth/jwt/create/`,
+      `${url}auth/jwt/create/`,
       requestOptions
     );
     let autor = await response.json();
@@ -50,7 +50,7 @@ export const newTokenFromRefresh = () => {
     };
 
     let resp = await fetch(
-      `${url}/api/v1/data/auth/jwt/refresh/`,
+      `${url}auth/jwt/refresh/`,
       requestOptions2
     );
 
