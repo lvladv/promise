@@ -8,7 +8,7 @@ import {
 const hasToken = localStorage.getItem("remember");
 const initialState = {
   token: hasToken,
-  isAutorisation: hasToken ,
+  isAutorisation: Boolean(hasToken) ,
   errorAutorisation: false,
 };
 export const tokenReducer = (state = initialState, action) => {

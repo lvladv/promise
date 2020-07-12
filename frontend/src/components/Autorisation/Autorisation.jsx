@@ -3,15 +3,18 @@ import { connect } from "react-redux";
 import { newToken, closeError } from "./../../store/token/action";
 import { newList } from "./../../store/list/action";
 import { ErrorAutorisation } from "./Error";
+import { Redirect } from "react-router-dom";
+
 import {
   Input,
   SubmitButton,
   Point,
   Box,
 } from "./../../componentsStyled/Registration.style";
+import { AuthBox } from "./../../componentsStyled/App.style";
 
 class Authorisation extends Component {
-    loginValue = createRef();
+  loginValue = createRef();
   passwordValue = createRef();
 
   toAutrosation = async () => {
@@ -21,12 +24,15 @@ class Authorisation extends Component {
       this.passwordValue.current.value
     );
     await newList();
- };
+  };
 
   render() {
-    const { errorAutorisation, closeError } = this.props;
+    const { errorAutorisation, closeError, isAutorisation } = this.props;
+    if (isAutorisation) {
+      return <Redirect to="/" />;
+    }
     return (
-      <div>
+      <AuthBox>
         <Box
           onKeyUp={(e) => {
             if (e.key === "Enter") {
@@ -51,7 +57,7 @@ class Authorisation extends Component {
           errorAutorisation={errorAutorisation}
           closeError={closeError}
         />
-      </div>
+      </AuthBox>
     );
   }
 }

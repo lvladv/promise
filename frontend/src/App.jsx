@@ -1,19 +1,21 @@
 import React, { Component, Fragment } from "react";
-import Input from "./components/Input/Input";
+import ContentPage from "./components/ContentPage/ContentPage";
 import Header from "./components/Header/Header";
 import Registration from "./components/Registration/Registration";
 import Authorisation from "./components/Autorisation/Autorisation";
-import Menu from "./components/Menu/Menu";
-import Parameters from "./components/Parameters/Parameters";
-import OpenNewCard from "./components/Input/OpenNewCard";
+
 import { connect } from "react-redux";
 import { newTokenFromRefresh } from "./store/token/action";
 import { newCategoryList } from "./store/category/action";
 import { newList } from "./store/list/action";
-import { Container, AuthBox, Main } from "./componentsStyled/App.style";
+import { Container, AuthBox } from "./componentsStyled/App.style";
 import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
+  refresh() {
+    this.props.newTokenFromRefresh();
+  }
+
   async componentDidMount() {
     const {
       isAutorisation,
@@ -21,6 +23,7 @@ class App extends Component {
       newList,
       newCategoryList,
     } = this.props;
+
     const remember = (await localStorage.getItem("remember")) === "true";
     const tokenData = await localStorage.getItem("tokenData");
 
@@ -38,32 +41,25 @@ class App extends Component {
 
   render() {
     const { isAutorisation } = this.props;
-
     return (
-      <Container>
-        <Header isAutorisation={isAutorisation} />
-        <Switch>
-          {!isAutorisation ? (
-            <Fragment>
-              <AuthBox>
-                <Route exact component={Authorisation} path="/" />
+      <Switch>
+        <Fragment>
+          <Container>
+            <Header isAutorisation={isAutorisation} />
 
-                <Route exact component={Registration} path="/registration" />
-              </AuthBox>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <Main>
-                <Menu />
-                <OpenNewCard />
+            <Route
+              path="/"
+              render={() => <ContentPage isAutorisation={isAutorisation} />}
+            />
 
-                <Route component={Input} path="/" exact />
-                <Route component={Parameters} path="/settings" />
-              </Main>
-            </Fragment>
-          )}
-        </Switch>
-      </Container>
+            <Route
+              path="/authorisation"
+              render={() => <Authorisation isAutorisation={isAutorisation} />}
+            />
+            <Route path="/registration" component={Registration} />
+          </Container>
+        </Fragment>
+      </Switch>
     );
   }
 }

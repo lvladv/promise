@@ -18,7 +18,7 @@ export const newUser = (newEmail, newUsername, newPassword) => {
     };
 
     let response = await fetch(
-      `http://${url}/api/v1/data/auth/users/`,
+      `${url}auth/users/`,
       requestOptions
     );
     let autor = await response.json();

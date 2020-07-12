@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import InputRegistration from "./InputRegistration";
 import { GoodRegistration } from "./OkRegistration";
-import { newUser, closeErrorRegistration } from "./../../store/registration/action";
+import {
+  newUser,
+  closeErrorRegistration,
+} from "./../../store/registration/action";
+import { AuthBox } from "./../../componentsStyled/App.style";
 
 class Registration extends Component {
   render() {
     const { registration, registerError, closeErrorRegistration } = this.props;
     return (
-      <React.Fragment>
+      <AuthBox>
         {this.props.okRegistration ? (
           <GoodRegistration />
         ) : (
@@ -18,7 +22,7 @@ class Registration extends Component {
             closeErrorRegistration={closeErrorRegistration}
           />
         )}
-      </React.Fragment>
+      </AuthBox>
     );
   }
 }

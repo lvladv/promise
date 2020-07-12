@@ -33,7 +33,7 @@ class Header extends Component {
               </EnterButton>
 
               <EnterButton>
-                <NavLink  to="/">Вход</NavLink >
+                <NavLink  to="/authorisation">Вход</NavLink >
               </EnterButton>
             </Fragment>
           ) : (

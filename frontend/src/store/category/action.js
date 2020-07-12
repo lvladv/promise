@@ -20,7 +20,7 @@ export const newCategoryList = () => {
     };
 
     let response = await fetch(
-      ` http://${url}/api/v1/data/category/`,
+      ` ${url}category/`,
       requestOptions
     );
     let list = await response.json();
@@ -52,7 +52,7 @@ export const putNewCategory = (name, color) => {
       method: "POST",
     };
 
-    await fetch(`http://${url}/api/v1/data/category/new/`, requestOptions);
+    await fetch(`${url}category/new/`, requestOptions);
   };
 };
 
@@ -76,7 +76,7 @@ export const changeItemCategory = (itemChangeCategory) => {
     };
 
     await fetch(
-      `http://${url}/api/v1/data/category/${itemChangeCategory.id}/`,
+      `${url}category/${itemChangeCategory.id}/`,
       requestOptions
     );
   };
@@ -97,7 +97,7 @@ export const deleteItemCategory = (itemChangeCategory) => {
     };
 
     await fetch(
-      `http://${url}/api/v1/data/category/${itemChangeCategory.id}/`,
+      `${url}category/${itemChangeCategory.id}/`,
       requestOptions
     );
   };
