@@ -1,5 +1,5 @@
-import { format } from "date-fns";
-import { url, paramUrl } from "./../url";
+import moment from 'moment';
+import { url, paramUrl, } from "./../url";
 export const GET_LIST = "GET_LIST";
 export const PUT_NEW_POINT_LIST = "PUT_NEW_POINT_LIST";
 export const NEW_STATUS = "NEW_STATUS";
@@ -56,19 +56,25 @@ export const filterList = (nameParam, valueParam) => {
   if (nameParam !== "page") {
     paramUrl.searchParams.set("page", 1);
   }
-  paramUrl.searchParams.set(nameParam, valueParam);
 
+  if(paramUrl.searchParams.get(nameParam) === String(valueParam)){
+    paramUrl.searchParams.delete(nameParam)
+  } else {
+    paramUrl.searchParams.set(nameParam, valueParam);
+  }
+
+  const pageValue  = nameParam === "page" ? valueParam : 1
+  
+ 
   return async (dispatch) => {
-    console.log(paramUrl);
     let response = await fetch(paramUrl, requestOptions);
     let list = await response.json();
     await dispatch({
       type: FILTER_LIST,
       payload: list.results,
       page: list,
-      pageNumber: valueParam,
+      pageNumber: pageValue,
     });
-    console.log(list);
   };
 };
 
@@ -93,17 +99,14 @@ export const newPointList = (
         category: category,
       },
     });
-    console.log(deadlineTime);
     let formData = new FormData();
-    let deadlineData = format(
-      new Date(deadline + " " + deadlineTime),
-      "yyyy-MM-dd HH:mm"
-    );
+    let deadlineDay = `${moment(deadline).format("YYYY-MM-DD")}`;
+    let deadlineHour = `${deadlineTime}`;
     formData.append("name", name);
     formData.append("description", description);
     formData.append("status", "N");
     formData.append("importance", importance);
-    formData.append("deadline", deadlineData);
+    formData.append("deadline", `${deadlineDay} ${deadlineHour}`);
     if (category) {
       formData.append("category", category);
     }

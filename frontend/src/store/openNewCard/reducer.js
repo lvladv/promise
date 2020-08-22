@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import moment from 'moment';
 
 import {
   OPEN_NEW_CARD,
@@ -12,7 +12,7 @@ import {
 const initialState = {
   isOpenNewCard: false,
   importance: "L",
-  deadline: format(new Date(), "yyyy-MM-dd"),
+  deadline: moment(new Date()).format("YYYY-MM-DD"),
   deadlineTime: "00:00",
   getCategory: "",
 };

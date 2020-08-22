@@ -34,7 +34,6 @@ export const newUser = (newEmail, newUsername, newPassword) => {
         email: autor.email,
         password: autor.password,
       });
-      console.log(autor);
     }
   };
 };

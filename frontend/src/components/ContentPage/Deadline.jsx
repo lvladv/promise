@@ -1,5 +1,5 @@
 import React from "react";
-import { format, addDays } from "date-fns";
+import moment from 'moment';
 import { withStyles } from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import blueGrey from "@material-ui/core/colors/blueGrey";
@@ -7,7 +7,7 @@ import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
+import MomentUtils from '@date-io/moment';
 import {
   DeadlineButton,
   RowBox,
@@ -61,7 +61,7 @@ export const Deadline = ({
   };
 
   const clickdeadline = (date) => {
-    deadlineChange(format(date, "yyyy-MM-dd"));
+    deadlineChange(moment(date).format("YYYY-MM-DD"));
   };
 
   const handleChangeTime = (value) => {
@@ -73,19 +73,19 @@ export const Deadline = ({
         <DeadlineButton onClick={() => clickdeadline(new Date())}>
           Сегодня
         </DeadlineButton>
-        <DeadlineButton onClick={() => clickdeadline(addDays(new Date(), 1))}>
+        <DeadlineButton onClick={() => clickdeadline(moment(new Date()).add('days', 1))}>
           Завтра
         </DeadlineButton>
-        <DeadlineButton onClick={() => clickdeadline(addDays(new Date(), 7))}>
+        <DeadlineButton onClick={() => clickdeadline(moment(new Date()).add('days', 7))}>
           Через неделю
         </DeadlineButton>
       </RowBox>
       <ThemeProvider theme={defaultMaterialTheme}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
           <Picker
             disableToolbar
             variant="inline"
-            format="yyyy.MM.dd"
+            format="YYYY-MM-DD"
             label="Выбрать свою дату"
             value={deadline}
             onChange={handleDateChange}

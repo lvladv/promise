@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { filterList } from "../../store/list/action";
-import List from "../List/List";
+import List from "../list/List";
 import { Main } from "./../../componentsStyled/App.style";
-import ChangesCard from "../List/ChangesCard";
+import ChangesCard from "../list/ChangesCard";
 import Pagination from "@material-ui/lab/Pagination";
 import { Redirect, Route, Switch } from "react-router-dom";
 import OpenNewCard from "./OpenNewCard";
@@ -17,15 +17,13 @@ import {
 } from "../../componentsStyled/Input.style";
 
 class ContentPage extends Component {
-  handlePagination = (event, value) => {
-    console.log(value);
+  handlePagination = (value) => {
     this.props.filterList("page", value);
   };
 
   render() {
     const { page, pageNumber, isAutorisation } = this.props;
     const pageCount = Math.ceil(page.count / 15);
-
     if (!isAutorisation) {
       return <Redirect to="/authorisation" />;
     }

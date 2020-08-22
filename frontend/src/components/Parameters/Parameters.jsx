@@ -44,7 +44,6 @@ class Parameters extends Component {
       putNewColorCategory,
     } = this.props;
 
-    console.log(categoryList);
     const openCategory = openChangeCategory ? (
       <ChangeCategory
         itemChangeCategory={itemChangeCategory}

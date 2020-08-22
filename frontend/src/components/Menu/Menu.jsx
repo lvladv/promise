@@ -12,6 +12,38 @@ import {
 } from "./../../componentsStyled/Menu.style";
 
 class Menu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { idCategory: "", idImportance: "", idStatus: "N" };
+    this.pointColor = "#cfd8dc"
+  }
+
+
+  getCategoryColor = (id) => {
+    if (+ id !== + this.state.idCategory) {
+      this.setState({ idCategory: id })
+    } else {
+      this.setState({ idCategory: "" })
+    }
+  }
+
+  getImportanceColor = (id) => {
+    if (id !== this.state.idImportance) {
+      this.setState({ idImportance: id })
+    } else {
+      this.setState({ idImportance: "" })
+    }
+  }
+
+  getStatusColor = (id) => {
+    if (id === "N") {
+      this.setState({ idStatus: "N" })
+    } else {
+      this.state.idStatus === "Y" ? this.setState({ idStatus: "N" }) : this.setState({ idStatus: "Y" })
+    }
+  }
+
+
   render() {
     const {
       clickCategory,
@@ -22,6 +54,8 @@ class Menu extends Component {
       openNewCard,
       filterList,
     } = this.props;
+
+    const { idCategory, idImportance, idStatus } = this.state;
     return (
       <>
         <MenuContainer>
@@ -43,6 +77,10 @@ class Menu extends Component {
               <Point
                 onClick={() => {
                   filterList("status", "N");
+                  this.getStatusColor("N")
+                }}
+                style={{
+                  background: idStatus === "N" ? this.pointColor : "",
                 }}
               >
                 <NavLink to={`/`}> Не выполненно</NavLink>
@@ -50,6 +88,10 @@ class Menu extends Component {
               <Point
                 onClick={() => {
                   filterList("status", "Y");
+                  this.getStatusColor("Y")
+                }}
+                style={{
+                  background: idStatus === "Y" ? this.pointColor : "",
                 }}
               >
                 <NavLink to={`/`}>Выполненно</NavLink>
@@ -64,6 +106,10 @@ class Menu extends Component {
                   <Point
                     onClick={() => {
                       filterList("importance", "L");
+                      this.getImportanceColor("L")
+                    }}
+                    style={{
+                      background: idImportance === "L" ? this.pointColor : "",
                     }}
                   >
                     <NavLink to="/"> Не важно</NavLink>
@@ -71,6 +117,10 @@ class Menu extends Component {
                   <Point
                     onClick={() => {
                       filterList("importance", "M");
+                      this.getImportanceColor("M")
+                    }}
+                    style={{
+                      background: idImportance === "M" ? this.pointColor : "",
                     }}
                   >
                     <NavLink to="/">Важно</NavLink>
@@ -78,6 +128,10 @@ class Menu extends Component {
                   <Point
                     onClick={() => {
                       filterList("importance", "H");
+                      this.getImportanceColor("H");
+                    }}
+                    style={{
+                      background: idImportance === "H" ? this.pointColor : "",
                     }}
                   >
                     <NavLink to="/"> Очень выжно</NavLink>
@@ -97,6 +151,10 @@ class Menu extends Component {
                         key={categoryItem.id}
                         onClick={() => {
                           filterList("category", categoryItem.id);
+                          this.getCategoryColor(categoryItem.id)
+                        }}
+                        style={{
+                          background: categoryItem.id === idCategory ? this.pointColor : "",
                         }}
                       >
                         <NavLink to="/"> {categoryItem.name}</NavLink>
@@ -107,6 +165,10 @@ class Menu extends Component {
                   <Point
                     onClick={() => {
                       filterList("category", 1);
+                      this.getCategoryColor(1)
+                    }}
+                    style={{
+                      background: 1 === idCategory ? this.pointColor : "",
                     }}
                   >
                     <NavLink to="/"> Без категории</NavLink>

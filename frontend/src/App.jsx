@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { newTokenFromRefresh } from "./store/token/action";
 import { newCategoryList } from "./store/category/action";
 import { newList } from "./store/list/action";
-import { Container, AuthBox } from "./componentsStyled/App.style";
+import { Container} from "./componentsStyled/App.style";
 import { Switch, Route } from "react-router-dom";
 
 class App extends Component {
@@ -18,7 +18,6 @@ class App extends Component {
 
   async componentDidMount() {
     const {
-      isAutorisation,
       newTokenFromRefresh,
       newList,
       newCategoryList,
@@ -28,11 +27,10 @@ class App extends Component {
     const tokenData = await localStorage.getItem("tokenData");
 
     if (remember) {
-      if (isAutorisation) {
         await newTokenFromRefresh();
         await newCategoryList();
         await newList();
-      }
+      
       if (Date.now() >= tokenData * 5000) {
         newTokenFromRefresh();
       }

@@ -39,7 +39,8 @@ class List extends Component {
       putItemChanges,
       categoryList,
     } = this.props;
-    
+
+
     return (
       <Box>
         {list.map((item) => (
@@ -84,8 +85,8 @@ class List extends Component {
                     {item.importance === "L"
                       ? " Не важно"
                       : item.importance === "M"
-                      ? " Важно"
-                      : " Очень важно"}
+                        ? " Важно"
+                        : " Очень важно"}
                   </span>
                 </Item>
 
